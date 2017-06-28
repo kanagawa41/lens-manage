@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  url: MyString
+  url_group_id: MyString
+  wait_time: 2017-06-26 15:07:02
+
+two:
+  url: MyString
+  url_group_id: MyString
+  wait_time: 2017-06-26 15:07:02

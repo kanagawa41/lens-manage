@@ -1,0 +1,2 @@
+class UrlGroup < ApplicationRecord
+end
