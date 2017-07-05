@@ -1,0 +1,2 @@
+class MCategory < ApplicationRecord
+end
