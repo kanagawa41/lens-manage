@@ -50,11 +50,18 @@ namespace :category do
     categories.each do |id, category_name|
       if category_index = m_categories_ids.index(id.to_i)
         if category_name != m_categories[category_index][:category_name]
-          MCategory.where(id: id).update_all(category_name: category_name)
+          MCategory.where(id: id).update_all(category_name: category_name, is_big_category: !!big_categories[id])
+
           change_ids[:update_ids][id] = {before_name: m_categories[category_index][:category_name], after_name: category_name}
         end
       else
-        MCategory.create(id: id, category_name: category_name)
+        MCategory.create(id: id, category_name: category_name, is_big_category: !!big_categories[id])
+        # ページ分
+        CategoryPage.create(m_category_id: id, range: "1:25")
+        CategoryPage.create(m_category_id: id, range: "26:50")
+        CategoryPage.create(m_category_id: id, range: "51:75")
+        CategoryPage.create(m_category_id: id, range: "76:100")
+
         change_ids[:insert_ids].push id
       end
     end
