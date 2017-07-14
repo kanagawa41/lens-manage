@@ -35,9 +35,9 @@ namespace :category do
     session.all(:css, 'a').each do |anchor|
       href = anchor[:href]
       if href =~ root_category
-        big_categories[href.match(root_category)[1]] = anchor[:text]
+        big_categories[href.match(root_category)[1]] = anchor[:text].strip
       elsif href =~ category_domain
-        categories[href.match(category_domain)[1]] = anchor[:text]
+        categories[href.match(category_domain)[1]] = anchor[:text].strip
       end
     end
 
@@ -55,7 +55,13 @@ namespace :category do
           change_ids[:update_ids][id] = {before_name: m_categories[category_index][:category_name], after_name: category_name}
         end
       else
-        MCategory.create(id: id, category_name: category_name, is_big_category: !!big_categories[id])
+        begin
+          MCategory.create(id: id, category_name: category_name, is_big_category: !!big_categories[id])
+        rescue ActiveRecord::RecordNotUnique, ActiveRecord::StatementInvalid => e
+          change_ids[:error_ids][id] = {id => e.message}
+          next
+        end
+
         # ページ分
         CategoryPage.create(m_category_id: id, range: "1:25")
         CategoryPage.create(m_category_id: id, range: "26:50")

@@ -1,0 +1,2 @@
+class MDeliveryBurden < ApplicationRecord
+end

@@ -10,21 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170711142221) do
+ActiveRecord::Schema.define(version: 20170713133126) do
 
   create_table "category_pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "range"
     t.boolean "complete_flag", default: false, null: false
-    t.bigint "m_category_id"
+    t.integer "m_category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["m_category_id"], name: "index_category_pages_on_m_category_id"
   end
 
   create_table "html_warehouses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "url", null: false
+    t.string "item_id", null: false
     t.text "html", null: false
     t.integer "http_status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "m_brand_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "brand_group_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "m_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "brand_name"
+    t.integer "brand_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -36,5 +48,48 @@ ActiveRecord::Schema.define(version: 20170711142221) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "category_pages", "m_categories"
+  create_table "m_delivery_burdens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "burdender"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "m_goods_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "status_description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "m_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "image_url"
+    t.string "goods_name"
+    t.text "goods_description"
+    t.integer "price"
+    t.integer "m_category_id"
+    t.integer "user_id"
+    t.integer "m_goods_statuse_id"
+    t.integer "m_brand_id"
+    t.integer "m_delivery_burden_id"
+    t.integer "m_prefecture"
+    t.text "options"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "m_prefectures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "prefecture_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "user_name"
+    t.integer "good_rating"
+    t.integer "normal_rating"
+    t.integer "bad_rating"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end

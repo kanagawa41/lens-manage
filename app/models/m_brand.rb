@@ -1,0 +1,2 @@
+class MBrand < ApplicationRecord
+end
