@@ -54,11 +54,18 @@ namespace :page do
         exist_items = MItem.select(:id).where(id: item_ids).all.map{|record| record[:id]}
 
         items = []
+        warehoses = []
         item_ids.each do |item_id|
-          items << MItem.new(id: item_id) unless exist_items.include? item_id
+          unless exist_items.include? item_id
+            items << MItem.new(id: item_id)
+            warehoses << HtmlWarehouse.new(item_id: item_id)
+          end
         end
 
-        MItem.import items if items.count
+        if items.count
+          MItem.import items 
+          HtmlWarehouse.import warehoses
+        end
       end
 
       CategoryPage.where(id: m_category.page_id).update_all(complete_flag: true)

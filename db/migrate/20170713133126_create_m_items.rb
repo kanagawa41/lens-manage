@@ -16,6 +16,7 @@ class CreateMItems < ActiveRecord::Migration[5.1]
       t.integer :m_brand_id
       t.integer :m_delivery_burden_id
       t.integer :m_prefecture
+      t.integer :like_num
       t.text :options
 
       t.timestamps

@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20170713133126) do
 
   create_table "html_warehouses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "item_id", null: false
-    t.text "html", null: false
-    t.integer "http_status", null: false
+    t.text "html"
+    t.integer "http_status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20170713133126) do
     t.integer "m_brand_id"
     t.integer "m_delivery_burden_id"
     t.integer "m_prefecture"
+    t.integer "like_num"
     t.text "options"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
