@@ -21,7 +21,14 @@ namespace :category do
     big_categories = {}
     categories = {}
     Capybara.register_driver :poltergeist do |app|
-      Capybara::Poltergeist::Driver.new(app, {:js_errors => false, :timeout => 1000 })
+      Capybara::Poltergeist::Driver.new(app, {
+        js_errors: false,
+        timeout: 1000,
+        phantomjs_options: [
+          '--load-images=no',
+          '--ignore-ssl-errors=yes',
+          '--ssl-protocol=any'],
+      })
     end
 
     session = Capybara::Session.new(:poltergeist)
