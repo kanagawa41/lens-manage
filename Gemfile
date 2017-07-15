@@ -58,3 +58,4 @@ gem 'poltergeist'
 gem 'capybara', '~> 2.13'
 gem 'activerecord-import'
 gem 'seed_dump'
+gem 'whenever', :require => false
