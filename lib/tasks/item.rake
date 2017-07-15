@@ -1,0 +1,2 @@
+namespace :item do
+end
