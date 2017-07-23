@@ -28,16 +28,17 @@ every '35 0 * * * ' do
   rake "category:fetch"
 end
 
-# 毎日10分毎(0時は除く)
-every '0-59/10 1-23 * * * ' do
+# 毎日１時間毎(5分に実行、0時は除く)
+every '5 1-23/1 * * * ' do
   rake "page:fetch"
 end
 
 # 毎日20分毎(0時は除く)
-every '0-59/20 1-23 * * * ' do
+every '10-59/25 1-23 * * * ' do
   rake "item:fetch"
 end
 
+# http://www.japan9.com/cgi/cron.cgi
 # http://morizyun.github.io/blog/whenever-gem-rails-ruby-capistrano/
 # # 出力先のログファイルの指定
 # set :output, 'log/crontab.log'

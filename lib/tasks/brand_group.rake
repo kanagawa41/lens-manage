@@ -11,18 +11,7 @@ namespace :brand_group do
       "\\?brand_group_id=(\\d+)"
     )
 
-    Capybara.register_driver :poltergeist do |app|
-      Capybara::Poltergeist::Driver.new(app, {
-        js_errors: false,
-        timeout: 1000,
-        phantomjs_options: [
-          '--load-images=no',
-          '--ignore-ssl-errors=yes',
-          '--ssl-protocol=any'],
-      })
-    end
-
-    session = Capybara::Session.new(:poltergeist)
+    session = TaskCommon::get_session
 
     # 対象URLに遷移する
     session.visit Rails.application.config.urls['mercari_brand_domain']

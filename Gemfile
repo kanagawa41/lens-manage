@@ -56,6 +56,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Scrayping
 gem 'poltergeist'
 gem 'capybara', '~> 2.13'
+gem 'phantomjs', '~> 2.1'
 gem 'activerecord-import'
 gem 'seed_dump'
 gem 'whenever', :require => false

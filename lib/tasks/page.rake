@@ -15,18 +15,7 @@ namespace :page do
 
     CATEGORY_BASE_DOMAIN = Rails.application.config.urls['mercari_category_list_domain']
 
-    Capybara.register_driver :poltergeist do |app|
-      Capybara::Poltergeist::Driver.new(app, {
-        js_errors: false,
-        timeout: 1000,
-        phantomjs_options: [
-          '--load-images=no',
-          '--ignore-ssl-errors=yes',
-          '--ssl-protocol=any'],
-      })
-    end
-
-    session = Capybara::Session.new(:poltergeist)
+    session = TaskCommon::get_session
 
     set_condition_m_category = MCategory.select("m_categories.id, category_pages.id as page_id, category_pages.range").
       joins(:category_pages).where("category_pages.complete_flag"=> false).

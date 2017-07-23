@@ -1,6 +1,7 @@
 namespace :brand do
   desc "ブランド情報を操作する"
   require 'capybara/poltergeist'
+  require 'phantomjs'
   task fetch: :environment do
     # ログ設定
     log_name = "brand-fetch"
@@ -23,17 +24,7 @@ namespace :brand do
     m_brands = MBrand.select(:id, :brand_name).all
     m_brand_ids = m_brands.map{|record| record[:id]}
 
-    Capybara.register_driver :poltergeist do |app|
-      Capybara::Poltergeist::Driver.new(app, {
-        js_errors: false,
-        timeout: 1000,
-        phantomjs_options: [
-          '--load-images=no',
-          '--ignore-ssl-errors=yes',
-          '--ssl-protocol=any'],
-      })
-    end
-    session = Capybara::Session.new(:poltergeist)
+    session = TaskCommon::get_session
 
     change_ids = {insert_ids: [], update_ids: {}, error_ids: {}}
     brand_group_ids.each do |brand_group_id|
