@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20170723014706) do
   create_table "collect_targets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "m_shop_info_id"
     t.string "list_url"
+    t.integer "page_num"
     t.boolean "is_done"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -43,7 +44,6 @@ ActiveRecord::Schema.define(version: 20170723014706) do
   create_table "m_shop_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "shop_name"
     t.string "shop_url"
-    t.integer "page_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
