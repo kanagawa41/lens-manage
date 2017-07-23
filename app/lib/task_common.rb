@@ -1,8 +1,9 @@
 require 'phantomjs'
 
 class TaskCommon
-
+  # Capybara初期設定
   def self.get_session
+    # ユーザエージェントはランダムで設定する
     http_user_agent = [
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36",
       "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Mobile Safari/537.36",
@@ -27,8 +28,8 @@ class TaskCommon
     session = Capybara::Session.new(:poltergeist)
   end
 
+  # ログ出力先設定
   def self.set_log(log_name)
     Rails.logger = Logger.new("log/#{log_name}.log", 'daily')
   end
-
 end

@@ -1,2 +1,0 @@
-class MItem < ApplicationRecord
-end

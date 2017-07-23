@@ -1,2 +1,0 @@
-class MBrandGroup < ApplicationRecord
-end

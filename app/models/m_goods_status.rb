@@ -1,2 +1,0 @@
-class MGoodsStatus < ApplicationRecord
-end

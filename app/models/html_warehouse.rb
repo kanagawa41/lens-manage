@@ -1,2 +1,0 @@
-class HtmlWarehouse < ApplicationRecord
-end

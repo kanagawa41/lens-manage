@@ -1,2 +1,0 @@
-class MDeliveryBurden < ApplicationRecord
-end

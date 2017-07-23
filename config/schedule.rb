@@ -8,6 +8,8 @@ set :output, 'log/cron.log'
 # ジョブの実行環境の指定
 set :environment, :development
 
+# FIXME: 本システムに合わせて作り直す
+
 # 毎日00:02分
 every '2 0 * * * ' do
   rake "page:reset"

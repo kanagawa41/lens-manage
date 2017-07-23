@@ -1,2 +1,0 @@
-class MBrand < ApplicationRecord
-end

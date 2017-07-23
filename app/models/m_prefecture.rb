@@ -1,2 +1,0 @@
-class MPrefecture < ApplicationRecord
-end

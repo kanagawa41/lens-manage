@@ -12,7 +12,8 @@ namespace :test do
     groups = {}
     # 全てのアンカーを取得する 
     session.all(:css, 'a').each do |anchor|
-      pp anchor[:href]
+      # pp anchor[:href]
+      Rails.logger.info anchor[:href]
     end
   end
 
@@ -26,8 +27,9 @@ namespace :test do
     common_href
     # 全てのアンカーを取得する 
     session.all(:css, '#content .article').each do |article|
-      pp article.text.gsub(/\r|\n|\t/, '').strip
-      pp article.all(:css, 'a').map do {|a| a[:href]}.uniq
+      result = article.text.gsub(/\r|\n|\t/, '').strip
+      Rails.logger.info result
+      # pp article.all(:css, 'a').map do {|a| a[:href]}.uniq
       # pp article['innerHTML'].gsub(/\r|\n|\t/, '').strip
       # pp article[:text]
     end
