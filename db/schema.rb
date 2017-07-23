@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170723014706) do
+ActiveRecord::Schema.define(version: 20170723023551) do
 
   create_table "collect_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "m_shop_info_id"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 20170723014706) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["m_shop_info_id"], name: "index_collect_targets_on_m_shop_info_id"
+  end
+
+  create_table "collect_warehouses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_shop_info_id"
+    t.string "row_collect_text"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["m_shop_info_id"], name: "index_collect_warehouses_on_m_shop_info_id"
   end
 
   create_table "m_lends_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -50,5 +58,6 @@ ActiveRecord::Schema.define(version: 20170723014706) do
 
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
+  add_foreign_key "collect_warehouses", "m_shop_infos"
   add_foreign_key "m_lends_infos", "m_shop_infos"
 end
