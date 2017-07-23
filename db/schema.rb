@@ -10,92 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170713133126) do
+ActiveRecord::Schema.define(version: 20170723014706) do
 
-  create_table "category_pages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "range"
-    t.boolean "complete_flag", default: false, null: false
-    t.integer "m_category_id", null: false
+  create_table "collect_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_shop_info_id"
+    t.boolean "is_done"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["m_shop_info_id"], name: "index_collect_results_on_m_shop_info_id"
   end
 
-  create_table "html_warehouses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "item_id", null: false
-    t.text "html"
-    t.integer "http_status"
+  create_table "collect_targets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_shop_info_id"
+    t.string "list_url"
+    t.boolean "is_done"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["m_shop_info_id"], name: "index_collect_targets_on_m_shop_info_id"
   end
 
-  create_table "m_brand_groups", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "brand_group_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "m_brands", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "brand_name"
-    t.integer "brand_group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "m_categories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "category_name", null: false
-    t.boolean "is_big_category", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "m_delivery_burdens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "burdender"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "m_goods_statuses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "status_description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "m_items", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "image_url1"
-    t.string "image_url2"
-    t.string "image_url3"
-    t.string "image_url4"
-    t.string "goods_name"
-    t.text "goods_description"
+  create_table "m_lends_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "lends_name"
+    t.string "lends_pic_url"
+    t.string "stock_state"
     t.integer "price"
-    t.integer "m_category_id1"
-    t.integer "m_category_id2"
-    t.integer "m_category_id3"
-    t.integer "user_id"
-    t.integer "m_goods_statuse_id"
-    t.integer "m_brand_id"
-    t.integer "m_delivery_burden_id"
-    t.integer "m_prefecture"
-    t.integer "like_num"
-    t.text "options"
+    t.bigint "m_shop_info_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["m_shop_info_id"], name: "index_m_lends_infos_on_m_shop_info_id"
+  end
+
+  create_table "m_shop_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "shop_name"
+    t.string "shop_url"
+    t.integer "page_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "m_prefectures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "prefecture_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "user_name"
-    t.integer "good_rating"
-    t.integer "normal_rating"
-    t.integer "bad_rating"
-    t.text "description"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
+  add_foreign_key "collect_results", "m_shop_infos"
+  add_foreign_key "collect_targets", "m_shop_infos"
+  add_foreign_key "m_lends_infos", "m_shop_infos"
 end

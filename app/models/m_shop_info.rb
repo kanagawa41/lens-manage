@@ -1,0 +1,2 @@
+class MShopInfo < ApplicationRecord
+end
