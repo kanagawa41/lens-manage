@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>M shop info:</strong>
+  <%= @collect_target.m_shop_info %>
+</p>
+
+<p>
+  <strong>List url:</strong>
+  <%= @collect_target.list_url %>
+</p>
+
+<p>
+  <strong>Page num:</strong>
+  <%= @collect_target.page_num %>
+</p>
+
+<p>
+  <strong>Is done:</strong>
+  <%= @collect_target.is_done %>
+</p>
+
+<%= link_to 'Edit', edit_collect_target_path(@collect_target) %> |
+<%= link_to 'Back', collect_targets_path %>
