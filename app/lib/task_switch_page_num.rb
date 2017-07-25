@@ -19,7 +19,7 @@ class TaskSwitchPageNum
   def self.target_1
     page_pattern = Regexp.new("p=(\\d+)")
 
-    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id, is_done: false).all
+    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
 
     session = TaskCommon::get_session
 
@@ -30,15 +30,14 @@ class TaskSwitchPageNum
       # 全てのアンカーを取得する 
       session.all(:css, '.navipage_ .navipage_last_ a').each do |anchor|
         if anchor[:href] =~ page_pattern
-          collect_target.page_num = $1
+          collect_target.start_page_num = 1
+          collect_target.end_page_num = $1
         else
           raise "#{$shop_id}"
         end
       end
 
-      ActiveRecord::Base.transaction do
-        collect_target.save!
-      end
+      collect_target.save!
     end
   end
 

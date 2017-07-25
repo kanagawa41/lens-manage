@@ -14,7 +14,8 @@ ActiveRecord::Schema.define(version: 20170723023551) do
 
   create_table "collect_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "m_shop_info_id"
-    t.boolean "is_done"
+    t.integer "success_num"
+    t.integer "fail_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["m_shop_info_id"], name: "index_collect_results_on_m_shop_info_id"
@@ -23,8 +24,8 @@ ActiveRecord::Schema.define(version: 20170723023551) do
   create_table "collect_targets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "m_shop_info_id"
     t.string "list_url"
-    t.integer "page_num"
-    t.boolean "is_done"
+    t.integer "start_page_num"
+    t.integer "end_page_num"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["m_shop_info_id"], name: "index_collect_targets_on_m_shop_info_id"
