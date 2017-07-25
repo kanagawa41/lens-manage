@@ -4,6 +4,8 @@ class TaskSwitchPageNum
     $shop_id = shop_id
     if shop_id == 1 # レモン社
       target_1
+    elsif shop_id == 2 # モリッツ
+      target_2
     elsif shop_id == 999
       # コピー用
     else
@@ -36,6 +38,18 @@ class TaskSwitchPageNum
           raise "#{$shop_id}"
         end
       end
+
+      collect_target.save!
+    end
+  end
+
+  # モリッツ
+  def self.target_2
+    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
+
+    collect_targets.each do |collect_target|
+      collect_target.start_page_num = 1
+      collect_target.end_page_num = 1
 
       collect_target.save!
     end

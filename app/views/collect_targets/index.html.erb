@@ -7,8 +7,8 @@
     <tr>
       <th>M shop info</th>
       <th>List url</th>
-      <th>Page num</th>
-      <th>Is done</th>
+      <th>Start page num</th>
+      <th>End page num</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,8 +18,8 @@
       <tr>
         <td><%= collect_target.m_shop_info %></td>
         <td><%= collect_target.list_url %></td>
-        <td><%= collect_target.page_num %></td>
-        <td><%= collect_target.is_done %></td>
+        <td><%= collect_target.start_page_num %></td>
+        <td><%= collect_target.end_page_num %></td>
         <td><%= link_to 'Show', collect_target %></td>
         <td><%= link_to 'Edit', edit_collect_target_path(collect_target) %></td>
         <td><%= link_to 'Destroy', collect_target, method: :delete, data: { confirm: 'Are you sure?' } %></td>

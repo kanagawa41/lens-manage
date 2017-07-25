@@ -69,6 +69,6 @@ class CollectTargetsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def collect_target_params
-      params.require(:collect_target).permit(:m_shop_info_id, :list_url, :page_num, :is_done)
+      params.require(:collect_target).permit(:m_shop_info_id, :list_url, :start_page_num, :end_page_num)
     end
 end

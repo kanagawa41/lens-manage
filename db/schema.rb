@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20170723023551) do
   create_table "m_lends_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "lends_name"
     t.string "lends_pic_url"
+    t.string "lends_info_url"
     t.string "stock_state"
     t.integer "price"
     t.bigint "m_shop_info_id"
