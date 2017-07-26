@@ -11,6 +11,8 @@ class TaskSwitchPageInfo
       target_3 collect_targets
     elsif shop_id == 4 # Foto:Mutori
       target_4 collect_targets
+    elsif shop_id == 5 # ドッピエッタトーキョー
+      target_5 collect_targets
     else
       raise "#{shop_id}"
     end
@@ -59,7 +61,7 @@ class TaskSwitchPageInfo
             end
             lends_info[:lends_pic_url] = article.find(:css, '.img_ img')[:src].strip
             lends_info[:stock_state] = avarable_stock_pattern.match(article.find(:css, '.zaiko_').text).present?
-            lends_info[:price] = article.find(:css, '.price_').text.gsub(/\r|\n|\t|￥|\\|,/, '').strip
+            lends_info[:price] = article.find(:css, '.price_').text.gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
 
             # upsert
             if m_lends_info = MLendsInfo.where(lends_info_url: lends_info[:lends_info_url], m_shop_info_id: $shop_id).first
@@ -117,7 +119,7 @@ class TaskSwitchPageInfo
             lends_info[:lends_pic_url] = article.all(:css, 'td[width="15%"] img')[0][:src].strip
             state_or_price = article.all(:css, 'td[width="25%"] b')[0].text
             lends_info[:stock_state] = !avarable_stock_pattern.match(state_or_price).present?
-            lends_info[:price] = lends_info[:stock_state] ? state_or_price.gsub(/\r|\n|\t|￥|\\|,/, '').strip : nil
+            lends_info[:price] = lends_info[:stock_state] ? state_or_price.gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip : nil
 
             # upsert
             if m_lends_info = MLendsInfo.where(lends_name: lends_info[:lends_name], m_shop_info_id: $shop_id).first
@@ -179,7 +181,7 @@ class TaskSwitchPageInfo
             lends_info[:lends_pic_url] = article.find(:css, '.article-first-image img')[:src].strip
             lends_infos = article.find(:css, '.article-body-inner').text
             if md = lends_infos.gsub(/,/, '').match(price_pattern) # 価格
-              lends_info[:price] = md[1].gsub(/\r|\n|\t|￥|\\|,/, '').strip
+              lends_info[:price] = md[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
               lends_info[:stock_state] = 1
             elsif lends_infos.match(sold_out_pattern) # 売り切れ
               lends_info[:price] = nil
@@ -245,7 +247,7 @@ class TaskSwitchPageInfo
               lends_info[:lends_info_url] = info_anchor[:href] if info_page_pattern.match(info_anchor[:href])
             end
             lends_info[:lends_pic_url] = article.find(:css, '.gridly-image img')[:src].strip
-            lends_info[:stock_state] = avarable_stock_pattern.match(article.find(:css, '.gridly-category').text).present?
+            lends_info[:stock_state] = !avarable_stock_pattern.match(article.find(:css, '.gridly-category').text).present?
             lends_info[:price] = nil # 記載していない
 
             # upsert
@@ -259,9 +261,86 @@ class TaskSwitchPageInfo
 
             success_num += 1
           rescue => e
-            pp e.message
+            # pp e.message
             fail_num += 1
           end
+        end
+      end
+    end
+
+    CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # ドッピエッタトーキョー
+  def self.target_5(collect_targets)
+    # 無限ループに陥る可能性があるため
+    safe_count = 30
+
+    lends_name_pattern = Regexp.new("<a.+?>(.+?)</a>")
+    price_pattern = Regexp.new("¥(\\d+)")
+    avarable_stock_pattern = Regexp.new("Sold out")
+
+    session = TaskCommon::get_session
+
+    success_num = 0
+    fail_num = 0
+    collect_targets_arr = collect_targets.map{|collect_target| collect_target.attributes}
+    collect_targets_arr.each do |collect_target|
+      next unless collect_target["start_page_num"].present? && collect_target["end_page_num"].present?
+
+      sleep [*2..5].sample # アクセスタイミングを分散させる
+
+      # 対象URLに遷移する
+      session.visit collect_target["list_url"]
+
+      # 効かない
+      # # 画面をスクロールする
+      # session.execute_script('window.scroll(0,10000);')
+      begin
+        safe_count -= 1
+        next_href = session.find(:css, '.pager-button a')[:href]
+        collect_targets_arr << {"list_url"=> next_href, "start_page_num"=> 1, "end_page_num"=> 1} if !next_href.match(/\#$/) && safe_count > 0
+pp next_href
+      rescue => e
+        pp e.message
+        # 最終ページの場合
+      end
+
+      # レンズ情報を取得する
+      session.all(:css, '.product-list .product-block').each do |article|
+        begin
+          lends_info = {
+            lends_name: nil,
+            lends_info_url: nil,
+            lends_pic_url: nil,
+            stock_state: nil,
+            price: 0,
+            m_shop_info_id: $shop_id,
+          }
+          # lends_info[:lends_name] = article.find(:css, '.upper a').text.gsub(/\r|\n|\t/, ' ').strip
+          lends_info[:lends_name] = article.find(:css, 'div.upper')['innerHTML'].match(lends_name_pattern)[1]
+          lends_info[:lends_info_url] = article.find(:css, 'a.image-inner')[:href]
+          lends_info[:lends_pic_url] = article.find(:css, 'a.image-inner img')[:src].strip
+          # lends_info[:stock_state] = avarable_stock_pattern.match(article.find(:css, '.caption.lower a').text).present?
+          lends_info[:stock_state] = !avarable_stock_pattern.match(article.find(:css, 'div.lower')['innerHTML']).present?
+          # if md = article.find(:css, 'span').text.gsub(/,/, '').match(price_pattern) # 価格
+          #   lends_info[:price] = md[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
+          # end
+          lends_info[:price] = article.find(:css, '.lower').text.gsub(/,/, '').match(price_pattern)[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
+
+          # upsert
+          if m_lends_info = MLendsInfo.where(lends_info_url: lends_info[:lends_info_url], m_shop_info_id: $shop_id).first
+            m_lends_info.attributes = lends_info
+          else
+            m_lends_info = MLendsInfo.new(lends_info)
+          end
+
+          m_lends_info.save!
+
+          success_num += 1
+        rescue => e
+          pp e.message
+          fail_num += 1
         end
       end
     end
