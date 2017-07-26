@@ -66,18 +66,23 @@ class TaskSwitchPageNum
     session = TaskCommon::get_session
 
     collect_targets.each do |collect_target|
-      # 対象URLに遷移する
-      session.visit collect_target.list_url.gsub(/\[\$page\]/, '1')
+      collect_target.start_page_num = 1
+      collect_target.end_page_num = 50
 
-      # 全てのアンカーを取得する 
-      session.all(:css, '.pager .paging-last a').each do |anchor|
-        if anchor[:href] =~ page_pattern
-          collect_target.start_page_num = 1
-          collect_target.end_page_num = $1
-        else
-          raise "#{$shop_id}"
-        end
-      end
+      # 過去のページは情報が古すぎるため適当なページで検索を止めている。
+      #
+      # # 対象URLに遷移する
+      # session.visit collect_target.list_url.gsub(/\[\$page\]/, '1')
+
+      # # 全てのアンカーを取得する 
+      # session.all(:css, '.pager .paging-last a').each do |anchor|
+      #   if anchor[:href] =~ page_pattern
+      #     collect_target.start_page_num = 1
+      #     collect_target.end_page_num = $1
+      #   else
+      #     raise "#{$shop_id}"
+      #   end
+      # end
 
       collect_target.save!
     end

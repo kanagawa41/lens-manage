@@ -185,7 +185,8 @@ class TaskSwitchPageInfo
               lends_info[:price] = nil
               lends_info[:stock_state] = 0
             else
-              raise "no target about price or stock"
+              lends_info[:price] = nil
+              lends_info[:stock_state] = nil
             end
              
             # upsert
