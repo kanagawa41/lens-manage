@@ -1,19 +1,31 @@
 namespace :test do
   desc "テスト"
   require 'capybara/poltergeist'
-  task exec: :environment do
-    TaskCommon::set_log 'test'
 
-    session = TaskCommon::get_session
+  task exec4: :environment do
+    targets = ["http://fotomutori.com/blog/?p=623",]
 
-    # 対象URLに遷移する
-    session.visit "https://item.mercari.com/jp/m55232908152/"
+    price_pattern = Regexp.new("/blog/\\?p=\\d+")
+    targets.each do |target|
+      if md = target.gsub(/,/, '').match(price_pattern) # 価格
+        pp md
+      else
+        pp "What's a fuck!?"
+      end
+    end
+  end
 
-    groups = {}
-    # 全てのアンカーを取得する 
-    session.all(:css, 'a').each do |anchor|
-      # pp anchor[:href]
-      Rails.logger.info anchor[:href]
+  task exec3: :environment do
+    targets = ["メーカー：ズノー光学工業 モデル名：ZUNOW Cine 13mm F1.9 （Dマウント） ランク ：ＡＢ 商品価格：￥8,800- 初期不良：７日以内 業務ＣＤ：FH221-02 付属品 ：写真に写っている物が全てです コメント：Dマウントのシネレンズ 外観は少し歴史を感じさせるような状 ...",
+    "メーカー：ダルメイヤー モデル名：SPEED ANASTIGMAT 25mm F1.5 （Cマウント） ランク ：ＡＢ－ 商品価格：￥84,800- 初期不良：７日以内 業務ＣＤ：FC430-06 付属品 ：写真に写っている物が全てです コメント：Cマウントのシネレンズ ダルメイヤーは1860年に創立されたイ ...",]
+
+    price_pattern = Regexp.new("商品価格：￥(\\d+)-")
+    targets.each do |target|
+      if md = target.gsub(/,/, '').match(price_pattern) # 価格
+        pp md
+      else
+        pp "What's a fuck!?"
+      end
     end
   end
 
@@ -35,6 +47,21 @@ namespace :test do
     end
   end
 
+  task exec: :environment do
+    TaskCommon::set_log 'test'
+
+    session = TaskCommon::get_session
+
+    # 対象URLに遷移する
+    session.visit "https://item.mercari.com/jp/m55232908152/"
+
+    groups = {}
+    # 全てのアンカーを取得する 
+    session.all(:css, 'a').each do |anchor|
+      # pp anchor[:href]
+      Rails.logger.info anchor[:href]
+    end
+  end
 end
 
 HTML = <<"EOS"
