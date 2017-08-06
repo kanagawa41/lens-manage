@@ -9,10 +9,36 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link rel="stylesheet" href="assets/css/main.css" />
   </head>
 
   <body>
+  <div id="page-wrapper">
+
+  <!-- Header -->
+    <div id="header-wrapper">
+      <header id="header" class="container">
+
+        <!-- Logo -->
+          <div id="logo">
+            <h1><a href="index.html">Search  old lens</a></h1>
+            <!-- <span>by HTML5 UP</span> -->
+          </div>
+
+        <!-- Nav -->
+          <nav id="nav">
+            <ul>
+              <li class="current"><a href="index.html">トップ</a></li>
+              <li><a href="index.html">レンズを探す</a></li>
+              <li><a href="index.html">サイトについて</a></li>
+              <li><a href="no-sidebar.html">お問い合わせ</a></li>
+            </ul>
+          </nav>
+
+      </header>
+    </div>
+
     <%= yield %>
+
+    </div>
   </body>
 </html>

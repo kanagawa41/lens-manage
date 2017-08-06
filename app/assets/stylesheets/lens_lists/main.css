@@ -1433,7 +1433,7 @@
 	}
 
 	header {
-		margin: 0 0 2em 0;
+		margin: 0 0 1em 0;
 	}
 
 		header h2, header h3 {
@@ -1739,7 +1739,7 @@
 		}
 
 			.box.feature .inner {
-				padding: 4em 2em 3em 2em;
+				padding: 1em 2em 1em 2em;
 			}
 
 			.box.feature h2 {
@@ -1874,6 +1874,20 @@
 			font-weight: 400;
 			padding: 0.25em 0.2em 0.25em 0.2em;
 			font-size: 3.25em;
+			letter-spacing: 0.05em;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		/* 追加 */
+		#logo h2 {
+			background: #ff4486;
+			color: #fff;
+			border-radius: 6px;
+			font-weight: 400;
+	    margin: 0;
+			padding: 0.25em 0.2em 0.25em 0.2em;
+			font-size: 2.25em;
 			letter-spacing: 0.05em;
 			display: inline-block;
 			vertical-align: middle;
