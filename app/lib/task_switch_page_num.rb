@@ -1,6 +1,6 @@
 class TaskSwitchPageNum
   # Capybara初期設定
-  def self.switch(shop_id)
+  def self.fetch(shop_id)
     $shop_id = shop_id
     if shop_id == 1 # レモン社
       target_1

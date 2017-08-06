@@ -39,16 +39,16 @@ ActiveRecord::Schema.define(version: 20170723023551) do
     t.index ["m_shop_info_id"], name: "index_collect_warehouses_on_m_shop_info_id"
   end
 
-  create_table "m_lends_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "lends_name"
-    t.string "lends_pic_url"
-    t.string "lends_info_url"
+  create_table "m_lens_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "lens_name"
+    t.string "lens_pic_url"
+    t.string "lens_info_url"
     t.string "stock_state"
     t.integer "price"
     t.bigint "m_shop_info_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["m_shop_info_id"], name: "index_m_lends_infos_on_m_shop_info_id"
+    t.index ["m_shop_info_id"], name: "index_m_lens_infos_on_m_shop_info_id"
   end
 
   create_table "m_shop_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -61,5 +61,5 @@ ActiveRecord::Schema.define(version: 20170723023551) do
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_shop_infos"
-  add_foreign_key "m_lends_infos", "m_shop_infos"
+  add_foreign_key "m_lens_infos", "m_shop_infos"
 end

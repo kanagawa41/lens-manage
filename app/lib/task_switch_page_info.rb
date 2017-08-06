@@ -1,5 +1,5 @@
 class TaskSwitchPageInfo
-  def self.switch(shop_id)
+  def self.fetch(shop_id)
     collect_targets = CollectTarget.select(:id, :list_url, :start_page_num, :end_page_num).where(m_shop_info_id: shop_id).all
 
     $shop_id = shop_id
@@ -46,31 +46,31 @@ class TaskSwitchPageInfo
         # レンズ情報を取得する
         session.all(:css, '.autopagerize_page_element .StyleT_Item_').each do |article|
           begin
-            lends_info = {
-              lends_name: nil,
-              lends_info_url: nil,
-              lends_pic_url: nil,
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: nil,
+              lens_pic_url: nil,
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
             }
 
-            lends_info[:lends_name] = article.find(:css, '.name1_').text.gsub(/\r|\n|\t/, ' ').strip
+            lens_info[:lens_name] = article.find(:css, '.name1_').text.gsub(/\r|\n|\t/, ' ').strip
             article.all(:css, 'a').each do |info_anchor|
-              lends_info[:lends_info_url] = info_anchor[:href] if info_page_pattern.match(info_anchor[:href])
+              lens_info[:lens_info_url] = info_anchor[:href] if info_page_pattern.match(info_anchor[:href])
             end
-            lends_info[:lends_pic_url] = article.find(:css, '.img_ img')[:src].strip
-            lends_info[:stock_state] = avarable_stock_pattern.match(article.find(:css, '.zaiko_').text).present?
-            lends_info[:price] = article.find(:css, '.price_').text.gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
+            lens_info[:lens_pic_url] = article.find(:css, '.img_ img')[:src].strip
+            lens_info[:stock_state] = avarable_stock_pattern.match(article.find(:css, '.zaiko_').text).present?
+            lens_info[:price] = article.find(:css, '.price_').text.gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
 
             # upsert
-            if m_lends_info = MLendsInfo.where(lends_info_url: lends_info[:lends_info_url], m_shop_info_id: $shop_id).first
-              m_lends_info.attributes = lends_info
+            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
             else
-              m_lends_info = MLendsInfo.new(lends_info)
+              m_lens_info = MLensInfo.new(lens_info)
             end
 
-            m_lends_info.save!
+            m_lens_info.save!
 
             success_num += 1
           rescue => e
@@ -105,30 +105,30 @@ class TaskSwitchPageInfo
         session.all(:css, 'tr[bgcolor="#ffffcc"]').each do |article|
 
           begin
-            lends_info = {
-              lends_name: nil,
-              lends_info_url: nil,
-              lends_pic_url: nil,
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: nil,
+              lens_pic_url: nil,
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
             }
 
-            lends_info[:lends_name] = article.all(:css, 'font[size="+1"]')[0].text.gsub(/\r|\n|\t/, ' ').strip
-            lends_info[:lends_info_url] = nil
-            lends_info[:lends_pic_url] = article.all(:css, 'td[width="15%"] img')[0][:src].strip
+            lens_info[:lens_name] = article.all(:css, 'font[size="+1"]')[0].text.gsub(/\r|\n|\t/, ' ').strip
+            lens_info[:lens_info_url] = nil
+            lens_info[:lens_pic_url] = article.all(:css, 'td[width="15%"] img')[0][:src].strip
             state_or_price = article.all(:css, 'td[width="25%"] b')[0].text
-            lends_info[:stock_state] = !avarable_stock_pattern.match(state_or_price).present?
-            lends_info[:price] = lends_info[:stock_state] ? state_or_price.gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip : nil
+            lens_info[:stock_state] = !avarable_stock_pattern.match(state_or_price).present?
+            lens_info[:price] = lens_info[:stock_state] ? state_or_price.gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip : nil
 
             # upsert
-            if m_lends_info = MLendsInfo.where(lends_name: lends_info[:lends_name], m_shop_info_id: $shop_id).first
-              m_lends_info.attributes = lends_info
+            if m_lens_info = MLensInfo.where(lens_name: lens_info[:lens_name], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
             else
-              m_lends_info = MLendsInfo.new(lends_info)
+              m_lens_info = MLensInfo.new(lens_info)
             end
 
-            m_lends_info.save!
+            m_lens_info.save!
 
             success_num += 1
           rescue => e
@@ -165,40 +165,40 @@ class TaskSwitchPageInfo
         # レンズ情報を取得する
         session.all(:css, '.article-inner').each do |article|
           begin
-            lends_info = {
-              lends_name: nil,
-              lends_info_url: nil,
-              lends_pic_url: nil,
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: nil,
+              lens_pic_url: nil,
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
             }
 
-            lends_info[:lends_name] = article.find(:css, '.article-title a').text.gsub(/\r|\n|\t/, ' ').strip
+            lens_info[:lens_name] = article.find(:css, '.article-title a').text.gsub(/\r|\n|\t/, ' ').strip
             article.all(:css, '.article-first-image a').each do |info_anchor|
-              lends_info[:lends_info_url] = info_anchor[:href] if info_page_pattern.match(info_anchor[:href])
+              lens_info[:lens_info_url] = info_anchor[:href] if info_page_pattern.match(info_anchor[:href])
             end
-            lends_info[:lends_pic_url] = article.find(:css, '.article-first-image img')[:src].strip
-            lends_infos = article.find(:css, '.article-body-inner').text
-            if md = lends_infos.gsub(/,/, '').match(price_pattern) # 価格
-              lends_info[:price] = md[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
-              lends_info[:stock_state] = 1
-            elsif lends_infos.match(sold_out_pattern) # 売り切れ
-              lends_info[:price] = nil
-              lends_info[:stock_state] = 0
+            lens_info[:lens_pic_url] = article.find(:css, '.article-first-image img')[:src].strip
+            lens_infos = article.find(:css, '.article-body-inner').text
+            if md = lens_infos.gsub(/,/, '').match(price_pattern) # 価格
+              lens_info[:price] = md[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
+              lens_info[:stock_state] = 1
+            elsif lens_infos.match(sold_out_pattern) # 売り切れ
+              lens_info[:price] = nil
+              lens_info[:stock_state] = 0
             else
-              lends_info[:price] = nil
-              lends_info[:stock_state] = nil
+              lens_info[:price] = nil
+              lens_info[:stock_state] = nil
             end
              
             # upsert
-            if m_lends_info = MLendsInfo.where(lends_info_url: lends_info[:lends_info_url], m_shop_info_id: $shop_id).first
-              m_lends_info.attributes = lends_info
+            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
             else
-              m_lends_info = MLendsInfo.new(lends_info)
+              m_lens_info = MLensInfo.new(lens_info)
             end
 
-            m_lends_info.save!
+            m_lens_info.save!
 
             success_num += 1
           rescue => e
@@ -233,31 +233,31 @@ class TaskSwitchPageInfo
         # レンズ情報を取得する
         session.all(:css, '#post-area .post').each do |article|
           begin
-            lends_info = {
-              lends_name: nil,
-              lends_info_url: nil,
-              lends_pic_url: nil,
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: nil,
+              lens_pic_url: nil,
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
             }
 
-            lends_info[:lends_name] = article.find(:css, '.gridly-copy h2 a').text.gsub(/\r|\n|\t/, ' ').strip
+            lens_info[:lens_name] = article.find(:css, '.gridly-copy h2 a').text.gsub(/\r|\n|\t/, ' ').strip
             article.all(:css, '.gridly-copy h2 a').each do |info_anchor|
-              lends_info[:lends_info_url] = info_anchor[:href] if info_page_pattern.match(info_anchor[:href])
+              lens_info[:lens_info_url] = info_anchor[:href] if info_page_pattern.match(info_anchor[:href])
             end
-            lends_info[:lends_pic_url] = article.find(:css, '.gridly-image img')[:src].strip
-            lends_info[:stock_state] = !avarable_stock_pattern.match(article.find(:css, '.gridly-category').text).present?
-            lends_info[:price] = nil # 記載していない
+            lens_info[:lens_pic_url] = article.find(:css, '.gridly-image img')[:src].strip
+            lens_info[:stock_state] = !avarable_stock_pattern.match(article.find(:css, '.gridly-category').text).present?
+            lens_info[:price] = nil # 記載していない
 
             # upsert
-            if m_lends_info = MLendsInfo.where(lends_info_url: lends_info[:lends_info_url], m_shop_info_id: $shop_id).first
-              m_lends_info.attributes = lends_info
+            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
             else
-              m_lends_info = MLendsInfo.new(lends_info)
+              m_lens_info = MLensInfo.new(lens_info)
             end
 
-            m_lends_info.save!
+            m_lens_info.save!
 
             success_num += 1
           rescue => e
@@ -276,7 +276,7 @@ class TaskSwitchPageInfo
     # 無限ループに陥る可能性があるため
     safe_count = 30
 
-    lends_name_pattern = Regexp.new("<a.+?>(.+?)</a>")
+    lens_name_pattern = Regexp.new("<a.+?>(.+?)</a>")
     price_pattern = Regexp.new("¥(\\d+)")
     avarable_stock_pattern = Regexp.new("Sold out")
 
@@ -309,33 +309,33 @@ pp next_href
       # レンズ情報を取得する
       session.all(:css, '.product-list .product-block').each do |article|
         begin
-          lends_info = {
-            lends_name: nil,
-            lends_info_url: nil,
-            lends_pic_url: nil,
+          lens_info = {
+            lens_name: nil,
+            lens_info_url: nil,
+            lens_pic_url: nil,
             stock_state: nil,
             price: 0,
             m_shop_info_id: $shop_id,
           }
-          # lends_info[:lends_name] = article.find(:css, '.upper a').text.gsub(/\r|\n|\t/, ' ').strip
-          lends_info[:lends_name] = article.find(:css, 'div.upper')['innerHTML'].match(lends_name_pattern)[1]
-          lends_info[:lends_info_url] = article.find(:css, 'a.image-inner')[:href]
-          lends_info[:lends_pic_url] = article.find(:css, 'a.image-inner img')[:src].strip
-          # lends_info[:stock_state] = avarable_stock_pattern.match(article.find(:css, '.caption.lower a').text).present?
-          lends_info[:stock_state] = !avarable_stock_pattern.match(article.find(:css, 'div.lower')['innerHTML']).present?
+          # lens_info[:lens_name] = article.find(:css, '.upper a').text.gsub(/\r|\n|\t/, ' ').strip
+          lens_info[:lens_name] = article.find(:css, 'div.upper')['innerHTML'].match(lens_name_pattern)[1]
+          lens_info[:lens_info_url] = article.find(:css, 'a.image-inner')[:href]
+          lens_info[:lens_pic_url] = article.find(:css, 'a.image-inner img')[:src].strip
+          # lens_info[:stock_state] = avarable_stock_pattern.match(article.find(:css, '.caption.lower a').text).present?
+          lens_info[:stock_state] = !avarable_stock_pattern.match(article.find(:css, 'div.lower')['innerHTML']).present?
           # if md = article.find(:css, 'span').text.gsub(/,/, '').match(price_pattern) # 価格
-          #   lends_info[:price] = md[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
+          #   lens_info[:price] = md[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
           # end
-          lends_info[:price] = article.find(:css, '.lower').text.gsub(/,/, '').match(price_pattern)[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
+          lens_info[:price] = article.find(:css, '.lower').text.gsub(/,/, '').match(price_pattern)[1].gsub(/\r|\n|\t|¥|￥|\\|,/, '').strip
 
           # upsert
-          if m_lends_info = MLendsInfo.where(lends_info_url: lends_info[:lends_info_url], m_shop_info_id: $shop_id).first
-            m_lends_info.attributes = lends_info
+          if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+            m_lens_info.attributes = lens_info
           else
-            m_lends_info = MLendsInfo.new(lends_info)
+            m_lens_info = MLensInfo.new(lens_info)
           end
 
-          m_lends_info.save!
+          m_lens_info.save!
 
           success_num += 1
         rescue => e
