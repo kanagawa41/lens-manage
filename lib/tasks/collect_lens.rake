@@ -1,4 +1,4 @@
-namespace :collect_lends do
+namespace :collect_lens do
   # require 'capybara/poltergeist'
 
   desc "ページ数を取得する"
