@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170723023551) do
+ActiveRecord::Schema.define(version: 20170807151050) do
 
   create_table "collect_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "m_shop_info_id"
@@ -39,6 +39,26 @@ ActiveRecord::Schema.define(version: 20170723023551) do
     t.index ["m_shop_info_id"], name: "index_collect_warehouses_on_m_shop_info_id"
   end
 
+  create_table "image_download_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_shop_info_id"
+    t.bigint "m_lens_info_id"
+    t.string "lens_pic_url", null: false
+    t.boolean "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["m_lens_info_id"], name: "index_image_download_histories_on_m_lens_info_id"
+    t.index ["m_shop_info_id"], name: "index_image_download_histories_on_m_shop_info_id"
+  end
+
+  create_table "m_images", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_lens_info_id"
+    t.string "path", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["m_lens_info_id"], name: "index_m_images_on_m_lens_info_id"
+    t.index ["path"], name: "index_m_images_on_path", unique: true
+  end
+
   create_table "m_lens_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "lens_name"
     t.string "lens_pic_url"
@@ -61,5 +81,8 @@ ActiveRecord::Schema.define(version: 20170723023551) do
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_shop_infos"
+  add_foreign_key "image_download_histories", "m_lens_infos"
+  add_foreign_key "image_download_histories", "m_shop_infos"
+  add_foreign_key "m_images", "m_lens_infos"
   add_foreign_key "m_lens_infos", "m_shop_infos"
 end
