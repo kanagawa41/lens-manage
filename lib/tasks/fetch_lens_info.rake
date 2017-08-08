@@ -1,6 +1,4 @@
 namespace :fetch_lens_info do
-  # require 'capybara/poltergeist'
-
   desc "ページ数を取得する"
   task :page_num, ['target_shop_id'] => :environment do |task, args|
     TaskCommon::set_log 'collect_rends/page_num'
@@ -29,7 +27,11 @@ namespace :fetch_lens_info do
         filename = HttpUtils::save_image(img_url, dir)
 
         ImageDownloadHistory.new(m_shop_info_id: m_shop_info.id, m_lens_info_id: m_lens_info.id, lens_pic_url: m_lens_info.lens_pic_url, status: true).save!
-        MImage.new(m_lens_info_id: m_lens_info.id, path: "#{dir}#{filename}").save!
+
+        path = "#{dir}#{filename}"
+        MImage.new(m_lens_info_id: m_lens_info.id, path: path).save!
+
+        ConvertUtils::convert_image(path, dir, m_shop_info.shop_name)
       rescue => e
         ImageDownloadHistory.new(m_shop_info_id: m_shop_info.id, m_lens_info_id: m_lens_info.id, lens_pic_url: m_lens_info.lens_pic_url, status: false).save
       end
