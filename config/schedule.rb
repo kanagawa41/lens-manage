@@ -7,38 +7,68 @@ require File.expand_path(File.dirname(__FILE__) + "/environment")
 set :output, 'log/cron.log'
 # ジョブの実行環境の指定
 set :environment, :development
+# set :environment, :production
 
 # FIXME: 本システムに合わせて作り直す
 
-# 毎日00:02分
+# ページ数取得
 every '2 0 * * * ' do
-  rake "page:reset"
+  rake "fetch_lens_info:page_num[1]"
 end
-
-# 毎日00:05分
-every '5 0 * * * ' do
-  rake "brand_group:fetch"
+every '4 0 * * * ' do
+  rake "fetch_lens_info:page_num[2]"
 end
-
-# 毎日00:10分
+every '6 0 * * * ' do
+  rake "fetch_lens_info:page_num[3]"
+end
+every '8 0 * * * ' do
+  rake "fetch_lens_info:page_num[4]"
+end
 every '10 0 * * * ' do
-  rake "brand:fetch"
+  rake "fetch_lens_info:page_num[5]"
 end
 
-# 毎日00:35分
-every '35 0 * * * ' do
-  rake "category:fetch"
+# 画像取得
+every '1 1 * * * ' do
+  rake "fetch_lens_info:page_info[1]"
+end
+every '11 1 * * * ' do
+  rake "fetch_lens_info:page_info[2]"
+end
+every '21 1 * * * ' do
+  rake "fetch_lens_info:page_info[3]"
+end
+every '31 1 * * * ' do
+  rake "fetch_lens_info:page_info[4]"
+end
+every '41 1 * * * ' do
+  rake "fetch_lens_info:page_info[5]"
 end
 
-# 毎日１時間毎(5分に実行、0時は除く)
-every '5 1-23/1 * * * ' do
-  rake "page:fetch"
-end
+# # 毎日00:05分
+# every '5 0 * * * ' do
+#   rake "brand_group:fetch"
+# end
 
-# 毎日20分毎(0時は除く)
-every '10-59/25 1-23 * * * ' do
-  rake "item:fetch"
-end
+# # 毎日00:10分
+# every '10 0 * * * ' do
+#   rake "brand:fetch"
+# end
+
+# # 毎日00:35分
+# every '35 0 * * * ' do
+#   rake "category:fetch"
+# end
+
+# # 毎日１時間毎(5分に実行、0時は除く)
+# every '5 1-23/1 * * * ' do
+#   rake "page:fetch"
+# end
+
+# # 毎日20分毎(0時は除く)
+# every '10-59/25 1-23 * * * ' do
+#   rake "item:fetch"
+# end
 
 # http://www.japan9.com/cgi/cron.cgi
 # http://morizyun.github.io/blog/whenever-gem-rails-ruby-capistrano/
