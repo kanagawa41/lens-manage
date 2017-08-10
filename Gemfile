@@ -60,3 +60,5 @@ gem 'phantomjs', '~> 2.1'
 gem 'activerecord-import'
 gem 'seed_dump'
 gem 'whenever', :require => false
+gem 'activeadmin'
+gem 'devise'

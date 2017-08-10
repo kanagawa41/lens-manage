@@ -3514,3 +3514,4 @@ MLensInfo.create!([
   {lens_name: "SMC TAKUMAR 67 200mm f/4", lens_pic_url: "https://cdn.shopify.com/s/files/1/0851/5804/products/4650_2F1456968874_2Fp3021377_1024x1024.jpeg?v=1458806674", lens_info_url: "https://doppietta-tokyo.jp/collections/smart-collection-6/products/smc-takumar-67-200mm-f-4", stock_state: "0", price: 4000, m_shop_info_id: 5},
   {lens_name: "Cine Ektar 15mm f/2.5 [Kodak Sマウント]", lens_pic_url: "https://cdn.shopify.com/s/files/1/0851/5804/products/4650_2F1458034762_2Fp3141864_1024x1024.jpeg?v=1458037933", lens_info_url: "https://doppietta-tokyo.jp/collections/smart-collection-6/products/cine-ektar-15mm-f-2-5-kodak-s", stock_state: "0", price: 9000, m_shop_info_id: 5}
 ])
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
