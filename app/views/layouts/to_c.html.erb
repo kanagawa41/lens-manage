@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MerManage</title>
+    <title><%= @title %> | 簡単オールドレンズ検索</title>
     <%= csrf_meta_tags %>
 
     <meta charset="utf-8" />
@@ -21,7 +21,7 @@
 
         <!-- Logo -->
           <div id="logo">
-            <h1><a href="index.html">Search  old lens</a></h1>
+            <h1><a href="index.html">簡単オールドレンズ検索</a></h1>
             <!-- <span>by HTML5 UP</span> -->
           </div>
 
@@ -34,12 +34,43 @@
               <li><a href="no-sidebar.html">お問い合わせ</a></li>
             </ul>
           </nav>
-
+    
+          <div id="search_bar" class="container">
+            <%= form_tag('/lens_lists/index', multipart: true, id: 'lens_lists_index') do %>
+            <div class="row">
+              <div class="10u 12u(medium)">
+                <input type="input" id="search_content" name="search_content">
+              </div>
+              <div class="2u 12u(medium)">
+                <%= link_to 'レンズを探す', 'javascript:void(0);', class: "button icon", id: "search_exec" %>
+                <%# link_to 'レンズを探す', {:controller => "lnes_lists", :action => "top"} %>
+                <!-- <a href="" class="button icon"></a> -->
+              </div>
+            </div>
+            <% end %>
+          </div>
       </header>
     </div>
 
     <%= yield %>
 
-    </div>
+    <%= render :partial => 'footer' %>
+
+    <script>
+      (function($) {
+        $('#search_content').keypress( function ( e ) {
+          if (e.which == 13) { // Enter
+            $('#search_exec').click();
+            return false;
+          }
+        });
+        $('#search_exec').on('click', function(){
+          var action = $('#lens_lists_index').attr('action');
+          var param = $('#search_content').val();
+          window.location.href = action + '?q=' + param;
+        });
+      })(jQuery);
+    </script>
+
   </body>
 </html>

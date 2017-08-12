@@ -1,0 +1,75 @@
+<!-- Banner -->
+<div id="banner-wrapper">
+	<div id="banner" class="box container">
+		<div class="row">
+			<div class="12u 12u(medium)">
+				<h2>オールドレンズをお探しでしょうか？</h2>
+				<p>このサイトでは複数のショップで販売されてるレンズを横断検索することができます。</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="header-wrapper" style="padding: 2em 0 0 0">
+	<div id="header" class="container">
+			<div id="logo" style="padding-bottom: 0">
+				<h2>NEW</h2>
+			</div>
+	</div>
+</div>
+
+<!-- Features -->
+<div id="features-wrapper">
+	<div class="container">
+<% @m_lens_infos.each.with_index(1) do |m_lens_info, i| %>
+<% row_start_flag = (i % 3 == 1) %>
+<% row_end_flag = (@m_lens_infos.size == i || i % 3 == 0) %>
+<% if row_start_flag %>
+		<div class="row">
+<% end %>
+			<div class="4u 12u(medium)">
+				<!-- Box -->
+				<section class="box feature">
+					<a href="<%= m_lens_info.lens_info_url %>" class="image featured"><img src="/assets/lens_lists/pic01.jpg" alt="" /></a>
+					<div class="inner">
+						<header>
+							<h2><%= m_lens_info.lens_name %></h2>
+							<p>値段：<%= m_lens_info.price %>円</p>
+							<p>在庫：<%= m_lens_info.stock_state == 1 ? "〇" : "×" %></p>
+							<p>サイト：<a href="m_lens_info.m_shop_info.shop_url"><%= m_lens_info.m_shop_info.shop_name %></a></p>
+						</header>
+					</div>
+				</section>
+			</div>
+			</a>
+<% if row_end_flag %>
+		</div>
+<% end %>
+<% end %>
+	</div>
+</div>
+
+<!-- Main -->
+<div id="main-wrapper">
+	<div class="container">
+		<div class="row 200%">
+			<div class="12u 12u(medium) important(medium)">
+
+				<!-- Content -->
+					<div id="content">
+						<section class="last">
+							<h2>オールドレンズって探すの大変ではないですか?</h2>
+							<p>オールドレンズっていざ探すとなると大変ですよね。いざ<strong>レンズが欲しい！</strong>って思ってもどの<strong>サイトを見ればいいのか分からない。</strong>直接お店を見るしかないとなっても、常連のお客さん御用達で入りずらいんでは？とか思ったり。結局ネットで探すしかなく、けどサイトが古くて<strong>探しずらい。見ずらい。</strong>そもそも更新されているか不安になったり。そこで<strong>”簡単オールドレンズ検索”</strong>が役に立つでしょう。複数のショップから探したいレンズを見つけることができます。</p>
+							<a href="#" class="button icon">レンズを探す</a>
+						</section>
+					</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	(function($) {
+  	LensLists.init();
+	})(jQuery);
+</script>

@@ -3,5 +3,13 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  root :to => 'lens_lists#index'
+  root :to => 'lens_lists#top'
+
+  resources :lens_lists do
+    collection do
+      get 'index'
+      get 'top'
+    end
+  end
+
 end
