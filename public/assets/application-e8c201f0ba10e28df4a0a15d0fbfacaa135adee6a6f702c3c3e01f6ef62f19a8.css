@@ -1,0 +1,2993 @@
+@charset "UTF-8";
+/*
+ * アプリケーションのみ呼び出し
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+ */
+/* 
+@import url("font-awesome.min.css");
+@import url("https://fonts.googleapis.com/css?family=Oleo+Script:400|Open+Sans:300,300italic,600,600italic,800");
+ */
+/*
+	Verti by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+/* Reset */
+/* line 13, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* line 22, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+/* line 26, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+body {
+  line-height: 1;
+}
+
+/* line 30, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ol, ul {
+  list-style: none;
+}
+
+/* line 34, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+blockquote, q {
+  quotes: none;
+}
+
+/* line 38, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+blockquote:before, blockquote:after, q:before, q:after {
+  content: '';
+  content: none;
+}
+
+/* line 43, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* line 48, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+body {
+  -webkit-text-size-adjust: none;
+}
+
+/* Box Model */
+/* line 54, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Containers */
+/* line 62, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 67, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.container.\31 25\25 {
+  width: 100%;
+  max-width: 1750px;
+  min-width: 1400px;
+}
+
+/* line 73, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.container.\37 5\25 {
+  width: 1050px;
+}
+
+/* line 77, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.container.\35 0\25 {
+  width: 700px;
+}
+
+/* line 81, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.container.\32 5\25 {
+  width: 350px;
+}
+
+/* line 85, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.container {
+  width: 1400px;
+}
+
+@media screen and (max-width: 1680px) {
+  /* line 91, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\31 25\25 {
+    width: 100%;
+    max-width: 1500px;
+    min-width: 1200px;
+  }
+
+  /* line 97, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\37 5\25 {
+    width: 900px;
+  }
+
+  /* line 101, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\35 0\25 {
+    width: 600px;
+  }
+
+  /* line 105, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\32 5\25 {
+    width: 300px;
+  }
+
+  /* line 109, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container {
+    width: 1200px;
+  }
+}
+@media screen and (max-width: 1280px) {
+  /* line 117, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\31 25\25 {
+    width: 100%;
+    max-width: 1200px;
+    min-width: 960px;
+  }
+
+  /* line 123, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\37 5\25 {
+    width: 720px;
+  }
+
+  /* line 127, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\35 0\25 {
+    width: 480px;
+  }
+
+  /* line 131, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\32 5\25 {
+    width: 240px;
+  }
+
+  /* line 135, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container {
+    width: 960px;
+  }
+}
+@media screen and (max-width: 980px) {
+  /* line 143, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\31 25\25 {
+    width: 100%;
+    max-width: 112.5%;
+    min-width: 90%;
+  }
+
+  /* line 149, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\37 5\25 {
+    width: 67.5%;
+  }
+
+  /* line 153, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\35 0\25 {
+    width: 45%;
+  }
+
+  /* line 157, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\32 5\25 {
+    width: 22.5%;
+  }
+
+  /* line 161, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container {
+    width: 90% !important;
+  }
+}
+@media screen and (max-width: 736px) {
+  /* line 169, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\31 25\25 {
+    width: 100%;
+    max-width: 125%;
+    min-width: 100%;
+  }
+
+  /* line 175, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\37 5\25 {
+    width: 75%;
+  }
+
+  /* line 179, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\35 0\25 {
+    width: 50%;
+  }
+
+  /* line 183, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container.\32 5\25 {
+    width: 25%;
+  }
+
+  /* line 187, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .container {
+    width: 100% !important;
+  }
+}
+/* Grid */
+/* line 195, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row {
+  border-bottom: solid 1px transparent;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 202, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row > * {
+  float: left;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* line 209, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row:after, .row:before {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+
+/* line 216, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform > * > :first-child {
+  margin-top: 0;
+}
+
+/* line 220, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform > * > :last-child {
+  margin-bottom: 0;
+}
+
+/* line 224, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\30 \25  > * {
+  padding: 0px 0 0 0px;
+}
+
+/* line 228, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\30 \25 {
+  margin: 0px 0 -1px 0px;
+}
+
+/* line 232, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\30 \25  > * {
+  padding: 0px 0 0 0px;
+}
+
+/* line 236, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\30 \25 {
+  margin: 0px 0 -1px 0px;
+}
+
+/* line 240, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row > * {
+  padding: 40px 0 0 40px;
+}
+
+/* line 244, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row {
+  margin: -40px 0 -1px -40px;
+}
+
+/* line 248, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform > * {
+  padding: 40px 0 0 40px;
+}
+
+/* line 252, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform {
+  margin: -40px 0 -1px -40px;
+}
+
+/* line 256, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\32 00\25  > * {
+  padding: 80px 0 0 80px;
+}
+
+/* line 260, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\32 00\25 {
+  margin: -80px 0 -1px -80px;
+}
+
+/* line 264, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\32 00\25  > * {
+  padding: 80px 0 0 80px;
+}
+
+/* line 268, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\32 00\25 {
+  margin: -80px 0 -1px -80px;
+}
+
+/* line 272, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\31 50\25  > * {
+  padding: 60px 0 0 60px;
+}
+
+/* line 276, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\31 50\25 {
+  margin: -60px 0 -1px -60px;
+}
+
+/* line 280, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\31 50\25  > * {
+  padding: 60px 0 0 60px;
+}
+
+/* line 284, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\31 50\25 {
+  margin: -60px 0 -1px -60px;
+}
+
+/* line 288, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\35 0\25  > * {
+  padding: 20px 0 0 20px;
+}
+
+/* line 292, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\35 0\25 {
+  margin: -20px 0 -1px -20px;
+}
+
+/* line 296, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\35 0\25  > * {
+  padding: 20px 0 0 20px;
+}
+
+/* line 300, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\35 0\25 {
+  margin: -20px 0 -1px -20px;
+}
+
+/* line 304, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\32 5\25  > * {
+  padding: 10px 0 0 10px;
+}
+
+/* line 308, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.\32 5\25 {
+  margin: -10px 0 -1px -10px;
+}
+
+/* line 312, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\32 5\25  > * {
+  padding: 10px 0 0 10px;
+}
+
+/* line 316, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.row.uniform.\32 5\25 {
+  margin: -10px 0 -1px -10px;
+}
+
+/* line 320, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\31 2u, .\31 2u\24 {
+  width: 100%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 326, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\31 1u, .\31 1u\24 {
+  width: 91.6666666667%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 332, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\31 0u, .\31 0u\24 {
+  width: 83.3333333333%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 338, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\39 u, .\39 u\24 {
+  width: 75%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 344, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\38 u, .\38 u\24 {
+  width: 66.6666666667%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 350, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\37 u, .\37 u\24 {
+  width: 58.3333333333%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 356, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\36 u, .\36 u\24 {
+  width: 50%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 362, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\35 u, .\35 u\24 {
+  width: 41.6666666667%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 368, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\34 u, .\34 u\24 {
+  width: 33.3333333333%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 374, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\33 u, .\33 u\24 {
+  width: 25%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 380, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\32 u, .\32 u\24 {
+  width: 16.6666666667%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 386, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\31 u, .\31 u\24 {
+  width: 8.3333333333%;
+  clear: none;
+  margin-left: 0;
+}
+
+/* line 392, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\31 2u\24  + *,
+.\31 1u\24  + *,
+.\31 0u\24  + *,
+.\39 u\24  + *,
+.\38 u\24  + *,
+.\37 u\24  + *,
+.\36 u\24  + *,
+.\35 u\24  + *,
+.\34 u\24  + *,
+.\33 u\24  + *,
+.\32 u\24  + *,
+.\31 u\24  + * {
+  clear: left;
+}
+
+/* line 407, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-11u {
+  margin-left: 91.66667%;
+}
+
+/* line 411, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-10u {
+  margin-left: 83.33333%;
+}
+
+/* line 415, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-9u {
+  margin-left: 75%;
+}
+
+/* line 419, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-8u {
+  margin-left: 66.66667%;
+}
+
+/* line 423, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-7u {
+  margin-left: 58.33333%;
+}
+
+/* line 427, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-6u {
+  margin-left: 50%;
+}
+
+/* line 431, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-5u {
+  margin-left: 41.66667%;
+}
+
+/* line 435, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-4u {
+  margin-left: 33.33333%;
+}
+
+/* line 439, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-3u {
+  margin-left: 25%;
+}
+
+/* line 443, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-2u {
+  margin-left: 16.66667%;
+}
+
+/* line 447, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.\-1u {
+  margin-left: 8.33333%;
+}
+
+@media screen and (max-width: 1680px) {
+  /* line 453, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row > * {
+    padding: 40px 0 0 40px;
+  }
+
+  /* line 457, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row {
+    margin: -40px 0 -1px -40px;
+  }
+
+  /* line 461, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform > * {
+    padding: 40px 0 0 40px;
+  }
+
+  /* line 465, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform {
+    margin: -40px 0 -1px -40px;
+  }
+
+  /* line 469, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25  > * {
+    padding: 80px 0 0 80px;
+  }
+
+  /* line 473, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25 {
+    margin: -80px 0 -1px -80px;
+  }
+
+  /* line 477, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25  > * {
+    padding: 80px 0 0 80px;
+  }
+
+  /* line 481, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25 {
+    margin: -80px 0 -1px -80px;
+  }
+
+  /* line 485, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25  > * {
+    padding: 60px 0 0 60px;
+  }
+
+  /* line 489, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25 {
+    margin: -60px 0 -1px -60px;
+  }
+
+  /* line 493, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25  > * {
+    padding: 60px 0 0 60px;
+  }
+
+  /* line 497, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25 {
+    margin: -60px 0 -1px -60px;
+  }
+
+  /* line 501, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25  > * {
+    padding: 20px 0 0 20px;
+  }
+
+  /* line 505, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25 {
+    margin: -20px 0 -1px -20px;
+  }
+
+  /* line 509, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25  > * {
+    padding: 20px 0 0 20px;
+  }
+
+  /* line 513, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25 {
+    margin: -20px 0 -1px -20px;
+  }
+
+  /* line 517, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25  > * {
+    padding: 10px 0 0 10px;
+  }
+
+  /* line 521, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25 {
+    margin: -10px 0 -1px -10px;
+  }
+
+  /* line 525, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25  > * {
+    padding: 10px 0 0 10px;
+  }
+
+  /* line 529, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25 {
+    margin: -10px 0 -1px -10px;
+  }
+
+  /* line 533, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\28xlarge\29, .\31 2u\24\28xlarge\29 {
+    width: 100%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 539, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 1u\28xlarge\29, .\31 1u\24\28xlarge\29 {
+    width: 91.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 545, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 0u\28xlarge\29, .\31 0u\24\28xlarge\29 {
+    width: 83.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 551, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\39 u\28xlarge\29, .\39 u\24\28xlarge\29 {
+    width: 75%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 557, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\38 u\28xlarge\29, .\38 u\24\28xlarge\29 {
+    width: 66.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 563, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\37 u\28xlarge\29, .\37 u\24\28xlarge\29 {
+    width: 58.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 569, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\36 u\28xlarge\29, .\36 u\24\28xlarge\29 {
+    width: 50%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 575, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\35 u\28xlarge\29, .\35 u\24\28xlarge\29 {
+    width: 41.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 581, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\34 u\28xlarge\29, .\34 u\24\28xlarge\29 {
+    width: 33.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 587, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\33 u\28xlarge\29, .\33 u\24\28xlarge\29 {
+    width: 25%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 593, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\32 u\28xlarge\29, .\32 u\24\28xlarge\29 {
+    width: 16.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 599, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 u\28xlarge\29, .\31 u\24\28xlarge\29 {
+    width: 8.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 605, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\24\28xlarge\29  + *,
+  .\31 1u\24\28xlarge\29  + *,
+  .\31 0u\24\28xlarge\29  + *,
+  .\39 u\24\28xlarge\29  + *,
+  .\38 u\24\28xlarge\29  + *,
+  .\37 u\24\28xlarge\29  + *,
+  .\36 u\24\28xlarge\29  + *,
+  .\35 u\24\28xlarge\29  + *,
+  .\34 u\24\28xlarge\29  + *,
+  .\33 u\24\28xlarge\29  + *,
+  .\32 u\24\28xlarge\29  + *,
+  .\31 u\24\28xlarge\29  + * {
+    clear: left;
+  }
+
+  /* line 620, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-11u\28xlarge\29 {
+    margin-left: 91.66667%;
+  }
+
+  /* line 624, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-10u\28xlarge\29 {
+    margin-left: 83.33333%;
+  }
+
+  /* line 628, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-9u\28xlarge\29 {
+    margin-left: 75%;
+  }
+
+  /* line 632, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-8u\28xlarge\29 {
+    margin-left: 66.66667%;
+  }
+
+  /* line 636, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-7u\28xlarge\29 {
+    margin-left: 58.33333%;
+  }
+
+  /* line 640, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-6u\28xlarge\29 {
+    margin-left: 50%;
+  }
+
+  /* line 644, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-5u\28xlarge\29 {
+    margin-left: 41.66667%;
+  }
+
+  /* line 648, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-4u\28xlarge\29 {
+    margin-left: 33.33333%;
+  }
+
+  /* line 652, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-3u\28xlarge\29 {
+    margin-left: 25%;
+  }
+
+  /* line 656, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-2u\28xlarge\29 {
+    margin-left: 16.66667%;
+  }
+
+  /* line 660, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-1u\28xlarge\29 {
+    margin-left: 8.33333%;
+  }
+}
+@media screen and (max-width: 1280px) {
+  /* line 668, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row > * {
+    padding: 25px 0 0 25px;
+  }
+
+  /* line 672, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row {
+    margin: -25px 0 -1px -25px;
+  }
+
+  /* line 676, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform > * {
+    padding: 25px 0 0 25px;
+  }
+
+  /* line 680, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform {
+    margin: -25px 0 -1px -25px;
+  }
+
+  /* line 684, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25  > * {
+    padding: 50px 0 0 50px;
+  }
+
+  /* line 688, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25 {
+    margin: -50px 0 -1px -50px;
+  }
+
+  /* line 692, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25  > * {
+    padding: 50px 0 0 50px;
+  }
+
+  /* line 696, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25 {
+    margin: -50px 0 -1px -50px;
+  }
+
+  /* line 700, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25  > * {
+    padding: 37.5px 0 0 37.5px;
+  }
+
+  /* line 704, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25 {
+    margin: -37.5px 0 -1px -37.5px;
+  }
+
+  /* line 708, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25  > * {
+    padding: 37.5px 0 0 37.5px;
+  }
+
+  /* line 712, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25 {
+    margin: -37.5px 0 -1px -37.5px;
+  }
+
+  /* line 716, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25  > * {
+    padding: 12.5px 0 0 12.5px;
+  }
+
+  /* line 720, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25 {
+    margin: -12.5px 0 -1px -12.5px;
+  }
+
+  /* line 724, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25  > * {
+    padding: 12.5px 0 0 12.5px;
+  }
+
+  /* line 728, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25 {
+    margin: -12.5px 0 -1px -12.5px;
+  }
+
+  /* line 732, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25  > * {
+    padding: 6.25px 0 0 6.25px;
+  }
+
+  /* line 736, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25 {
+    margin: -6.25px 0 -1px -6.25px;
+  }
+
+  /* line 740, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25  > * {
+    padding: 6.25px 0 0 6.25px;
+  }
+
+  /* line 744, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25 {
+    margin: -6.25px 0 -1px -6.25px;
+  }
+
+  /* line 748, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\28large\29, .\31 2u\24\28large\29 {
+    width: 100%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 754, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 1u\28large\29, .\31 1u\24\28large\29 {
+    width: 91.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 760, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 0u\28large\29, .\31 0u\24\28large\29 {
+    width: 83.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 766, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\39 u\28large\29, .\39 u\24\28large\29 {
+    width: 75%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 772, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\38 u\28large\29, .\38 u\24\28large\29 {
+    width: 66.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 778, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\37 u\28large\29, .\37 u\24\28large\29 {
+    width: 58.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 784, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\36 u\28large\29, .\36 u\24\28large\29 {
+    width: 50%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 790, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\35 u\28large\29, .\35 u\24\28large\29 {
+    width: 41.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 796, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\34 u\28large\29, .\34 u\24\28large\29 {
+    width: 33.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 802, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\33 u\28large\29, .\33 u\24\28large\29 {
+    width: 25%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 808, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\32 u\28large\29, .\32 u\24\28large\29 {
+    width: 16.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 814, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 u\28large\29, .\31 u\24\28large\29 {
+    width: 8.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 820, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\24\28large\29  + *,
+  .\31 1u\24\28large\29  + *,
+  .\31 0u\24\28large\29  + *,
+  .\39 u\24\28large\29  + *,
+  .\38 u\24\28large\29  + *,
+  .\37 u\24\28large\29  + *,
+  .\36 u\24\28large\29  + *,
+  .\35 u\24\28large\29  + *,
+  .\34 u\24\28large\29  + *,
+  .\33 u\24\28large\29  + *,
+  .\32 u\24\28large\29  + *,
+  .\31 u\24\28large\29  + * {
+    clear: left;
+  }
+
+  /* line 835, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-11u\28large\29 {
+    margin-left: 91.66667%;
+  }
+
+  /* line 839, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-10u\28large\29 {
+    margin-left: 83.33333%;
+  }
+
+  /* line 843, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-9u\28large\29 {
+    margin-left: 75%;
+  }
+
+  /* line 847, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-8u\28large\29 {
+    margin-left: 66.66667%;
+  }
+
+  /* line 851, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-7u\28large\29 {
+    margin-left: 58.33333%;
+  }
+
+  /* line 855, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-6u\28large\29 {
+    margin-left: 50%;
+  }
+
+  /* line 859, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-5u\28large\29 {
+    margin-left: 41.66667%;
+  }
+
+  /* line 863, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-4u\28large\29 {
+    margin-left: 33.33333%;
+  }
+
+  /* line 867, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-3u\28large\29 {
+    margin-left: 25%;
+  }
+
+  /* line 871, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-2u\28large\29 {
+    margin-left: 16.66667%;
+  }
+
+  /* line 875, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-1u\28large\29 {
+    margin-left: 8.33333%;
+  }
+}
+@media screen and (max-width: 980px) {
+  /* line 883, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row > * {
+    padding: 25px 0 0 25px;
+  }
+
+  /* line 887, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row {
+    margin: -25px 0 -1px -25px;
+  }
+
+  /* line 891, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform > * {
+    padding: 25px 0 0 25px;
+  }
+
+  /* line 895, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform {
+    margin: -25px 0 -1px -25px;
+  }
+
+  /* line 899, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25  > * {
+    padding: 50px 0 0 50px;
+  }
+
+  /* line 903, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25 {
+    margin: -50px 0 -1px -50px;
+  }
+
+  /* line 907, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25  > * {
+    padding: 50px 0 0 50px;
+  }
+
+  /* line 911, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25 {
+    margin: -50px 0 -1px -50px;
+  }
+
+  /* line 915, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25  > * {
+    padding: 37.5px 0 0 37.5px;
+  }
+
+  /* line 919, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25 {
+    margin: -37.5px 0 -1px -37.5px;
+  }
+
+  /* line 923, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25  > * {
+    padding: 37.5px 0 0 37.5px;
+  }
+
+  /* line 927, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25 {
+    margin: -37.5px 0 -1px -37.5px;
+  }
+
+  /* line 931, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25  > * {
+    padding: 12.5px 0 0 12.5px;
+  }
+
+  /* line 935, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25 {
+    margin: -12.5px 0 -1px -12.5px;
+  }
+
+  /* line 939, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25  > * {
+    padding: 12.5px 0 0 12.5px;
+  }
+
+  /* line 943, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25 {
+    margin: -12.5px 0 -1px -12.5px;
+  }
+
+  /* line 947, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25  > * {
+    padding: 6.25px 0 0 6.25px;
+  }
+
+  /* line 951, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25 {
+    margin: -6.25px 0 -1px -6.25px;
+  }
+
+  /* line 955, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25  > * {
+    padding: 6.25px 0 0 6.25px;
+  }
+
+  /* line 959, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25 {
+    margin: -6.25px 0 -1px -6.25px;
+  }
+
+  /* line 963, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\28medium\29, .\31 2u\24\28medium\29 {
+    width: 100%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 969, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 1u\28medium\29, .\31 1u\24\28medium\29 {
+    width: 91.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 975, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 0u\28medium\29, .\31 0u\24\28medium\29 {
+    width: 83.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 981, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\39 u\28medium\29, .\39 u\24\28medium\29 {
+    width: 75%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 987, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\38 u\28medium\29, .\38 u\24\28medium\29 {
+    width: 66.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 993, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\37 u\28medium\29, .\37 u\24\28medium\29 {
+    width: 58.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 999, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\36 u\28medium\29, .\36 u\24\28medium\29 {
+    width: 50%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1005, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\35 u\28medium\29, .\35 u\24\28medium\29 {
+    width: 41.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1011, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\34 u\28medium\29, .\34 u\24\28medium\29 {
+    width: 33.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1017, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\33 u\28medium\29, .\33 u\24\28medium\29 {
+    width: 25%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1023, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\32 u\28medium\29, .\32 u\24\28medium\29 {
+    width: 16.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1029, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 u\28medium\29, .\31 u\24\28medium\29 {
+    width: 8.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1035, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\24\28medium\29  + *,
+  .\31 1u\24\28medium\29  + *,
+  .\31 0u\24\28medium\29  + *,
+  .\39 u\24\28medium\29  + *,
+  .\38 u\24\28medium\29  + *,
+  .\37 u\24\28medium\29  + *,
+  .\36 u\24\28medium\29  + *,
+  .\35 u\24\28medium\29  + *,
+  .\34 u\24\28medium\29  + *,
+  .\33 u\24\28medium\29  + *,
+  .\32 u\24\28medium\29  + *,
+  .\31 u\24\28medium\29  + * {
+    clear: left;
+  }
+
+  /* line 1050, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-11u\28medium\29 {
+    margin-left: 91.66667%;
+  }
+
+  /* line 1054, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-10u\28medium\29 {
+    margin-left: 83.33333%;
+  }
+
+  /* line 1058, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-9u\28medium\29 {
+    margin-left: 75%;
+  }
+
+  /* line 1062, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-8u\28medium\29 {
+    margin-left: 66.66667%;
+  }
+
+  /* line 1066, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-7u\28medium\29 {
+    margin-left: 58.33333%;
+  }
+
+  /* line 1070, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-6u\28medium\29 {
+    margin-left: 50%;
+  }
+
+  /* line 1074, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-5u\28medium\29 {
+    margin-left: 41.66667%;
+  }
+
+  /* line 1078, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-4u\28medium\29 {
+    margin-left: 33.33333%;
+  }
+
+  /* line 1082, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-3u\28medium\29 {
+    margin-left: 25%;
+  }
+
+  /* line 1086, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-2u\28medium\29 {
+    margin-left: 16.66667%;
+  }
+
+  /* line 1090, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-1u\28medium\29 {
+    margin-left: 8.33333%;
+  }
+}
+@media screen and (max-width: 736px) {
+  /* line 1098, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row > * {
+    padding: 20px 0 0 20px;
+  }
+
+  /* line 1102, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row {
+    margin: -20px 0 -1px -20px;
+  }
+
+  /* line 1106, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform > * {
+    padding: 20px 0 0 20px;
+  }
+
+  /* line 1110, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform {
+    margin: -20px 0 -1px -20px;
+  }
+
+  /* line 1114, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25  > * {
+    padding: 40px 0 0 40px;
+  }
+
+  /* line 1118, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 00\25 {
+    margin: -40px 0 -1px -40px;
+  }
+
+  /* line 1122, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25  > * {
+    padding: 40px 0 0 40px;
+  }
+
+  /* line 1126, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 00\25 {
+    margin: -40px 0 -1px -40px;
+  }
+
+  /* line 1130, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25  > * {
+    padding: 30px 0 0 30px;
+  }
+
+  /* line 1134, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\31 50\25 {
+    margin: -30px 0 -1px -30px;
+  }
+
+  /* line 1138, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25  > * {
+    padding: 30px 0 0 30px;
+  }
+
+  /* line 1142, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\31 50\25 {
+    margin: -30px 0 -1px -30px;
+  }
+
+  /* line 1146, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25  > * {
+    padding: 10px 0 0 10px;
+  }
+
+  /* line 1150, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\35 0\25 {
+    margin: -10px 0 -1px -10px;
+  }
+
+  /* line 1154, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25  > * {
+    padding: 10px 0 0 10px;
+  }
+
+  /* line 1158, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\35 0\25 {
+    margin: -10px 0 -1px -10px;
+  }
+
+  /* line 1162, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25  > * {
+    padding: 5px 0 0 5px;
+  }
+
+  /* line 1166, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.\32 5\25 {
+    margin: -5px 0 -1px -5px;
+  }
+
+  /* line 1170, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25  > * {
+    padding: 5px 0 0 5px;
+  }
+
+  /* line 1174, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .row.uniform.\32 5\25 {
+    margin: -5px 0 -1px -5px;
+  }
+
+  /* line 1178, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\28small\29, .\31 2u\24\28small\29 {
+    width: 100%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1184, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 1u\28small\29, .\31 1u\24\28small\29 {
+    width: 91.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1190, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 0u\28small\29, .\31 0u\24\28small\29 {
+    width: 83.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1196, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\39 u\28small\29, .\39 u\24\28small\29 {
+    width: 75%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1202, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\38 u\28small\29, .\38 u\24\28small\29 {
+    width: 66.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1208, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\37 u\28small\29, .\37 u\24\28small\29 {
+    width: 58.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1214, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\36 u\28small\29, .\36 u\24\28small\29 {
+    width: 50%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1220, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\35 u\28small\29, .\35 u\24\28small\29 {
+    width: 41.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1226, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\34 u\28small\29, .\34 u\24\28small\29 {
+    width: 33.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1232, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\33 u\28small\29, .\33 u\24\28small\29 {
+    width: 25%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1238, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\32 u\28small\29, .\32 u\24\28small\29 {
+    width: 16.6666666667%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1244, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 u\28small\29, .\31 u\24\28small\29 {
+    width: 8.3333333333%;
+    clear: none;
+    margin-left: 0;
+  }
+
+  /* line 1250, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\31 2u\24\28small\29  + *,
+  .\31 1u\24\28small\29  + *,
+  .\31 0u\24\28small\29  + *,
+  .\39 u\24\28small\29  + *,
+  .\38 u\24\28small\29  + *,
+  .\37 u\24\28small\29  + *,
+  .\36 u\24\28small\29  + *,
+  .\35 u\24\28small\29  + *,
+  .\34 u\24\28small\29  + *,
+  .\33 u\24\28small\29  + *,
+  .\32 u\24\28small\29  + *,
+  .\31 u\24\28small\29  + * {
+    clear: left;
+  }
+
+  /* line 1265, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-11u\28small\29 {
+    margin-left: 91.66667%;
+  }
+
+  /* line 1269, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-10u\28small\29 {
+    margin-left: 83.33333%;
+  }
+
+  /* line 1273, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-9u\28small\29 {
+    margin-left: 75%;
+  }
+
+  /* line 1277, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-8u\28small\29 {
+    margin-left: 66.66667%;
+  }
+
+  /* line 1281, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-7u\28small\29 {
+    margin-left: 58.33333%;
+  }
+
+  /* line 1285, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-6u\28small\29 {
+    margin-left: 50%;
+  }
+
+  /* line 1289, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-5u\28small\29 {
+    margin-left: 41.66667%;
+  }
+
+  /* line 1293, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-4u\28small\29 {
+    margin-left: 33.33333%;
+  }
+
+  /* line 1297, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-3u\28small\29 {
+    margin-left: 25%;
+  }
+
+  /* line 1301, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-2u\28small\29 {
+    margin-left: 16.66667%;
+  }
+
+  /* line 1305, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .\-1u\28small\29 {
+    margin-left: 8.33333%;
+  }
+}
+/* Basic */
+@-ms-viewport {
+  width: device-width;
+}
+/* line 1317, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+body {
+  background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.05), transparent), url("images/bg01.png");
+  background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.05), transparent), url("images/bg01.png");
+  background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.05), transparent), url("images/bg01.png");
+  background-image: linear-gradient(top, rgba(0, 0, 0, 0.05), transparent), url("images/bg01.png");
+  background-color: #f7f7f7;
+  background-position: top left, top left;
+  background-repeat: repeat-x, repeat;
+  background-size: 100% 30em, auto;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13pt;
+  color: #696969;
+  font-weight: 300;
+  line-height: 2.25em;
+}
+
+/* line 1333, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+body.is-loading * {
+  -moz-transition: none !important;
+  -webkit-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+  -moz-animation: none !important;
+  -webkit-animation: none !important;
+  -ms-animation: none !important;
+  animation: none !important;
+}
+
+/* line 1344, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input, select, textarea {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13pt;
+  color: #696969;
+  font-weight: 300;
+  line-height: 2.25em;
+}
+
+/* line 1352, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+a {
+  color: #0090c5;
+  text-decoration: underline;
+}
+
+/* line 1357, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+a:hover {
+  text-decoration: none;
+}
+
+/* line 1361, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+h1, h2, h3, h4, h5, h6 {
+  color: #444;
+  font-weight: 800;
+}
+
+/* line 1366, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  color: inherit;
+  text-decoration: none;
+  outline: 0;
+}
+
+/* line 1372, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+h2 {
+  font-size: 2.25em;
+  margin: 0 0 1.1em 0;
+  line-height: 1em;
+}
+
+/* line 1378, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+h3 {
+  font-size: 1.35em;
+  margin: 0 0 1em 0;
+}
+
+/* line 1383, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+b, strong {
+  font-weight: 600;
+  color: #444;
+}
+
+/* line 1388, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+i, em {
+  font-style: italic;
+}
+
+/* line 1392, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+br.clear {
+  clear: both;
+}
+
+/* line 1396, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+sub {
+  position: relative;
+  top: 0.5em;
+  font-size: 0.8em;
+}
+
+/* line 1402, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+sup {
+  position: relative;
+  top: -0.5em;
+  font-size: 0.8em;
+}
+
+/* line 1408, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+hr {
+  border: 0;
+  border-top: solid 1px #eee;
+}
+
+/* line 1413, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+blockquote {
+  border-left: solid 0.5em #eee;
+  padding: 1em 0 1em 2em;
+  font-style: italic;
+}
+
+/* line 1419, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+p, ul, ol, dl, table {
+  margin-bottom: 2em;
+}
+
+/* Section/Article */
+/* line 1425, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+section, article {
+  margin-bottom: 5em;
+}
+
+/* line 1429, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+section > :last-child,
+article > :last-child,
+section:last-child,
+article:last-child {
+  margin-bottom: 0;
+}
+
+/* line 1436, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+header {
+  margin: 0 0 1em 0;
+}
+
+/* line 1440, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+header h2, header h3 {
+  margin: 0 0 0.25em 0;
+}
+
+/* line 1444, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+header p {
+  margin: 0;
+}
+
+/* line 1448, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+footer {
+  margin: 2.5em 0 0 0;
+}
+
+/* Forms */
+/* line 1454, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form label {
+  display: block;
+  font-weight: 800;
+  margin: 0 0 1em 0;
+  font-size: 0.8em;
+  color: #444;
+}
+
+/* line 1462, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form select,
+form textarea {
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+  border: solid 1px #eee;
+}
+
+/* line 1474, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form input[type="text"]:focus,
+form input[type="email"]:focus,
+form input[type="password"]:focus,
+form select:focus,
+form textarea:focus {
+  border-color: #0090c5;
+}
+
+/* line 1482, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+  line-height: 3em;
+  padding: 0 1em;
+}
+
+/* line 1489, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form select {
+  line-height: 3em;
+  padding: 0 1em;
+}
+
+/* line 1494, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form textarea {
+  min-height: 9em;
+  padding: 1em;
+}
+
+/* line 1499, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form .formerize-placeholder {
+  color: #555 !important;
+}
+
+/* line 1503, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form ::-webkit-input-placeholder {
+  color: #555 !important;
+}
+
+/* line 1507, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form :-moz-placeholder {
+  color: #555 !important;
+}
+
+/* line 1511, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form ::-moz-placeholder {
+  color: #555 !important;
+}
+
+/* line 1515, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form :-ms-input-placeholder {
+  color: #555 !important;
+}
+
+/* line 1519, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+form ::-moz-focus-inner {
+  border: 0;
+}
+
+/* Tables */
+/* line 1525, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table {
+  width: 100%;
+}
+
+/* line 1529, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table.default {
+  width: 100%;
+}
+
+/* line 1533, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table.default tr {
+  border-top: solid 1px #eee;
+}
+
+/* line 1537, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table.default tr:first-child {
+  border-top: 0;
+}
+
+/* line 1541, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table.default td {
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+/* line 1545, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table.default th {
+  text-align: left;
+  padding: 0.5em 1em 0.5em 1em;
+  font-weight: 800;
+  margin: 0 0 1em 0;
+}
+
+/* line 1552, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+table.default thead {
+  background: #404248;
+  color: #fff;
+}
+
+/* Image */
+/* line 1559, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.image {
+  display: inline-block;
+  outline: 0;
+}
+
+/* line 1564, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.image img {
+  display: block;
+  width: 100%;
+  border-radius: 8px;
+}
+
+/* line 1570, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.image.fit {
+  display: block;
+  width: 100%;
+}
+
+/* line 1575, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.image.featured {
+  display: block;
+  width: 100%;
+  margin: 0 0 2.5em 0;
+}
+
+/* line 1581, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.image.left {
+  float: left;
+  margin: 0 2em 2em 0;
+}
+
+/* line 1586, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.image.centered {
+  display: block;
+  margin: 0 0 2.5em 0;
+}
+
+/* line 1591, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.image.centered img {
+  margin: 0 auto;
+  width: auto;
+}
+
+/* Button */
+/* line 1598, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button,
+.button {
+  -moz-transition: background-color .25s ease-in-out;
+  -webkit-transition: background-color .25s ease-in-out;
+  -ms-transition: background-color .25s ease-in-out;
+  transition: background-color .25s ease-in-out;
+  -webkit-appearance: none;
+  position: relative;
+  display: inline-block;
+  background: #0090c5;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 800;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  font-size: 1.35em;
+  padding: 0.6em 1.5em;
+}
+
+/* line 1622, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"].icon:before,
+input[type="submit"].icon:before,
+input[type="reset"].icon:before,
+button.icon:before,
+.button.icon:before {
+  position: relative;
+  margin-right: 0.5em;
+  top: 0.05em;
+}
+
+/* line 1632, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+button:hover,
+.button:hover {
+  background: #10a0d5;
+}
+
+/* line 1640, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"]:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+button:active,
+.button:active {
+  background: #20b0e5;
+}
+
+/* line 1648, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"].alt,
+input[type="submit"].alt,
+input[type="reset"].alt,
+button.alt,
+.button.alt {
+  background: #f1f1f1;
+  background: rgba(0, 0, 0, 0.05);
+  color: #444;
+}
+
+/* line 1658, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"].alt:hover,
+input[type="submit"].alt:hover,
+input[type="reset"].alt:hover,
+button.alt:hover,
+.button.alt:hover {
+  background: #e8e8e8;
+  background: rgba(0, 0, 0, 0.085);
+}
+
+/* line 1667, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"].alt:active,
+input[type="submit"].alt:active,
+input[type="reset"].alt:active,
+button.alt:active,
+.button.alt:active {
+  background: #e4e4e4;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* line 1676, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+input[type="button"].big,
+input[type="submit"].big,
+input[type="reset"].big,
+button.big,
+.button.big {
+  font-size: 2.25em;
+  padding: 0.8em 0.9em;
+}
+
+/* List */
+/* line 1687, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ul.default {
+  list-style: disc;
+  padding-left: 1em;
+}
+
+/* line 1692, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ul.default li {
+  padding-left: 0.5em;
+}
+
+/* line 1696, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ul.actions li {
+  display: inline-block;
+  padding: 0 0 0 0.25em;
+  margin: 0 0 0 0.25em;
+}
+
+/* line 1702, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ul.actions li:first-child {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* line 1707, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ul.menu li {
+  border-left: solid 1px #e0e0e0;
+  display: inline-block;
+  padding: 0 0 0 0.75em;
+  margin: 0 0 0 0.75em;
+}
+
+/* line 1714, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ul.menu li:first-child {
+  border-left: 0;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* line 1720, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ol.default {
+  list-style: decimal;
+  padding-left: 1.25em;
+}
+
+/* line 1725, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+ol.default li {
+  padding-left: 0.25em;
+}
+
+/* Box */
+/* line 1731, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.box {
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.05);
+  padding: 2em;
+}
+
+/* line 1738, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.box.feature {
+  padding: 0;
+}
+
+/* line 1742, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.box.feature .inner {
+  padding: 1em 2em 1em 2em;
+}
+
+/* line 1746, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.box.feature h2 {
+  font-size: 1.35em;
+}
+
+/* line 1750, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.box.feature p {
+  margin: 0;
+}
+
+/* line 1754, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.box.feature .image {
+  position: relative;
+  margin: 0;
+}
+
+/* line 1759, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.box.feature .image img {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Icons */
+/* line 1766, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.icon {
+  position: relative;
+  text-decoration: none;
+}
+
+/* line 1771, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.icon:before {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none !important;
+}
+
+/* line 1780, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.icon > .label {
+  display: none;
+}
+
+/* Widgets */
+/* line 1786, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.thumbnails .grid {
+  margin: 0 0 3em 0;
+}
+
+/* line 1790, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.thumbnails .image {
+  margin: 0;
+}
+
+/* line 1794, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.contact ul {
+  overflow: hidden;
+  position: relative;
+  left: -4px;
+  top: 4px;
+  margin-bottom: 1.5em;
+}
+
+/* line 1802, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.contact ul li {
+  display: inline-block;
+  margin-right: 0.25em;
+}
+
+/* line 1807, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.contact ul li a {
+  -moz-transition: background-color .25s ease-in-out;
+  -webkit-transition: background-color .25s ease-in-out;
+  -ms-transition: background-color .25s ease-in-out;
+  transition: background-color .25s ease-in-out;
+  display: inline-block;
+  width: 2.5em;
+  height: 2.5em;
+  text-align: center;
+  line-height: 2.5em;
+  border-radius: 0.35em;
+  outline: 0;
+  opacity: 0.75;
+  text-decoration: none;
+  background: #222222;
+}
+
+/* line 1824, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.contact ul li a:before {
+  color: #f3f3f3;
+  font-size: 1.75em;
+  line-height: 1.5em;
+}
+
+/* line 1830, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.contact ul li a:hover {
+  background: #444444;
+}
+
+/* line 1834, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.widget.contact ul li a:active {
+  background: #666666;
+}
+
+/* Wrappers */
+/* line 1840, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#header-wrapper {
+  padding: 4.5em 0 1em 0;
+}
+
+/* line 1844, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#features-wrapper {
+  padding: 3em 0 3em 0;
+}
+
+/* line 1848, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#main-wrapper {
+  background: #fff;
+  box-shadow: 0px 3px 0px 0px rgba(0, 0, 0, 0.05);
+  padding: 5em 0 5em 0;
+}
+
+/* line 1854, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#footer-wrapper {
+  padding: 6em 0 8em 0;
+}
+
+/* Header */
+/* line 1860, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#header {
+  position: relative;
+}
+
+/* Logo */
+/* line 1866, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#logo {
+  display: inline-block;
+}
+
+/* line 1870, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#logo h1 {
+  background: #ff4486;
+  color: #fff;
+  border-radius: 6px;
+  font-family: 'Oleo Script', serif;
+  font-weight: 400;
+  padding: 0.25em 0.2em 0.25em 0.2em;
+  font-size: 3.25em;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* 追加 */
+/* line 1884, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#logo h2 {
+  background: #ff4486;
+  color: #fff;
+  border-radius: 6px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0.25em 0.2em 0.25em 0.2em;
+  font-size: 2.25em;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* line 1897, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#logo span {
+  font-weight: 800;
+  line-height: 4.5em;
+  letter-spacing: 0.025em;
+  font-size: 0.9em;
+  vertical-align: middle;
+  margin: 0 0 0 1.25em;
+}
+
+/* Nav */
+/* line 1908, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#nav {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 0.9em;
+}
+
+/* line 1915, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#nav ul li {
+  float: left;
+  line-height: 4.5em;
+  padding-left: 1.5em;
+}
+
+/* line 1921, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#nav ul li a, #nav ul li span {
+  -moz-transition: background-color .25s ease-in-out;
+  -webkit-transition: background-color .25s ease-in-out;
+  -ms-transition: background-color .25s ease-in-out;
+  transition: background-color .25s ease-in-out;
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  color: #696969;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 0.5em 1em 0.5em 1em;
+}
+
+/* line 1934, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#nav ul li > ul {
+  display: none;
+}
+
+/* line 1938, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#nav ul li:hover a, #nav ul li:hover span {
+  background: #fff;
+}
+
+/* line 1942, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#nav ul li.active a, #nav ul li.active span {
+  background: #fff;
+}
+
+/* line 1946, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#nav ul li.current a {
+  background: #444;
+  color: #fff;
+}
+
+/* line 1951, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron {
+  background: #fff;
+  letter-spacing: 0.025em;
+  color: #696969;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 0.75em 0;
+  min-width: 15em;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1), 0 0.25em 0.25em 0.1em rgba(0, 0, 0, 0.025);
+  margin-top: calc(-0.75em + 1px);
+  margin-left: -1px;
+}
+
+/* line 1964, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron li {
+  border-top: solid 1px #eee;
+  line-height: 3em;
+}
+
+/* line 1969, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron li:first-child {
+  border-top: 0;
+}
+
+/* line 1973, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron li > a, .dropotron li > span {
+  -moz-transition: color .25s ease-in-out, background-color .25s ease-in-out;
+  -webkit-transition: color .25s ease-in-out, background-color .25s ease-in-out;
+  -ms-transition: color .25s ease-in-out, background-color .25s ease-in-out;
+  transition: color .25s ease-in-out, background-color .25s ease-in-out;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 0 1.5em;
+}
+
+/* line 1984, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron li > a:hover, .dropotron li > span:hover {
+  background: #eee;
+}
+
+/* line 1988, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron li.active > a, .dropotron li.active > span {
+  background: #eee;
+}
+
+/* line 1992, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron.level-0 {
+  font-size: 0.8em;
+  margin-left: 1.5em;
+  margin-top: 0;
+}
+
+/* line 1998, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+.dropotron.level-0:before {
+  content: '';
+  position: absolute;
+  top: -0.5em;
+  left: 1em;
+  border-bottom: solid 0.75em #ffffff;
+  border-left: solid 0.75em transparent;
+  border-right: solid 0.75em transparent;
+  z-index: 1;
+}
+
+/* Banner */
+/* line 2011, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#banner {
+  position: relative;
+  padding: 4.5em;
+}
+
+/* line 2016, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#banner h2 {
+  font-size: 3.5em;
+  margin: 0.1em 0 0.35em 0;
+}
+
+/* line 2021, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#banner p {
+  font-size: 2.75em;
+  line-height: 1.35em;
+  margin: 0;
+}
+
+/* line 2027, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#banner .button {
+  width: 100%;
+  margin-bottom: 0.5em;
+}
+
+/* line 2032, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#banner .button.icon:before {
+  position: absolute;
+  right: 0.15em;
+  top: 50%;
+  margin-top: -0.5em;
+}
+
+/* line 2039, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#banner .button.alt {
+  margin-bottom: 0;
+}
+
+/* line 2043, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#banner ul {
+  margin: 0 0 0 2em;
+}
+
+/* Footer */
+/* line 2049, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#footer {
+  margin-top: 0;
+}
+
+/* line 2053, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#footer a {
+  color: inherit;
+}
+
+/* line 2057, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#copyright {
+  color: #aaa;
+  padding: 4em 0 0 0;
+  text-align: center;
+}
+
+/* line 2063, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#copyright a {
+  color: inherit;
+}
+
+/* XLarge */
+@media screen and (max-width: 1680px) {
+  /* Basic */
+  /* line 2073, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  body, input, select, textarea {
+    font-size: 12pt;
+  }
+}
+/* Large */
+@media screen and (max-width: 1280px) {
+  /* Basic */
+  /* line 2085, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  body, input, select, textarea {
+    font-size: 11pt;
+  }
+}
+/* Medium */
+/* line 2093, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+#navPanel, #navToggle {
+  display: none;
+}
+
+@media screen and (max-width: 980px) {
+  /* Basic */
+  /* line 2101, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* line 2105, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  body, input, select, textarea {
+    font-size: 11pt;
+  }
+
+  /* Section/Article */
+  /* line 2111, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  section, article {
+    clear: both;
+    margin-bottom: 3em !important;
+  }
+
+  /* line 2116, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  section.last, article.last {
+    margin-bottom: 0 !important;
+  }
+
+  /* Image */
+  /* line 2122, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .image.left {
+    width: 25%;
+    margin-bottom: 2em !important;
+  }
+
+  /* List */
+  /* line 2129, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  ul.menu li {
+    display: block;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* line 2136, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  ul.actions li {
+    display: block;
+    padding: 0;
+    margin: 1em 0 0 0;
+  }
+
+  /* line 2142, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  ul.actions li:first-child {
+    margin-top: 0;
+  }
+
+  /* Button */
+  /* line 2148, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  button,
+  .button {
+    width: 100%;
+    text-align: center;
+    font-size: 1.35em;
+    padding: 0.85em 0 !important;
+  }
+
+  /* line 2159, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  input[type="button"].icon,
+  input[type="submit"].icon,
+  input[type="reset"].icon,
+  button.icon,
+  .button.icon {
+    padding-right: 0.75em !important;
+  }
+
+  /* line 2167, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  input[type="button"].icon:before,
+  input[type="submit"].icon:before,
+  input[type="reset"].icon:before,
+  button.icon:before,
+  .button.icon:before {
+    margin-right: 0.5em;
+    top: 0.05em;
+  }
+
+  /* Wrappers */
+  /* line 2178, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #header-wrapper {
+    padding: 3em 0 1em 0;
+    text-align: center;
+  }
+
+  /* line 2183, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #footer-wrapper {
+    padding: 6em 0 4em 0;
+  }
+
+  /* Header */
+  /* line 2189, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #header {
+    margin: 0 auto;
+  }
+
+  /* Logo */
+  /* line 2195, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #logo span {
+    display: block;
+    margin: 0;
+  }
+
+  /* Nav */
+  /* line 2202, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #nav {
+    display: none;
+  }
+
+  /* Banner */
+  /* line 2208, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner {
+    padding: 4.5em 3em;
+    text-align: center;
+  }
+
+  /* line 2213, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner ul {
+    margin: 2em 0 0 0;
+  }
+
+  /* line 2217, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner .button.icon:before {
+    position: relative;
+    right: auto;
+    top: auto;
+  }
+
+  /* Content */
+  /* line 2225, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #content {
+    border-bottom: solid 1px #e8e8e8;
+    padding-bottom: 4em;
+    margin-bottom: 0 !important;
+  }
+
+  /* line 2231, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #content > :last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* line 2235, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #sidebar > :last-child {
+    margin-bottom: 0 !important;
+  }
+
+  /* Footer */
+  /* line 2241, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #copyright {
+    padding: 0;
+  }
+
+  /* Off-Canvas Navigation */
+  /* line 2247, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #page-wrapper {
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-transition: -moz-transform 0.5s ease;
+    -webkit-transition: -webkit-transform 0.5s ease;
+    -ms-transition: -ms-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    padding-bottom: 1px;
+  }
+
+  /* line 2259, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navToggle {
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-transition: -moz-transform 0.5s ease;
+    -webkit-transition: -webkit-transform 0.5s ease;
+    -ms-transition: -ms-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    display: block;
+    height: 44px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10001;
+  }
+
+  /* line 2277, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navToggle .toggle {
+    width: 70px;
+    height: 50px;
+    opacity: 0.35;
+  }
+
+  /* line 2283, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navToggle .toggle:before {
+    display: inline-block;
+    font-family: FontAwesome;
+    text-decoration: none;
+    font-style: normal;
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    position: absolute;
+    left: 6px;
+    top: 6px;
+    background: rgba(0, 0, 0, 0.5);
+    width: 58px;
+    height: 38px;
+    border-radius: 6px;
+    content: '\f0c9';
+    color: #fff;
+    text-align: center;
+    line-height: 38px;
+    font-size: 20px;
+  }
+
+  /* line 2305, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navToggle .toggle:active {
+    opacity: 0.75;
+  }
+
+  /* line 2309, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel {
+    -moz-backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-transform: translateX(-275px);
+    -webkit-transform: translateX(-275px);
+    -ms-transform: translateX(-275px);
+    transform: translateX(-275px);
+    -moz-transition: -moz-transform 0.5s ease;
+    -webkit-transition: -webkit-transform 0.5s ease;
+    -ms-transition: -ms-transform 0.5s ease;
+    transition: transform 0.5s ease;
+    display: block;
+    height: 100%;
+    left: 0;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    width: 275px;
+    z-index: 10002;
+    background: #fff;
+    box-shadow: inset -3px 0px 0px 0px #dfdfdf;
+    padding: 0 23px 0 20px;
+  }
+
+  /* line 2335, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .link {
+    display: block;
+    text-decoration: none;
+    height: 54px;
+    line-height: 54px;
+    border-top: solid 1px #e8e8e8;
+    color: #696969;
+  }
+
+  /* line 2344, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .link:first-child {
+    border-top: 0;
+  }
+
+  /* line 2348, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .indent-1 {
+    display: inline-block;
+    width: 1em;
+  }
+
+  /* line 2353, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .indent-2 {
+    display: inline-block;
+    width: 2em;
+  }
+
+  /* line 2358, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .indent-3 {
+    display: inline-block;
+    width: 3em;
+  }
+
+  /* line 2363, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .indent-4 {
+    display: inline-block;
+    width: 4em;
+  }
+
+  /* line 2368, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .indent-5 {
+    display: inline-block;
+    width: 5em;
+  }
+
+  /* line 2373, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #navPanel .depth-0 {
+    color: #444;
+    font-weight: 800;
+  }
+
+  /* line 2378, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  body.navPanel-visible #page-wrapper {
+    -moz-transform: translateX(275px);
+    -webkit-transform: translateX(275px);
+    -ms-transform: translateX(275px);
+    transform: translateX(275px);
+  }
+
+  /* line 2385, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  body.navPanel-visible #navToggle {
+    -moz-transform: translateX(275px);
+    -webkit-transform: translateX(275px);
+    -ms-transform: translateX(275px);
+    transform: translateX(275px);
+  }
+
+  /* line 2392, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  body.navPanel-visible #navPanel {
+    -moz-transform: translateX(0);
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+  }
+}
+/* Small */
+@media screen and (max-width: 736px) {
+  /* Basic */
+  /* line 2407, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  body, input, select, textarea {
+    line-height: 2em;
+  }
+
+  /* line 2411, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  h2, h3, h4, h5, h6 {
+    font-size: 13pt;
+    margin: 0 0 1em 0;
+  }
+
+  /* Section/Article */
+  /* line 2418, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  section, article {
+    clear: both;
+    margin-bottom: 3em !important;
+  }
+
+  /* line 2423, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  section.last, article.last {
+    margin-bottom: 0 !important;
+  }
+
+  /* Image */
+  /* line 2429, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .image.left {
+    width: 25%;
+    margin-bottom: 2em !important;
+  }
+
+  /* List */
+  /* line 2436, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  ul.menu li {
+    display: block;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* line 2443, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  ul.actions li {
+    display: block;
+    padding: 0;
+    margin: 1em 0 0 0;
+  }
+
+  /* line 2449, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  ul.actions li:first-child {
+    margin-top: 0;
+  }
+
+  /* Button */
+  /* line 2455, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  button,
+  .button {
+    width: 100%;
+    text-align: center;
+    font-size: 1.25em !important;
+    padding: 0.65em 0 !important;
+  }
+
+  /* line 2466, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  input[type="button"].icon,
+  input[type="submit"].icon,
+  input[type="reset"].icon,
+  button.icon,
+  .button.icon {
+    padding-right: 0.75em !important;
+  }
+
+  /* line 2474, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  input[type="button"].icon:before,
+  input[type="submit"].icon:before,
+  input[type="reset"].icon:before,
+  button.icon:before,
+  .button.icon:before {
+    margin-right: 0.5em;
+    top: 0.05em;
+  }
+
+  /* Box */
+  /* line 2485, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .box {
+    padding: 15px 15px 15px 15px;
+    margin: 0;
+  }
+
+  /* line 2490, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .box.feature {
+    margin: 20px 0 0 0 !important;
+    padding: 0;
+  }
+
+  /* line 2495, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .box.feature .inner {
+    padding: 30px 15px 30px 15px;
+  }
+
+  /* line 2499, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .box.feature p {
+    margin: 0;
+  }
+
+  /* line 2503, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .box.feature .image {
+    position: relative;
+    margin: 0;
+  }
+
+  /* line 2508, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .box.feature .image img {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  /* Widgets */
+  /* line 2515, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .widget.thumbnails .image {
+    margin: 0;
+  }
+
+  /* line 2519, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .widget.thumbnails .x {
+    padding: 1em 0.5em 0 0;
+  }
+
+  /* line 2523, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .widget.thumbnails .y {
+    padding: 1em 0 0 0.5em;
+  }
+
+  /* line 2527, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  .widget.thumbnails .row:first-child .x, .widget.thumbnails .row:first-child .y {
+    padding-top: 0;
+  }
+
+  /* Wrappers */
+  /* line 2533, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #header-wrapper {
+    padding: 3em 0 1.5em 0;
+  }
+
+  /* line 2537, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner-wrapper {
+    padding: 0 15px 0 15px;
+  }
+
+  /* line 2541, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #features-wrapper {
+    padding: 0 15px 40px 15px;
+  }
+
+  /* line 2545, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #main-wrapper, #footer-wrapper {
+    padding: 40px 30px 40px 30px;
+  }
+
+  /* Logo */
+  /* line 2551, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #logo h1 {
+    font-size: 2.75em;
+    padding: 0.2em 0.275em;
+  }
+
+  /* line 2556, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #logo span {
+    line-height: 3em;
+  }
+
+  /* Banner */
+  /* line 2562, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner {
+    text-align: center;
+    padding: 15px 15px 15px 15px;
+    margin: 0 auto !important;
+  }
+
+  /* line 2568, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner h2 {
+    font-size: 2em;
+    margin: 0.75em 0 0.5em 0;
+  }
+
+  /* line 2573, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner p {
+    font-size: 1.5em;
+    line-height: 1.5em;
+    margin: 0;
+  }
+
+  /* line 2579, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner ul {
+    margin: 0;
+  }
+
+  /* line 2583, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #banner .button {
+    margin: 0 0 1em 0;
+  }
+
+  /* Content */
+  /* line 2589, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #content {
+    padding-bottom: 3em;
+  }
+
+  /* Footer */
+  /* line 2595, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #footer section {
+    border-bottom: solid 1px #ccc;
+    padding-bottom: 3em;
+    margin-bottom: 1em !important;
+  }
+
+  /* line 2601, /home/app/share/lens-manage/app/assets/stylesheets/lens_lists/main.scss */
+  #copyright {
+    text-align: left;
+  }
+}
