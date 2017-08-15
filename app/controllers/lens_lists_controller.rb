@@ -7,7 +7,18 @@ class LensListsController < ApplicationController
   end
 
   def index
-    @m_lens_infos = LensListsService.index(params[:q])
+    if @q = params[:q]
+      @m_lens_infos = LensListsService.index(params[:q], params[:page])
+      @q = params[:q]
+    end
+  end
+
+  def about
+    
+  end
+
+  def contact
+    
   end
 
   private 

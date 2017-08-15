@@ -1,5 +1,0 @@
-mercari_item_domain: "https://item.mercari.com/jp/"
-mercari_category_list_domain: "https://www.mercari.com/jp/category/"
-#mercari_page_domain: "https://www.mercari.com/jp/category/\\d+/\\?page=\\d+"
-mercari_brand_domain: "https://www.mercari.com/jp/brand/"
-mercari_user_domain: https://www.mercari.com/jp/u/

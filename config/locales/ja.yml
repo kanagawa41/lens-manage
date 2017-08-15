@@ -1,0 +1,17 @@
+ja:
+  views:
+    pagination:
+      first: "最初"
+      last: "最後"
+      previous: "前"
+      next: "次"
+      truncate: "..."
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "お探しの条件に該当するレンズ情報が見つかりませんでした。"
+          one: "<b>1</b>&nbsp;件がヒット"
+          other: "<b>&nbsp;%{count}</b>&nbsp;件がヒット"
+      more_pages:
+        display_entries: "<b>%{total}</b>&nbsp;件がヒット&nbsp;<b>%{first}&nbsp;~&nbsp;%{last}</b>&nbsp;件を表示"

@@ -1,19 +1,20 @@
-<!-- Banner -->
+<% if @q.present? %>
 <div id="banner-wrapper">
   <div id="banner" class="box container">
     <div class="row">
       <div class="12u 12u(medium)">
-        <h2>オールドレンズをお探しでしょうか？</h2>
-        <p>このサイトでは複数のショップで販売されてるレンズを横断検索することができます。</p>
+        <p><%= page_entries_info @m_lens_infos %></p>
       </div>
     </div>
   </div>
 </div>
+<% end %>
 
+<% if @m_lens_infos.present? %>
 <div id="header-wrapper" style="padding: 2em 0 0 0">
   <div id="header" class="container">
       <div id="logo" style="padding-bottom: 0">
-        <h2>NEW</h2>
+        <h2>検索結果</h2>
       </div>
   </div>
 </div>
@@ -49,22 +50,13 @@
   </div>
 </div>
 
-<!-- Main -->
-<div id="main-wrapper">
-  <div class="container">
-    <div class="row 200%">
-      <div class="12u 12u(medium) important(medium)">
-
-        <!-- Content -->
-          <div id="content">
-            <section class="last">
-              <h2>オールドレンズって探すの大変ではないですか?</h2>
-              <p>オールドレンズっていざ探すとなると大変ですよね。いざ<strong>レンズが欲しい！</strong>って思ってもどの<strong>サイトを見ればいいのか分からない。</strong>直接お店を見るしかないとなっても、常連のお客さん御用達で入りずらいんでは？とか思ったり。結局ネットで探すしかなく、けどサイトが古くて<strong>探しずらい。見ずらい。</strong>そもそも更新されているか不安になったり。そこで<strong>”簡単オールドレンズ検索”</strong>が役に立つでしょう。複数のショップから探したいレンズを見つけることができます。</p>
-              <a href="#" class="button icon">レンズを探す</a>
-            </section>
-          </div>
-
+<div id="banner-wrapper">
+  <div id="banner" class="box container">
+    <div class="row">
+      <div class="12u 12u(medium)" style="text-align: center;">
+        <%= paginate @m_lens_infos %>
       </div>
     </div>
   </div>
 </div>
+<% end %>

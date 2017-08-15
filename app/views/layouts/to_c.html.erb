@@ -21,30 +21,28 @@
 
         <!-- Logo -->
           <div id="logo">
-            <h1><a href="index.html">簡単オールドレンズ検索</a></h1>
+            <h1><%= link_to '簡単オールドレンズ検索', '/lens_lists/top' %></h1>
             <!-- <span>by HTML5 UP</span> -->
           </div>
 
         <!-- Nav -->
           <nav id="nav">
             <ul>
-              <li class="current"><a href="index.html">トップ</a></li>
-              <li><a href="index.html">レンズを探す</a></li>
+              <li><%= link_to 'トップ', '/lens_lists/top' %></li>
+              <li><%= link_to 'レンズを探す', '/lens_lists/index' %></li>
               <li><a href="index.html">サイトについて</a></li>
               <li><a href="no-sidebar.html">お問い合わせ</a></li>
             </ul>
           </nav>
-    
+
           <div id="search_bar" class="container">
             <%= form_tag('/lens_lists/index', multipart: true, id: 'lens_lists_index') do %>
             <div class="row">
               <div class="10u 12u(medium)">
-                <input type="input" id="search_content" name="search_content">
+                <%= text_field_tag 'q', @q, placeholder: 'レンズ名を入力' %>
               </div>
               <div class="2u 12u(medium)">
                 <%= link_to 'レンズを探す', 'javascript:void(0);', class: "button icon", id: "search_exec" %>
-                <%# link_to 'レンズを探す', {:controller => "lnes_lists", :action => "top"} %>
-                <!-- <a href="" class="button icon"></a> -->
               </div>
             </div>
             <% end %>
@@ -58,7 +56,7 @@
 
     <script>
       (function($) {
-        $('#search_content').keypress( function ( e ) {
+        $('#q').keypress( function ( e ) {
           if (e.which == 13) { // Enter
             $('#search_exec').click();
             return false;
@@ -66,9 +64,15 @@
         });
         $('#search_exec').on('click', function(){
           var action = $('#lens_lists_index').attr('action');
-          var param = $('#search_content').val();
+          var param = $('#q').val();
           window.location.href = action + '?q=' + param;
         });
+        var currentPath = '<%= request.path %>';
+        $('#nav li a').each(function(i, element){
+          if($(element).attr('href') == currentPath){
+            $(element).parent().addClass('current');
+          }
+        })
       })(jQuery);
     </script>
 
