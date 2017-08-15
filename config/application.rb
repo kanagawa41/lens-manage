@@ -20,7 +20,9 @@ module MerManage
       g.helper false
       g.test_framework false
     end
-
-    config.i18n.default_locale = :ja
+    
+    I18n.available_locales = %i(ja en)
+    I18n.enforce_available_locales = true
+    I18n.default_locale = :en
   end
 end

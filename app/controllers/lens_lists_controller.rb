@@ -7,6 +7,7 @@ class LensListsController < ApplicationController
   end
 
   def index
+    @title = 'レンズを探す'
     if @q = params[:q]
       @m_lens_infos = LensListsService.index(params[:q], params[:page])
       @q = params[:q]
@@ -14,10 +15,12 @@ class LensListsController < ApplicationController
   end
 
   def about
+    @title = 'サイトについて'
     
   end
 
   def contact
+    @title = 'お問い合わせ'
     
   end
 
