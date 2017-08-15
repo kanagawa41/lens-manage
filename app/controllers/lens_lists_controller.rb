@@ -16,11 +16,12 @@ class LensListsController < ApplicationController
 
   def about
     @title = 'サイトについて'
-    
+    @hide_search_bar = true
   end
 
   def contact
     @title = 'お問い合わせ'
+    @hide_search_bar = true
     
   end
 

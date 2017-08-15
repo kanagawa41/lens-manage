@@ -1,0 +1,29 @@
+<div id="features-wrapper">
+  <div class="container">
+<% @m_lens_infos.each.with_index(1) do |m_lens_info, i| %>
+<% row_start_flag = (i % 3 == 1) %>
+<% row_end_flag = (@m_lens_infos.size == i || i % 3 == 0) %>
+<% if row_start_flag %>
+    <div class="row">
+<% end %>
+      <div class="4u 12u(medium)">
+        <!-- Box -->
+        <section class="box feature">
+          <a href="<%= m_lens_info.lens_info_url %>" class="image featured" target="_blank_lens"><img src="/assets/lens_lists/pic01.jpg" alt="" /></a>
+          <div class="inner">
+            <header>
+              <h2><%= m_lens_info.lens_name %></h2>
+              <p>値段：<%= m_lens_info.price %>円</p>
+              <p>在庫：<%= m_lens_info.stock_state == 1 ? "〇" : "×" %></p>
+              <p>サイト：<a href="<%= m_lens_info.m_shop_info.shop_url %>" target="_blank_shop"><%= m_lens_info.m_shop_info.shop_name %></a></p>
+            </header>
+          </div>
+        </section>
+      </div>
+      </a>
+<% if row_end_flag %>
+    </div>
+<% end %>
+<% end %>
+  </div>
+</div>

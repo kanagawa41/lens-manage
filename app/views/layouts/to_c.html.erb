@@ -30,11 +30,12 @@
             <ul>
               <li><%= link_to 'トップ', '/lens_lists/top' %></li>
               <li><%= link_to 'レンズを探す', '/lens_lists/index' %></li>
-              <li><a href="index.html">サイトについて</a></li>
-              <li><a href="no-sidebar.html">お問い合わせ</a></li>
+              <li><%= link_to 'サイトについて', '/lens_lists/about' %></li>
+              <li><%= link_to 'お問い合わせ', '/lens_lists/contact' %></li>
             </ul>
           </nav>
 
+          <% unless @hide_search_bar %>
           <div id="search_bar" class="container">
             <%= form_tag('/lens_lists/index', multipart: true, id: 'lens_lists_index') do %>
             <div class="row">
@@ -47,6 +48,7 @@
             </div>
             <% end %>
           </div>
+          <% end %>
       </header>
     </div>
 

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     collection do
       get 'index'
       get 'top'
+      get 'about'
+      get 'contact'
     end
   end
 
