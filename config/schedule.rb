@@ -12,37 +12,16 @@ set :environment, :development
 # FIXME: 本システムに合わせて作り直す
 
 # ページ数取得
-every '2 0 * * * ' do
-  rake "fetch_lens_info:page_num[1]"
-end
-every '4 0 * * * ' do
-  rake "fetch_lens_info:page_num[2]"
-end
-every '6 0 * * * ' do
-  rake "fetch_lens_info:page_num[3]"
-end
-every '8 0 * * * ' do
-  rake "fetch_lens_info:page_num[4]"
+every '5 0 * * * ' do
+  rake "fetch_lens_info:all:page_num"
 end
 every '10 0 * * * ' do
-  rake "fetch_lens_info:page_num[5]"
+  rake "fetch_lens_info:all:page_info"
 end
 
 # 画像取得
 every '1 1 * * * ' do
-  rake "fetch_lens_info:page_info[1]"
-end
-every '11 1 * * * ' do
-  rake "fetch_lens_info:page_info[2]"
-end
-every '21 1 * * * ' do
-  rake "fetch_lens_info:page_info[3]"
-end
-every '31 1 * * * ' do
-  rake "fetch_lens_info:page_info[4]"
-end
-every '41 1 * * * ' do
-  rake "fetch_lens_info:page_info[5]"
+  rake "fetch_lens_info:all:lens_image"
 end
 
 # # 毎日00:05分
