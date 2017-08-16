@@ -8,6 +8,8 @@ class ConvertUtils
     input_filename = File.basename(input_file_path)
     output_file_path = "#{output_dir}c_#{input_filename}"
 
+    return if File.exist?(output_file_path)
+
     # ガウス処理
     `convert #{input_file_path} -blur 2x1 #{output_file_path}`
 

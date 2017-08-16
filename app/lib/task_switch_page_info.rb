@@ -115,7 +115,7 @@ class TaskSwitchPageInfo
             }
 
             lens_info[:lens_name] = article.all(:css, 'font[size="+1"]')[0].text.gsub(/\r|\n|\t/, ' ').strip
-            lens_info[:lens_info_url] = nil
+            lens_info[:lens_info_url] = collect_target.list_url
             lens_info[:lens_pic_url] = article.all(:css, 'td[width="15%"] img')[0][:src].strip
             state_or_price = article.all(:css, 'td[width="25%"] b')[0].text
             lens_info[:stock_state] = !avarable_stock_pattern.match(state_or_price).present?

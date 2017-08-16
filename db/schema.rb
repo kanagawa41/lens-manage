@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170809162959) do
+ActiveRecord::Schema.define(version: 20170815101952) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 20170809162959) do
     t.string "stock_state"
     t.integer "price"
     t.bigint "m_shop_info_id"
+    t.boolean "disabled", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["m_shop_info_id"], name: "index_m_lens_infos_on_m_shop_info_id"
@@ -105,6 +106,7 @@ ActiveRecord::Schema.define(version: 20170809162959) do
   create_table "m_shop_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "shop_name"
     t.string "shop_url"
+    t.boolean "disabled", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

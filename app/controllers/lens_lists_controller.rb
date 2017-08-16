@@ -12,6 +12,7 @@ class LensListsController < ApplicationController
       @m_lens_infos = LensListsService.index(params[:q], params[:page])
       @q = params[:q]
     end
+    @test2 = @test
   end
 
   def about

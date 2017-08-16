@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
 
   # アプリではJA、管理画面ではENを使用するため
   def set_locale
-    I18n.locale = :ja
+    if request.path =~ /^\/admin/
+      I18n.locale = :en
+    else
+      I18n.locale = :ja
+    end
   end
 end
