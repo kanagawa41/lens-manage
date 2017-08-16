@@ -1,5 +1,5 @@
 AdminUser.create!([
-  {email: 'admin@example.com', password: 'password', password_confirmation: 'password'}
+  {email: 'admin@example.password_confirmation', password: 'password', password_confirmation: 'password'}
 ])
 MShopInfo.create!([
   {shop_name: "レモン社", shop_url: "http://cameranonaniwa.jp", disabled: false},

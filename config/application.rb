@@ -24,5 +24,7 @@ module MerManage
     I18n.available_locales = %i(ja en)
     I18n.enforce_available_locales = true
     I18n.default_locale = :en
+
+    config.assets.initialize_on_precompile = false
   end
 end
