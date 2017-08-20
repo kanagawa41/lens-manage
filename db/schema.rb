@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170815101952) do
+ActiveRecord::Schema.define(version: 20170820042409) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20170815101952) do
 
   create_table "m_shop_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "shop_name"
+    t.string "letter_code", null: false
     t.string "shop_url"
     t.boolean "disabled", default: true, null: false
     t.datetime "created_at", null: false

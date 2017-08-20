@@ -1,8 +1,9 @@
 ActiveAdmin.register MShopInfo do
-  permit_params :shop_name, :shop_url, :disabled
+  permit_params :shop_name, :letter_code, :shop_url, :disabled
   actions :all
 
   filter :shop_name
+  filter :letter_code
   filter :shop_url
   filter :disabled
   filter :updated_at
@@ -17,6 +18,7 @@ ActiveAdmin.register MShopInfo do
   
     column :id
     column :shop_name
+    column :letter_code
     column :shop_url
     column :disabled
 
@@ -30,6 +32,7 @@ ActiveAdmin.register MShopInfo do
   form do |f|
     f.inputs do
       f.input :shop_name
+      f.input :letter_code
       f.input :shop_url
       f.input :disabled
     end

@@ -1,12 +1,13 @@
 class ConvertUtils
-  FONT="#{Rails.root.to_s}/tmp/ipag.ttc"
+  FONT="#{Rails.root.to_s}/app/assets/fonts/ipag.ttc"
 
   # 指定の画像にガウス加工と文字の挿入を行う
   # input_file_path: "/var/tmp/hoge/test.jpg"
   # output_dir: "/var/tmp/hoge/"
   def self.convert_image(input_file_path, output_dir, insert_str)
     input_filename = File.basename(input_file_path)
-    output_file_path = "#{output_dir}c_#{input_filename}"
+    `mkdir -p #{output_dir}c/`
+    output_file_path = "#{output_dir}c/c_#{input_filename}"
 
     return if File.exist?(output_file_path)
 

@@ -17,7 +17,7 @@ namespace :convert_image do
     TaskCommon::set_log 'convert_image/masking'
 
     m_shop_info = MShopInfo.find(args[:target_shop_id].to_i)
-    dir = "#{IMAGE_SAVE_DIR}/#{m_shop_info.id}/"
+    dir = "#{IMAGE_SAVE_DIR}/#{m_shop_info.letter_code}/"
 
     m_shop_info.m_lens_infos.all.each do |m_lens_info|
       m_image = MImage.where(m_lens_info_id: m_lens_info.id).first
@@ -26,7 +26,7 @@ namespace :convert_image do
       path = m_image[:path]
 
       begin
-        ConvertUtils::convert_image(path, dir, m_shop_info.shop_name) if path.present?
+        ConvertUtils::convert_image("#{dir}/#{path}", dir, m_shop_info.shop_name) if path.present?
       rescue => e
         Rails.logger.info "#{path}: #{e.message}"
       end

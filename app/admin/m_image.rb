@@ -22,9 +22,12 @@ ActiveAdmin.register MImage do
       link_to model_name.m_lens_info.id, admin_m_lens_info_path(model_name.m_lens_info)
     end
 
+    m_shop_infos = {}
+    MShopInfo.select(:id, :letter_code).all.each{|m| m_shop_infos[m.id] = m.letter_code}
     # # belongs_to でつながっている parent_model のリンク付きの項目
     column :path do |model_name|
-      image_tag "#{IMAGE_REFER_PATH}/#{model_name.m_lens_info.m_shop_info_id}/#{model_name.path}" if model_name.path.present?
+      letter_code = m_shop_infos[model_name.m_lens_info.m_shop_info_id]
+      image_tag "#{IMAGE_REFER_PATH}/#{letter_code}/#{model_name.path}" if model_name.path.present?
     end
 
     actions defaults: false do |model|
