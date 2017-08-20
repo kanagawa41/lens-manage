@@ -22,7 +22,13 @@
               <% else %>
               <p>値段：-</p>
               <% end %>
-              <p>在庫：<%= m_lens_info.stock_state ? "〇" : "×" %></p>
+              <% if m_lens_info.stock_state.nil? %>
+              <p>在庫：×</p>
+              <% elsif m_lens_info.stock_state.to_i == 1 %>
+              <p>在庫：〇</p>
+              <% elsif m_lens_info.stock_state.to_i == 0 %>
+              <p>在庫：×</p>
+              <% end %>
               <p>サイト：<a href="<%= m_lens_info.m_shop_info.shop_url %>" target="_blank_shop"><%= m_lens_info.m_shop_info.shop_name %></a></p>
               <p class="no">No.<%= m_lens_info.id %></p>
             </header>
