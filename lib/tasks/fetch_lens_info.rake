@@ -74,11 +74,10 @@ namespace :fetch_lens_info do
 
         ImageDownloadHistory.new(m_shop_info_id: m_shop_info.id, m_lens_info_id: m_lens_info.id, lens_pic_url: m_lens_info.lens_pic_url, status: true).save!
 
-        next_id = MImage.maximum(:id) + 1
+        maximum_id = MImage.maximum(:id)
+        next_id = maximum_id ? maximum_id + 1 : 1
         rename_filename = "#{m_shop_info.letter_code}_#{next_id}#{File.extname(filename)}"
 
-Rails.logger.info "#{dir}#{filename}"
-Rails.logger.info "#{dir}#{rename_filename}"
         File.rename("#{dir}#{filename}", "#{dir}#{rename_filename}")
         
         MImage.new(m_lens_info_id: m_lens_info.id, path: rename_filename).save!
@@ -88,7 +87,6 @@ Rails.logger.info "#{dir}#{rename_filename}"
         # 画像加工
         ConvertUtils::convert_image(path, dir, m_shop_info.shop_name)
       rescue => e
-Rails.logger.info e.message
         ImageDownloadHistory.new(m_shop_info_id: m_shop_info.id, m_lens_info_id: m_lens_info.id, lens_pic_url: m_lens_info.lens_pic_url, status: false).save
       end
     end
