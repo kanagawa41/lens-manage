@@ -2,6 +2,14 @@ namespace :test do
   desc "テスト"
   require 'capybara/poltergeist'
 
+  task exec5: :environment do
+    avarable_stock_pattern = Regexp.new("在庫状況：○")
+    pp test = "在庫状況：×：通常2-3日でお届け".match(avarable_stock_pattern).present?
+    pp test = "在庫状況：○：通常2-3日でお届け".match(avarable_stock_pattern).present?
+    pp test = avarable_stock_pattern.match("在庫状況：○：通常2-3日でお届け").present?
+
+  end
+
   task exec4: :environment do
     targets = ["http://fotomutori.com/blog/?p=623",]
 

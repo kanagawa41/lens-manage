@@ -145,7 +145,6 @@ class TaskSwitchPageInfo
   # フォトベルゼ
   def self.target_3(collect_targets)
     info_page_pattern = Regexp.new("/archives\/\\d+.html")
-    avarable_stock_pattern = Regexp.new("在庫状況：○")
     price_pattern = Regexp.new("商品価格：￥(\\d+)-")
     sold_out_pattern = Regexp.new("SOLD OUT")
 
