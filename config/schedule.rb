@@ -6,8 +6,8 @@
 require File.expand_path(File.dirname(__FILE__) + "/environment")
 set :output, 'log/cron.log'
 # ジョブの実行環境の指定
-set :environment, :development
-# set :environment, :production
+# set :environment, :development
+set :environment, :production
 
 # FIXME: 本システムに合わせて作り直す
 
