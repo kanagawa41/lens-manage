@@ -1,6 +1,106 @@
 namespace :test do
   desc "テスト"
-  require 'capybara/poltergeist'
+
+  task exec9: :environment do
+    # https://github.com/ruby-openstack/ruby-openstack/wiki/Object-Storage
+    conoha_obs_conf = Rails.application.config.api.conoha_object_strage
+    os = OpenStack::Connection.create(
+      :username => conoha_obs_conf[:user_id],
+      :api_key => conoha_obs_conf[:password],
+      :authtenant_id => conoha_obs_conf[:tenant_id],
+      :auth_url => conoha_obs_conf[:auth_url],
+      :service_type => "object-store",
+      :is_debug => true
+    )
+
+    container_name = 'lens-manage'
+    # pp "get_info: #{os.get_info}"
+    # pp "containers: #{os.containers}"
+    # pp "containers_detail: #{os.containers_detail}"
+    # pp "container_exists?: #{os.container_exists?(container_name)}"
+    pp "create_container: #{os.create_container(container_name, '.r:*')}" unless os.container_exists?(container_name)
+
+    cont = os.container(container_name)
+    pp "cont: #{cont}"
+    pp cont.container_metadata 
+    # pp cont.set_metadata({'X-Container-Read'=>'.r:*,.rlistings'})
+    pp cont.metadata
+    # pp cont.set_metadata({'X-Container-Read'=>'.r:*', "X-Container-Meta-Author"=> "msa", "version"=>"1.2", :date=>"today"})
+    pp cont.objects_detail
+    # pp cont.empty?
+
+    object_name = 'test.txt'
+    pp cont.object_exists?(object_name)
+    new_obj = cont.create_object(object_name, {:metadata=>{"herpy"=>"derp"}, :content_type=>"text/plain"}, "this is the data")
+    pp new_obj.write("over writting the data")
+    pp new_obj.data
+    # pp cont.delete_object(object_name)
+
+    object_name = 'text/test2.txt'
+    pp cont.object_exists?(object_name)
+    new_obj = cont.create_object(object_name, {:metadata=>{"herpy"=>"derp"}, :content_type=>"text/plain"}, "this is the data")
+    pp new_obj.data
+
+#     object_image_name = 'test.jpg'
+#     image_path = '/tmp/lens-manage/images/LEM/LEM_311.jpg'
+#     new_obj = cont.create_object(object_image_name, {:metadata=>{"herpy"=>"derp", 'X-Container-Read'=>'.r:*'}, :content_type=>MimeMagic.by_magic(File.open(image_path)).type
+# }, open(image_path))
+#     pp new_obj
+    # pp cont.delete_object(object_image_name)
+    
+    # pp "delete_container: #{os.delete_container(container_name)}"
+  end
+
+  task exec8: :environment do
+    conoha_obs_conf = Rails.application.config.api.conoha_object_strage
+    client = ConoStorage.new(
+      tenant_id: conoha_obs_conf[:tenant_id],
+      username: conoha_obs_conf[:user_id],
+      password: conoha_obs_conf[:password],
+      endpoint: conoha_obs_conf[:end_point],
+      web_mode: true # Web公開モード
+    )
+
+    # コンテナ作成
+pp 'test1'
+    client.put_container('lens-manage')
+    # オブジェクトアップロード
+pp 'test2'
+    client.put_object('lens-manage/images/LEM','/tmp/lens-manage/images/LEM/LEM_311.jpg').url
+    # 削除予約付きオブジェクトアップロード
+    # client.put_object('awesome_gifs', 'wan.gif', hearders: { 'X-Delete-At' => "1170774000" } ) # Custom Headers
+    # オブジェクトのメタデータなどダウンロード
+pp 'test3'
+    client.get_object('lens-manage/images/LEM', 'LEM_311.jpg')
+    # オブジェクト削除
+    # client.delete_object('awesome_gifs', 'nyan.gif')
+    # コンテナ削除
+    # client.delete_container('awesome_gifs').status
+  end
+
+  task exec7: :environment do
+    input_path = '/tmp/lens-manage/images/LEM/LEM_311.jpg'
+    out_path = '/tmp/lens-manage/images/LEM/c'
+    pp ConvertUtils::convert_image(input_path, out_path, 'テスト', 'c_')
+  end
+
+  task exec6: :environment do
+    conoha_obs_conf = Rails.application.config.api.conoha_object_strage
+    auth = ConohaObjectStrage::Auth.new
+    auth.user_id = conoha_obs_conf[:user_id]
+    auth.password = conoha_obs_conf[:password]
+    auth.tenant_id = conoha_obs_conf[:tenant_id]
+    auth.auth_url = conoha_obs_conf[:auth_url]
+    auth.end_point = conoha_obs_conf[:end_point]
+
+    conoha_obs = ConohaObjectStrage.new(auth, '/tmp/lens-manage')
+    conoha_obs.set_dir(Rails.env)
+    conoha_obs.create_container('images/LEM')
+    # pp conoha_obs.upload('images/LEM/LEM_311.jpg')
+    # conoha_obs.create_container('images/LEM/c')
+    # pp conoha_obs.upload('images/LEM/c/c_LEM_311.jpg')
+    pp conoha_obs.download('images/LEM/c/c_LEM_311.jpg')
+  end
 
   task exec5: :environment do
     avarable_stock_pattern = Regexp.new("在庫状況：○")

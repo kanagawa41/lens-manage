@@ -62,3 +62,4 @@ gem 'seed_dump'
 gem 'whenever', :require => false
 gem 'activeadmin'
 gem 'devise'
+gem 'mimemagic'

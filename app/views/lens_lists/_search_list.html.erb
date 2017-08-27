@@ -10,7 +10,7 @@
         <!-- Box -->
         <section class="box feature">
           <% if m_lens_info.m_image.present? %>
-          <a href="<%= m_lens_info.lens_info_url %>" class="image featured" target="_blank_lens"><%= image_tag "#{IMAGE_REFER_PATH}/#{m_lens_info.m_shop_info.letter_code}/c/c_#{m_lens_info.m_image.path}", alt: m_lens_info.lens_name %></a>
+          <a href="<%= m_lens_info.lens_info_url %>" class="image featured" target="_blank_lens"><%= image_tag "#{Rails.application.config.common.images[:src_path]}/#{m_lens_info.m_shop_info.letter_code}/c/c_#{m_lens_info.m_image.path}", alt: m_lens_info.lens_name %></a>
           <% else %>
           <a href="<%= m_lens_info.lens_info_url %>" class="image featured" target="_blank_lens"><%= image_tag 'lens_lists/no_image.jpg' %></a>
           <% end %>

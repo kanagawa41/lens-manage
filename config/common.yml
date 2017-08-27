@@ -1,0 +1,18 @@
+default: &default
+  images:
+    work_dir: /tmp/lens-manage/images
+    src_path: /objs/lens-manage/images
+    objs_path: /images
+    convert:
+      font_path: /app/assets/fonts/ipag.ttc
+  nginx:
+    pid_dir: /home/app/run
+
+test:
+  <<: *default
+
+development:
+  <<: *default
+
+production:
+  <<: *default

@@ -1,13 +1,13 @@
 #!/bin/sh
 
-IP_ADD=192.168.33.10
-
 if [ $# -ne 1 ]; then
   echo "引数にlocal, development, productionを指定して下さい"
   exit 1
 fi
 
 if [ $1 = "local" ]; then
+  IP_ADD=192.168.33.10
+
   ps aux | grep lens-manage | grep -v grep | awk '{ print "kill -9", $2 }' | sh
   nohup bundle exec rails s -b 0.0.0.0 &
 
