@@ -22,7 +22,8 @@
 
 .byebug_history
 
-/vendor
+/vendor/*
+!/vendor/.keep
 nohup.out
 /test/*
 nohup.out
