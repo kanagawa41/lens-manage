@@ -16,7 +16,7 @@ class TaskSwitchPageNum
       raise "#{shop_id}"
     end
   rescue => e
-    raise "m_shop_info_idが#{e.message}のページ数が取得できませんでした。"
+    raise "m_shop_info_idが#{$shop_id}のページ数が取得できませんでした。: #{e.message}"
   end
 
   private

@@ -1,3 +1,5 @@
+require 'capybara/poltergeist'
+
 namespace :fetch_lens_info do
   namespace :all do
     desc "ページ数を全て取得する"
