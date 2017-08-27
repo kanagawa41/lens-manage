@@ -21,10 +21,15 @@ elif [ $1 = "app" ]; then
   rm -rf $PROJECT_NAME
   git clone https://github.com/kanagawa41/$PROJECT_NAME.git
   cp -r vendors/$PROJECT_NAME/bundle lens-manage/vendor
+  cd $PROJECT_NAME
+  bundle install --path vendor/bundle
+  ./up.sh production
 elif [ $1 = "manage" ]; then
   rm -rf $PROJECT_NAME
   git clone https://github.com/kanagawa41/$PROJECT_NAME.git
   cp -r vendors/$PROJECT_NAME/bundle lens-manage/vendor
+  cd $PROJECT_NAME
+  bundle install --path vendor/bundle
 else
   echo "有効な引数ではありません。init, app, manageを指定して下さい"
   exit 1

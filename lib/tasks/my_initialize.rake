@@ -4,6 +4,9 @@ task my_initializers: :environment do
   if `which convert > /dev/null 2>&1; echo $?;`.to_i != 0
     raise 'imagemagicがインストールされていません。'
   end
+  if `which phantomjs > /dev/null 2>&1; echo $?;`.to_i != 0
+    raise 'phantomjsがインストールされていません。'
+  end
 
   # 必須のファイルが存在するか？
   unless font_path = File.exist?("#{Rails.root.to_s}#{Rails.application.config.common.images[:convert][:font_path]}")
