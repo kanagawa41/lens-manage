@@ -1,7 +1,7 @@
 default: &default
   images:
     work_dir: /tmp/lens-manage/images
-    src_path: /objs/lens-manage/images
+    src_path: /objs/images
     objs_path: /images
     convert:
       font_path: /app/assets/fonts/ipag.ttc
