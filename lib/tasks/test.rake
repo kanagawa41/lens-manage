@@ -2,7 +2,7 @@ namespace :test do
   desc "テスト"
 
   # コンテナから削除する。
-  task exec10: :environment do
+  task exec11: :environment do
     conoha_obs_conf = Rails.application.config.api.conoha_object_strage
     os = OpenStack::Connection.create(
       :username => conoha_obs_conf[:user_id],
