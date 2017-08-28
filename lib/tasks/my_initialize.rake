@@ -29,6 +29,7 @@ task my_initializers: :environment do
   )
 
   os.create_container(conoha_obs_conf[:container_name], '.r:*')
+  os.create_container(conoha_obs_conf[:private_container_name], '.r:*')
 
   puts '実行環境の構築が完了しました。'
 end

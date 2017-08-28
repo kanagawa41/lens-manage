@@ -1,6 +1,58 @@
 namespace :test do
   desc "テスト"
 
+  # コンテナから削除する。
+  task exec10: :environment do
+    conoha_obs_conf = Rails.application.config.api.conoha_object_strage
+    os = OpenStack::Connection.create(
+      :username => conoha_obs_conf[:user_id],
+      :api_key => conoha_obs_conf[:password],
+      :authtenant_id => conoha_obs_conf[:tenant_id],
+      :auth_url => conoha_obs_conf[:auth_url],
+      :service_type => "object-store",
+      :is_debug => true
+    )
+    container_name = 'lens-manage-private'
+    cont = os.container(container_name)
+
+    work_dir = '/home/app/share/test/'
+    cont.objects_detail.each do |path, info|
+      if path =~ /development\/\//
+        pp path
+        cont.delete_object(path)
+      end
+    end
+  end
+
+  # コンテナ間を移動する。
+  task exec10: :environment do
+    conoha_obs_conf = Rails.application.config.api.conoha_object_strage
+    os = OpenStack::Connection.create(
+      :username => conoha_obs_conf[:user_id],
+      :api_key => conoha_obs_conf[:password],
+      :authtenant_id => conoha_obs_conf[:tenant_id],
+      :auth_url => conoha_obs_conf[:auth_url],
+      :service_type => "object-store",
+      :is_debug => true
+    )
+    container_name = 'lens-manage'
+    container_name2 = 'lens-manage-private'
+    cont = os.container(container_name)
+
+    cont.objects_detail.each do |path, info|
+      unless path =~ /production\/.+c_/
+        pp path
+        cont.object(path).move(
+          path,
+          container_name2,
+          {
+            :content_type=>info[:content_type]
+          }
+        )
+      end
+    end
+  end
+
   task exec9: :environment do
     # https://github.com/ruby-openstack/ruby-openstack/wiki/Object-Storage
     conoha_obs_conf = Rails.application.config.api.conoha_object_strage
@@ -63,15 +115,15 @@ namespace :test do
 
     # コンテナ作成
 pp 'test1'
-    client.put_container('lens-manage')
+    # client.put_container('lens-manage')
     # オブジェクトアップロード
 pp 'test2'
-    client.put_object('lens-manage/images/LEM','/tmp/lens-manage/images/LEM/LEM_311.jpg').url
+    # client.put_object('lens-manage/images/LEM','/tmp/lens-manage/images/LEM/LEM_311.jpg').url
     # 削除予約付きオブジェクトアップロード
     # client.put_object('awesome_gifs', 'wan.gif', hearders: { 'X-Delete-At' => "1170774000" } ) # Custom Headers
     # オブジェクトのメタデータなどダウンロード
 pp 'test3'
-    client.get_object('lens-manage/images/LEM', 'LEM_311.jpg')
+    # client.get_object('lens-manage/images/LEM', 'LEM_311.jpg')
     # オブジェクト削除
     # client.delete_object('awesome_gifs', 'nyan.gif')
     # コンテナ削除
@@ -94,12 +146,12 @@ pp 'test3'
     auth.end_point = conoha_obs_conf[:end_point]
 
     conoha_obs = ConohaObjectStrage.new(auth, '/tmp/lens-manage')
-    conoha_obs.set_dir(Rails.env)
-    conoha_obs.create_container('images/LEM')
-    # pp conoha_obs.upload('images/LEM/LEM_311.jpg')
-    # conoha_obs.create_container('images/LEM/c')
-    # pp conoha_obs.upload('images/LEM/c/c_LEM_311.jpg')
-    pp conoha_obs.download('images/LEM/c/c_LEM_311.jpg')
+    # conoha_obs.set_dir(Rails.env)
+    # conoha_obs.create_container('images/LEM')
+    # # pp conoha_obs.upload('images/LEM/LEM_311.jpg')
+    # # conoha_obs.create_container('images/LEM/c')
+    # # pp conoha_obs.upload('images/LEM/c/c_LEM_311.jpg')
+    # pp conoha_obs.download('images/LEM/c/c_LEM_311.jpg')
   end
 
   task exec5: :environment do

@@ -17,7 +17,7 @@ class TaskSwitchPageInfo
       raise "#{shop_id}"
     end
   rescue => e
-    raise "m_shop_info_idが#{e.message}のページ情報が取得できませんでした。"
+    raise "m_shop_info_idが#{$shop_id}のページ数が取得できませんでした。: #{e.message}"
   end
 
   private
@@ -299,12 +299,12 @@ class TaskSwitchPageInfo
         safe_count -= 1
         next_href = session.find(:css, '.pager-button a')[:href]
         collect_targets_arr << {"list_url"=> next_href, "start_page_num"=> 1, "end_page_num"=> 1} if !next_href.match(/\#$/) && safe_count > 0
-pp next_href
       rescue => e
-        pp e.message
+        pp "#{collect_target["list_url"]}のページ移動が失敗した。: #{e.message}"
         # 最終ページの場合
       end
 
+      # FIXME: 情報を取得できない。要素が作成されている感じはする。だけど取得できていない。
       # レンズ情報を取得する
       session.all(:css, '.product-list .product-block').each do |article|
         begin

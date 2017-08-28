@@ -65,6 +65,7 @@ namespace :fetch_lens_info do
     work_dir = "#{Rails.application.config.common.images[:work_dir]}/#{m_shop_info.letter_code}"
     # オブジェクトストレージのパス
     objs_path = "#{Rails.env}#{Rails.application.config.common.images[:objs_path]}/#{m_shop_info.letter_code}"
+    private_objs_path = "#{Rails.env}#{Rails.application.config.common.images[:private_container_name]}/#{m_shop_info.letter_code}"
     # オブジェクトストレージの接続情報
     conoha_obs_conf = Rails.application.config.api.conoha_object_strage
     os = OpenStack::Connection.create(
@@ -99,7 +100,7 @@ namespace :fetch_lens_info do
 
         image_chunk = File.open(image_path)
         new_obj = cont.create_object(
-          "#{objs_path}/#{image_name}", 
+          "#{private_objs_path}/#{image_name}", 
           {
             content_type: MimeMagic.by_magic(image_chunk).type
           },
@@ -107,7 +108,7 @@ namespace :fetch_lens_info do
         )
         c_image_chunk = File.open(c_image_path)
         new_obj = cont.create_object(
-          "#{objs_path}/#{File.basename(c_image_path)}", 
+          "#{objs_path}/c/#{File.basename(c_image_path)}", 
           {
             content_type: MimeMagic.by_magic(c_image_chunk).type
           },
