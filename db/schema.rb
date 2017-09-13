@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913122652) do
+ActiveRecord::Schema.define(version: 20170913152247) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20170913122652) do
     t.string "stock_state"
     t.integer "price"
     t.bigint "m_shop_info_id"
-    t.boolean "disabled", default: true, null: false
+    t.boolean "disabled", default: false, null: false
     t.datetime "created_at", null: false
     t.string "memo"
     t.datetime "updated_at", null: false
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20170913122652) do
     t.string "shop_name"
     t.string "letter_code", null: false
     t.string "shop_url"
-    t.boolean "disabled", default: true, null: false
+    t.boolean "disabled", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

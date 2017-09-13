@@ -4,7 +4,7 @@ class LensListsService
   end
 
   def self.index(query, page=1)
-    MLensInfo.where(disabled: true).where("lens_name like ?", "%" + query + "%").order(:created_at).page(page)
+    MLensInfo.where(disabled: false).where("lens_name like ?", "%" + query + "%").order(:created_at).page(page)
   end
 
 end

@@ -34,10 +34,10 @@ CollectTarget.create!([
 ])
 
 MShopInfo.create!([
-  {shop_name: "レモン社", letter_code: "LEM", shop_url: "http://cameranonaniwa.jp", disabled: true},
-  {shop_name: "クラシックカメラ　モリッツ", letter_code: "CCM", shop_url: "http://www.moritz.co.jp", disabled: true},
-  {shop_name: "フォトベルゼ", letter_code: "FBZ", shop_url: "http://fotoborse.blog.jp", disabled: true},
-  {shop_name: "Foto:Mutori", letter_code: "FMR", shop_url: "http://fotomutori.com", disabled: true},
-  {shop_name: "ドッピエッタトーキョー", letter_code: "DET", shop_url: "https://doppietta-tokyo.jp", disabled: true},
-  {shop_name: "大沢カメラ", letter_code: "OSC", shop_url: "http://www.oosawacamera.com/", disabled: true}
+  {shop_name: "レモン社", letter_code: "LEM", shop_url: "http://cameranonaniwa.jp", disabled: false},
+  {shop_name: "クラシックカメラ　モリッツ", letter_code: "CCM", shop_url: "http://www.moritz.co.jp", disabled: false},
+  {shop_name: "フォトベルゼ", letter_code: "FBZ", shop_url: "http://fotoborse.blog.jp", disabled: false},
+  {shop_name: "Foto:Mutori", letter_code: "FMR", shop_url: "http://fotomutori.com", disabled: false},
+  {shop_name: "ドッピエッタトーキョー", letter_code: "DET", shop_url: "https://doppietta-tokyo.jp", disabled: false},
+  {shop_name: "大沢カメラ", letter_code: "OSC", shop_url: "http://www.oosawacamera.com/", disabled: false}
 ])
