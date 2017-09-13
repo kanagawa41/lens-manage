@@ -7,8 +7,9 @@ namespace :fetch_lens_info do
       TaskCommon::set_log 'fetch_lens_info/all/page_num'
 
       MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
-        Rails.logger.info "#{m.shop_name}のページ数を取得"
-        Rake::Task["fetch_lens_info:page_num"].invoke(m.id)
+        Rails.logger.info "#{m.shop_name}のページ数を取得Fuck"
+        # Rake::Task["fetch_lens_info:page_num"].invoke(m.id)
+        `bundle exec rails fetch_lens_info:page_num[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
 
@@ -18,7 +19,8 @@ namespace :fetch_lens_info do
 
       MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
         Rails.logger.info "#{m.shop_name}のページ情報を取得"
-        Rake::Task["fetch_lens_info:page_info"].invoke(m.id)
+        # Rake::Task["fetch_lens_info:page_info"].invoke(m.id)
+        `bundle exec rails fetch_lens_info:page_info[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
 
@@ -28,7 +30,8 @@ namespace :fetch_lens_info do
 
       MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
         Rails.logger.info "#{m.shop_name}の画像を取得"
-        Rake::Task["fetch_lens_info:lens_image"].invoke(m.id)
+        # Rake::Task["fetch_lens_info:lens_image"].invoke(m.id)
+        `bundle exec rails fetch_lens_info:lens_image[#{m.id}] RAILS_ENV=#{Rails.env}`        
       end
     end
   end
@@ -38,7 +41,8 @@ namespace :fetch_lens_info do
     task :lens_image, ['target_shop_id'] => :environment do |task, args|
       shop_id = args[:target_shop_id].to_i
       MImage.joins(:m_lens_info).where('m_lens_infos.m_shop_info_id = ?', shop_id).delete_all
-      Rake::Task["fetch_lens_info:lens_image"].invoke(shop_id)      
+      # Rake::Task["fetch_lens_info:lens_image"].invoke(shop_id)      
+      `bundle exec rails fetch_lens_info:lens_image[#{m.id}] RAILS_ENV=#{Rails.env}`        
     end
   end
 
