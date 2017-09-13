@@ -23,8 +23,9 @@ elif [ $1 = "production" ]; then
   # 直近３バージョンは保持する仕様
   bundle exec rails assets:clean RAILS_ENV=production
   bundle exec rails assets:precompile RAILS_ENV=production
+  bundle exec whenever --update-crontab RAILS_ENV=production 
   SECRET_KEY_BASE=`bundle exec rails secret` RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production nohup bundle exec puma -w 4 &
-
+  
   echo "== open as production =="
 else
   echo "有効な引数ではありません。local, development, productionを指定して下さい"
