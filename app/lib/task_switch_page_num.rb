@@ -12,6 +12,8 @@ class TaskSwitchPageNum
       target_4
     elsif shop_id == 5 # ドッピエッタトーキョー
       target_5
+    elsif shop_id == 6 # 大沢カメラ
+      target_6
     else
       raise "#{shop_id}"
     end
@@ -104,6 +106,18 @@ class TaskSwitchPageNum
 
   # ドッピエッタトーキョー
   def self.target_5
+    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
+
+    collect_targets.each do |collect_target|
+      collect_target.start_page_num = 1
+      collect_target.end_page_num = 1
+
+      collect_target.save!
+    end
+  end
+
+  # 大沢カメラ
+  def self.target_6
     collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
 
     collect_targets.each do |collect_target|

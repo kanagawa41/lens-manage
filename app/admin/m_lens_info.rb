@@ -1,5 +1,5 @@
 ActiveAdmin.register MLensInfo do
-  permit_params :lens_name, :lens_pic_url, :lens_info_url, :stock_state, :price, :m_shop_info_id, :disabled
+  permit_params :lens_name, :lens_pic_url, :lens_info_url, :stock_state, :price, :m_shop_info_id, :disabled, :memo
   actions :all
 
   filter :lens_name
@@ -9,6 +9,7 @@ ActiveAdmin.register MLensInfo do
   filter :price
   filter :m_shop_info_id, as: :select, collection: MShopInfo.all.order(id: :asc).map{ |parent| [parent.shop_name, parent.id] }
   filter :disabled
+  filter :memo
   filter :updated_at
 
   ActiveAdmin.setup do |config|
@@ -34,6 +35,7 @@ ActiveAdmin.register MLensInfo do
     end
 
     column :disabled
+    column :memo
     column :updated_at
 
     actions defaults: false do |model|
@@ -52,6 +54,7 @@ ActiveAdmin.register MLensInfo do
       f.input :price
       f.input :m_shop_info_id, as: :select, collection: MShopInfo.all.map { |model| [model.shop_name, model.id] }
       f.input :disabled
+      f.input :memo
     end
     f.actions
   end

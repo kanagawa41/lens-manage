@@ -13,6 +13,8 @@ class TaskSwitchPageInfo
       target_4 collect_targets
     elsif shop_id == 5 # ドッピエッタトーキョー
       target_5 collect_targets
+    elsif shop_id == 6 # 大沢カメラ
+      target_6 collect_targets
     else
       raise "#{shop_id}"
     end
@@ -346,5 +348,90 @@ class TaskSwitchPageInfo
 
     CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
   end
-  
+
+  # 大沢カメラ
+  def self.target_6(collect_targets)
+    info_page_pattern = Regexp.new("/archives\/\\d+.html")
+    price_pattern = Regexp.new("商品価格：￥(\\d+)-")
+    sold_out_pattern = Regexp.new("sold out")
+
+    session = TaskCommon::get_session
+
+    success_num = 0
+    fail_num = 0
+    collect_targets.each do |collect_target|
+      Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
+        next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
+
+        # sleep [*2..5].sample # アクセスタイミングを分散させる
+
+        # 対象URLに遷移する
+        session.visit collect_target.list_url
+
+        # レンズ情報を取得する
+        session.all(:css, '#contents .block').each do |article|
+          raw_lens_info = {
+            lens_name: nil,
+            lens_info_url: nil,
+            lens_pic_url: nil,
+            stock_state: nil,
+            price: 0,
+            m_shop_info_id: $shop_id,
+            memo: nil,
+          }
+          lens_info = nil
+
+          start_flag = false
+          element_count = 0
+
+          begin
+            article.all(:css, 'td').each do |iarticle|
+              if start_flag
+                element_count += 1
+
+                if element_count == 1 # イ-7407
+                  lens_info[:memo] = iarticle.text.strip
+                elsif element_count == 2 # M42マウント ドイツ製 Isco-Göttingen Westromat 50mm/f1.9 前後キャップ付 http://t.co/hCxmWSncmz 試し撮り画像
+                  lens_info[:lens_name] = iarticle.text.split('http')[0]
+                elsif element_count == 3 # ￥32,800- sold out
+                  prices = iarticle.text.split('-')
+                  lens_info[:price] = prices[0].strip.gsub(/￥|,/, '')
+                  lens_info[:stock_state] = !sold_out_pattern.match(prices[1]).present?
+                elsif element_count == 4 # src="img/i-7317-thumbnail.jpg"
+                  lens_info[:lens_pic_url] = iarticle.find(:css, 'img')[:src].gsub(/-thumbnail/, '')
+
+                  # upsert
+                  if m_lens_info = MLensInfo.where(memo: lens_info[:memo], m_shop_info_id: $shop_id).first
+                    m_lens_info.attributes = lens_info
+                  else
+                    m_lens_info = MLensInfo.new(lens_info)
+                  end
+
+                  m_lens_info.save!
+
+                  success_num += 1
+
+                  start_flag = false
+                  element_count = 0
+                end
+              end
+
+              if !start_flag && iarticle.text.strip == '写真'
+                lens_info = Marshal.load(Marshal.dump(raw_lens_info))
+                start_flag = true 
+              end
+            end
+          rescue => e
+            pp e.message
+            fail_num += 1
+          end
+        end
+      end
+    end
+pp success_num
+pp fail_num
+
+    CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
 end
