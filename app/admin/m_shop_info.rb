@@ -8,11 +8,6 @@ ActiveAdmin.register MShopInfo do
   filter :disabled
   filter :updated_at
 
-  ActiveAdmin.setup do |config|
-    config.download_links = true
-    config.download_links = [:csv]
-  end
-
   index do
     selectable_column
   
@@ -39,4 +34,22 @@ ActiveAdmin.register MShopInfo do
     f.actions
   end
 
+
+  csv humanize_name: false do
+    column :id
+    column :shop_name
+    column :letter_code
+    column :shop_url
+    column :disabled
+  end
+
+  active_admin_importable do |model_c, hash|
+    if model_c.exists?(hash[:id])
+      @model = model_c.find(hash[:id])
+      @model.attributes = hash
+      @model.save!
+    else
+      model_c.create!(hash)
+    end
+  end
 end

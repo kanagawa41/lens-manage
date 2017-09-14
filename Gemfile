@@ -63,3 +63,4 @@ gem 'whenever', :require => false
 gem 'activeadmin'
 gem 'devise'
 gem 'mimemagic'
+gem 'active_admin_importable'
