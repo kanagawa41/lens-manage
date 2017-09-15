@@ -30,7 +30,11 @@ CollectTarget.create!([
   {m_shop_info_id: 6, list_url: "http://www.oosawacamera.com/canon.html", start_page_num: 1, end_page_num: 1},
   {m_shop_info_id: 6, list_url: "http://www.oosawacamera.com/olympus.html", start_page_num: 1, end_page_num: 1},
   {m_shop_info_id: 6, list_url: "http://www.oosawacamera.com/ohter.html", start_page_num: 1, end_page_num: 1},
-  {m_shop_info_id: 6, list_url: "http://www.oosawacamera.com/import.html", start_page_num: 1, end_page_num: 1}
+  {m_shop_info_id: 6, list_url: "http://www.oosawacamera.com/import.html", start_page_num: 1, end_page_num: 1},
+  {m_shop_info_id: 7, list_url: "http://www.akasaka-camera.com/LEICA-L1.html", start_page_num: 1, end_page_num: 1},
+  {m_shop_info_id: 7, list_url: "http://www.akasaka-camera.com/INPORTED-L1.html", start_page_num: 1, end_page_num: 1},
+  {m_shop_info_id: 7, list_url: "http://www.akasaka-camera.com/AF-L1.html", start_page_num: 1, end_page_num: 1},
+  {m_shop_info_id: 7, list_url: "http://www.akasaka-camera.com/MF-L1.html", start_page_num: 1, end_page_num: 1},
 ])
 
 MShopInfo.create!([
@@ -39,5 +43,6 @@ MShopInfo.create!([
   {shop_name: "フォトベルゼ", letter_code: "FBZ", shop_url: "http://fotoborse.blog.jp", disabled: false},
   {shop_name: "Foto:Mutori", letter_code: "FMR", shop_url: "http://fotomutori.com", disabled: false},
   {shop_name: "ドッピエッタトーキョー", letter_code: "DET", shop_url: "https://doppietta-tokyo.jp", disabled: false},
-  {shop_name: "大沢カメラ", letter_code: "OSC", shop_url: "http://www.oosawacamera.com/", disabled: false}
+  {shop_name: "大沢カメラ", letter_code: "OSC", shop_url: "http://www.oosawacamera.com/", disabled: false},
+  {shop_name: "アカサカカメラ", letter_code: "ASC", shop_url: "http://www.akasaka-camera.com/", disabled: false},
 ])

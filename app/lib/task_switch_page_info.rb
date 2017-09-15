@@ -15,8 +15,10 @@ class TaskSwitchPageInfo
       target_5 collect_targets
     elsif shop_id == 6 # 大沢カメラ
       target_6 collect_targets
+    elsif shop_id == 7 # アカサカカメラ
+      target_7 collect_targets
     else
-      raise "#{shop_id}"
+      raise "#{shop_id}(存在しない)"
     end
   rescue => e
     raise "m_shop_info_idが#{$shop_id}のページ数が取得できませんでした。: #{e.message}"
@@ -191,7 +193,7 @@ class TaskSwitchPageInfo
               lens_info[:price] = nil
               lens_info[:stock_state] = nil
             end
-             
+
             # upsert
             if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
               m_lens_info.attributes = lens_info
@@ -363,7 +365,7 @@ class TaskSwitchPageInfo
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
         next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
 
-        # sleep [*2..5].sample # アクセスタイミングを分散させる
+        sleep [*2..5].sample # アクセスタイミングを分散させる
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -372,7 +374,7 @@ class TaskSwitchPageInfo
         session.all(:css, '#contents .block').each do |article|
           raw_lens_info = {
             lens_name: nil,
-            lens_info_url: nil,
+            lens_info_url: collect_target.list_url,
             lens_pic_url: nil,
             stock_state: nil,
             price: 0,
@@ -428,8 +430,74 @@ class TaskSwitchPageInfo
         end
       end
     end
-pp success_num
-pp fail_num
+
+    CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # アカサカカメラ
+  def self.target_7(collect_targets)
+    sold_out_pattern = Regexp.new("SOLD OUT")
+
+    session = TaskCommon::get_session
+
+    success_num = 0
+    fail_num = 0
+    collect_targets.each do |collect_target|
+      Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
+        next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
+
+        sleep [*2..5].sample # アクセスタイミングを分散させる
+
+        # 対象URLに遷移する
+        session.visit collect_target.list_url
+
+        # レンズ情報を取得する
+        session.all(:css, 'center table[width="915"]').each do |article|
+          begin
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: collect_target.list_url,
+              lens_pic_url: nil,
+              stock_state: nil,
+              price: 0,
+              m_shop_info_id: $shop_id,
+            }
+
+            lens_info[:lens_name] = article.find(:css, 'td[bgcolor="#ffff00"] b').text.gsub(/\r|\n|\t/, ' ').strip
+            # FIXME 多分ここが取得できない場合がある。
+            images = article.all(:css, 'td a img')
+            if images.present?
+              lens_info[:lens_pic_url] = images[0][:src].strip
+            else
+              next # 画像のない情報は無視する。
+            end
+
+            price = article.find(:css, 'td[width="744"] b').text.strip
+            if price.match(sold_out_pattern)
+              lens_info[:price] = nil
+              lens_info[:stock_state] = false
+            else
+              lens_info[:price] = price.strip.gsub(/円|,/, '')
+              lens_info[:stock_state] = true
+            end
+
+            # upsert
+            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
+            else
+              m_lens_info = MLensInfo.new(lens_info)
+            end
+
+            m_lens_info.save!
+
+            success_num += 1
+          rescue => e
+            pp e.message
+            fail_num += 1
+          end
+        end
+      end
+    end
 
     CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
   end

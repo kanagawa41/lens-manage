@@ -4,18 +4,10 @@ class TaskSwitchPageNum
     $shop_id = shop_id
     if shop_id == 1 # レモン社
       target_1
-    elsif shop_id == 2 # モリッツ
-      target_2
     elsif shop_id == 3 # フォトベルゼ
       target_3
-    elsif shop_id == 4 # Foto:Mutori
-      target_4
-    elsif shop_id == 5 # ドッピエッタトーキョー
-      target_5
-    elsif shop_id == 6 # 大沢カメラ
-      target_6
     else
-      raise "#{shop_id}"
+      raise "#{shop_id}(存在しない)"
     end
   rescue => e
     raise "m_shop_info_idが#{$shop_id}のページ数が取得できませんでした。: #{e.message}"
@@ -44,18 +36,6 @@ class TaskSwitchPageNum
           raise "#{$shop_id}"
         end
       end
-
-      collect_target.save!
-    end
-  end
-
-  # モリッツ
-  def self.target_2
-    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
-
-    collect_targets.each do |collect_target|
-      collect_target.start_page_num = 1
-      collect_target.end_page_num = 1
 
       collect_target.save!
     end
@@ -92,40 +72,13 @@ class TaskSwitchPageNum
     end
   end
 
-  # Foto:Mutori
-  def self.target_4
-    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
+  private
+    def self.set_all_one_page(collect_targets)
+      collect_targets.each do |collect_target|
+        collect_target.start_page_num = 1
+        collect_target.end_page_num = 1
 
-    collect_targets.each do |collect_target|
-      collect_target.start_page_num = 1
-      collect_target.end_page_num = 1
-
-      collect_target.save!
+        collect_target.save!
+      end
     end
-  end
-
-  # ドッピエッタトーキョー
-  def self.target_5
-    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
-
-    collect_targets.each do |collect_target|
-      collect_target.start_page_num = 1
-      collect_target.end_page_num = 1
-
-      collect_target.save!
-    end
-  end
-
-  # 大沢カメラ
-  def self.target_6
-    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
-
-    collect_targets.each do |collect_target|
-      collect_target.start_page_num = 1
-      collect_target.end_page_num = 1
-
-      collect_target.save!
-    end
-  end
-  
 end
