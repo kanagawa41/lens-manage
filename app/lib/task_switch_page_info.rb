@@ -17,6 +17,8 @@ class TaskSwitchPageInfo
       target_6 collect_targets
     elsif shop_id == 7 # アカサカカメラ
       target_7 collect_targets
+    elsif shop_id == 8 # 喜久屋カメラ
+      target_8 collect_targets
     else
       raise "#{shop_id}(存在しない)"
     end
@@ -480,6 +482,62 @@ class TaskSwitchPageInfo
               lens_info[:price] = price.strip.gsub(/円|,/, '')
               lens_info[:stock_state] = true
             end
+
+            # upsert
+            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
+            else
+              m_lens_info = MLensInfo.new(lens_info)
+            end
+
+            m_lens_info.save!
+
+            success_num += 1
+          rescue => e
+            pp e.message
+            fail_num += 1
+          end
+        end
+      end
+    end
+
+    CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # 喜久屋カメラ
+  def self.target_8(collect_targets)
+    session = TaskCommon::get_session
+
+    success_num = 0
+    fail_num = 0
+    collect_targets.each do |collect_target|
+      Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
+        next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
+
+        sleep [*2..5].sample # アクセスタイミングを分散させる
+
+        # 対象URLに遷移する
+        session.visit collect_target.list_url
+
+        # レンズ情報を取得する
+        session.all(:css, '#main .item_box').each do |article|
+          begin
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: nil,
+              lens_pic_url: nil,
+              stock_state: nil,
+              price: 0,
+              m_shop_info_id: $shop_id,
+            }
+
+            lens_info[:lens_name] = article.find(:css, '.item_name').text.gsub(/\r|\n|\t/, ' ').strip
+            lens_info[:lens_info_url] = article.find(:css, '.item_name a')[:href].to_s
+            lens_info[:lens_pic_url] = article.find(:css, 'img')
+
+            lens_info[:price] = article.find(:css, '.item_price').text.delete("^0-9")
+            # 売り切れになったら別ページに表示される
+            lens_info[:stock_state] = true
 
             # upsert
             if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
