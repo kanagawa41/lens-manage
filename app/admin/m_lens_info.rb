@@ -54,18 +54,6 @@ ActiveAdmin.register MLensInfo do
     f.actions
   end
 
-  csv humanize_name: false do
-    column :id
-    column :lens_name
-    column :lens_pic_url
-    column :lens_info_url
-    column :stock_state
-    column :price
-    column :m_shop_info_id
-    column :disabled
-    column :memo
-  end
-
   active_admin_importable do |model_c, hash|
     if model_c.exists?(hash[:id])
       @model = model_c.find(hash[:id])

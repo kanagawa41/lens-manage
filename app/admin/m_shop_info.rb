@@ -34,15 +34,6 @@ ActiveAdmin.register MShopInfo do
     f.actions
   end
 
-
-  csv humanize_name: false do
-    column :id
-    column :shop_name
-    column :letter_code
-    column :shop_url
-    column :disabled
-  end
-
   active_admin_importable do |model_c, hash|
     if model_c.exists?(hash[:id])
       @model = model_c.find(hash[:id])
