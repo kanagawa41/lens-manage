@@ -112,7 +112,7 @@ namespace :fetch_lens_info do
         )
         c_image_chunk = File.open(c_image_path)
         new_obj = cont.create_object(
-          "#{objs_path}/c/#{File.basename(c_image_path)}", 
+          "#{objs_path}/#{File.basename(c_image_path)}", 
           {
             content_type: MimeMagic.by_magic(c_image_chunk).type
           },

@@ -103,16 +103,3 @@ class ConohaObjectStrage
     str.gsub(/^\//, '').gsub(/\/$/, '')
   end
 end
-
-# auth = ConohaObjectStrage::Auth.new
-# auth.user_id = "gncuXXXX"
-# auth.password = "AsarouRoot0401"
-# auth.tenant_id = "7cf6cd6aed604d90a290608b89169504"
-# auth.auth_url = "https://identity.tyo1.conoha.io/v2.0"
-# auth.end_point = "https://object-storage.tyo1.conoha.io/v1/nc_7cf6cd6aed604d90a290608b89169504"
-# conoha_obs = ConohaObjectStrage.new(auth, '/home/app/test/work')
-# conoha_obs.create_container('container1')
-# puts conoha_obs.upload('container1/aaa.jpeg')
-# # puts conoha_obs.upload('container1')
-# puts conoha_obs.download('container1/aaa.jpeg')
-# # puts conoha_obs.download('container1')
