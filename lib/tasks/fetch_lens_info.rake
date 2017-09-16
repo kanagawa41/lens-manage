@@ -37,12 +37,11 @@ namespace :fetch_lens_info do
   end
 
   namespace :reset do
-    desc "画像をリセットしたのち取得する"
+    desc "画像取得情報をリセットする"
     task :lens_image, ['target_shop_id'] => :environment do |task, args|
       shop_id = args[:target_shop_id].to_i
       MImage.joins(:m_lens_info).where('m_lens_infos.m_shop_info_id = ?', shop_id).delete_all
-      # Rake::Task["fetch_lens_info:lens_image"].invoke(shop_id)      
-      `bundle exec rails fetch_lens_info:lens_image[#{m.id}] RAILS_ENV=#{Rails.env}`        
+      ImageDownloadHistory.where(m_shop_info_id: shop_id).delete_all
     end
   end
 
