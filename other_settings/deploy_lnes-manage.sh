@@ -64,6 +64,9 @@ elif [ $1 = "app" ]; then
   rm -rf $PROJECT_PATH
   git clone https://github.com/kanagawa41/$PROJECT_NAME.git
 
+  # routesを修正
+  cp -f $PROJECT_PATH/config routes-app.rb routes.rb
+
   # バックアップを移行する
   cp -r $BK_BUNDLE/* $ORG_BUNDLE
   cp -r $BK_LOG/* $ORG_LOG
