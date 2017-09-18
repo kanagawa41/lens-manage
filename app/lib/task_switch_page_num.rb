@@ -8,6 +8,8 @@ class TaskSwitchPageNum
       target_3
     elsif shop_id == 9 # フラッシュバックカメラ
       target_9
+    elsif shop_id == 10 # 大貫カメラ
+      target_10
     else
       raise "#{shop_id}(存在しない)"
     end
@@ -95,9 +97,59 @@ class TaskSwitchPageNum
       # 対象URLに遷移する
       $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)
 
-      last_page = nil
+      last_page = 1
       # 全てのアンカーを取得する 
       $session.all(:css, '.pagination a[name="pagination"]').each do |anchor|
+        last_page = $1 if anchor[:href] =~ $page_pattern
+
+        # ページがまだ続く場合
+        if anchor.text =~ $continue_page_pattern
+          # 次のページ遷移した際に「...」が前後に出現する場合がある
+          if anchor[:href] =~ $page_pattern && $1.to_i > next_page.to_i
+            last_page = search_page $1
+          end
+        end
+      end
+
+      return last_page
+    end
+
+    collect_targets.each do |collect_target|
+      $target_url = collect_target.list_url
+      last_page = search_page(collect_target.start_page_num)
+
+      collect_target.start_page_num = 1
+      collect_target.end_page_num = last_page
+      collect_target.save!
+
+      $save_count = 0
+    end
+  end
+
+  # 大貫カメラ
+  def self.target_10
+    $page_pattern = Regexp.new("page=(\\d+)")
+    $continue_page_pattern = Regexp.new("...")
+    $save_count = 0
+    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
+
+    $session = TaskCommon::get_session
+
+    # 指定回数を超えた場合は無限ループに陥ったと判定し例外を投げる
+    def self.count_up
+      raise "#{$target_url} で無限ループに陥った可能性があります。" if ($save_count += 1) >= 30
+    end
+
+    def self.search_page(next_page)
+      count_up
+      sleep [*2..5].sample # アクセスタイミングを分散させる
+
+      # 対象URLに遷移する
+      $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)
+
+      last_page = 1
+      # 全てのアンカーを取得する 
+      $session.all(:css, '#productsListingListingBottomLinks a').each do |anchor|
         last_page = $1 if anchor[:href] =~ $page_pattern
 
         # ページがまだ続く場合
