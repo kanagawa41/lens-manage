@@ -7,6 +7,14 @@
 # 本シェルパス:   /home/test/deploy_XXXX.sh
 
 ####################
+# Parameter varidations
+####################
+if [ $# -ne 1 ]; then
+  echo "== Need to use 'init', 'app' or 'manage' in parameters. =="
+  exit 1
+fi
+
+####################
 # Variables
 ####################
 # シェルパス
@@ -14,13 +22,15 @@ SCRIPT_DIR=$(cd $(dirname $0); pwd)
 # プロジェクト名
 PROJECT_NAME=lens-manage
 # プロジェクト絶対パス
-PROJECT_PATH=$SCRIPT_DIR/lens-manage
+PROJECT_PATH=$SCRIPT_DIR/$PROJECT_NAME
 BK_PROJECT_PATH=$SCRIPT_DIR/backup/$PROJECT_NAME
 
+# バンドルフォルダーパス
 BUNDLE_PATH=vendor/bundle
 ORG_BUNDLE=$PROJECT_PATH/$BUNDLE_PATH
 BK_BUNDLE=$BK_PROJECT_PATH/bundle
 
+# ログフォルダーパス
 ORG_LOG=$PROJECT_PATH/log
 BK_LOG=$BK_PROJECT_PATH/log
 
@@ -30,20 +40,12 @@ BK_LOG=$BK_PROJECT_PATH/log
 # 存在すれば削除する
 ifrm () {
   if [ -e $1 ]; then
-    echo "== ${1} exist, delete it. =="
+    echo "== ${1} exist and delete it. =="
     rm -rf $1
   fi
 
-  return 0 
+  return 0
 }
-
-####################
-# Varidations
-####################
-if [ $# -ne 1 ]; then
-  echo "引数にinit, app, manageを指定して下さい"
-  exit 1
-fi
 
 ####################
 # Main
@@ -78,17 +80,17 @@ elif [ $1 = "app" ]; then
   if [ `diff -qr $ORG_BUNDLE $BK_BUNDLE >/dev/null` ]; then
     rm -rf $BK_BUNDLE
     cp -r $ORG_BUNDLE $BK_PROJECT_PATH
-    echo "== Bundle folder has different. Back up bundle folder was updated. =="
+    echo "== This folder of bundle is different from the folder of back-up. The folder of back-up was updated latest. =="
   fi
 
   cd $PROJECT_PATH
   ./up.sh production
 elif [ $1 = "manage" ]; then
-  echo "使用していません。"
+  echo "== Not using. =="
   exit 1
 else
-  echo "有効な引数ではありません。init, app, manageを指定して下さい"
+  echo "== Parameters are invalid. Need to use 'init', 'app' or 'manage' in parameters. =="
   exit 1
 fi
 
-echo "= Success! ="
+echo "== Success! =="

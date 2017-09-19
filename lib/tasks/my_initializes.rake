@@ -19,6 +19,10 @@ task my_initializers: :environment do
   # pidファイル設置場所
   FileUtils.mkdir_p(Rails.application.config.common.nginx[:pid_dir])
 
+  # デプロイシェルを設置
+  `cp other_settings/deploy_lnes-manage.sh ..`
+  
+  # ステレージ設定を行なう
   conoha_obs_conf = Rails.application.config.api.conoha_object_strage
   os = OpenStack::Connection.create(
     :username => conoha_obs_conf[:user_id],
