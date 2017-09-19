@@ -5,22 +5,51 @@
 # 例)
 # プロジェクトパス: /home/test/reails
 # 本シェルパス:   /home/test/deploy_XXXX.sh
+# 引数)
+# 第１：処理内容、第２：プロジェクト名(任意)
+
+echo "== Start deployment! =="
 
 ####################
 # Parameter varidations
 ####################
-if [ $# -ne 1 ]; then
-  echo "== Need to use 'init', 'app' or 'manage' in parameters. =="
+valid_params () {
+  # 引数に配列を受け取るためのおまじない
+  local param_1=$1
+  shift
+  local param_2=($@)
+
+  # if文に[]をつけると意図しない動きになる
+  if ! `echo $param_2[@] | grep -qw "$param_1"` ; then
+    SPECIFIC_STR=$(IFS=,; echo "${param_2[*]}")
+    echo "有効な引数ではありません！'$SPECIFIC_STR'から指定して下さい。"
+    exit 1
+  fi
+}
+
+if [ $# -ne 2 ]; then
+  echo "引数に'実行対象', 'プロジェクト名'を渡してください。"
   exit 1
 fi
 
+# 実行対象（順番は重要）
+DEPS=("init" "app" "manage")
+valid_params $1 ${DEPS[@]}
+# プロジェクト名（順番は重要）
+PROJECTS=("lens-manage" "m-lens-manage")
+valid_params $2 ${PROJECTS[@]}
+
+exit 1
 ####################
 # Variables
 ####################
 # シェルパス
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
+# GITプロジェクト名
+GIT_PROJECT_URL=https://github.com/kanagawa41/lens-manage.git
 # プロジェクト名
-PROJECT_NAME=lens-manage
+PROJECT_NAME=$2
+
 # プロジェクト絶対パス
 PROJECT_PATH=$SCRIPT_DIR/$PROJECT_NAME
 BK_PROJECT_PATH=$SCRIPT_DIR/backup/$PROJECT_NAME
@@ -50,10 +79,10 @@ ifrm () {
 ####################
 # Main
 ####################
-if [ $1 = "init" ]; then
+if [ $1 = ${DEPS[0]} ]; then
   ifrm $PROJECT_PATH
   ifrm $BK_PROJECT_PATH
-  git clone https://github.com/kanagawa41/$PROJECT_NAME.git
+  git clone $GIT_PROJECT_URL $PROJECT_NAME
   cd $PROJECT_PATH
   bundle install --deployment --path $BUNDLE_PATH
 
@@ -61,13 +90,16 @@ if [ $1 = "init" ]; then
   cp -r $ORG_BUNDLE $BK_PROJECT_PATH
 
   mkdir -p $BK_LOG
-elif [ $1 = "app" ]; then
+
+elif [ $1 = ${DEPS[1]} || $1 = ${DEPS[2]} ]; then
   cp -r $ORG_LOG $BK_LOG
   rm -rf $PROJECT_PATH
-  git clone https://github.com/kanagawa41/$PROJECT_NAME.git
+  git clone $GIT_PROJECT_URL $PROJECT_NAME
 
-  # routesを修正
-  cp -f $PROJECT_PATH/config routes-app.rb routes.rb
+  if [ $1 = ${DEPS[1]} ]
+    # routesを修正
+    cp -f $PROJECT_PATH/config routes-app.rb routes.rb
+  fi
 
   # バックアップを移行する
   cp -r $BK_BUNDLE/* $ORG_BUNDLE
@@ -84,13 +116,7 @@ elif [ $1 = "app" ]; then
   fi
 
   cd $PROJECT_PATH
-  ./up.sh production
-elif [ $1 = "manage" ]; then
-  echo "== Not using. =="
-  exit 1
-else
-  echo "== Parameters are invalid. Need to use 'init', 'app' or 'manage' in parameters. =="
-  exit 1
+  ./up.sh $1 production
 fi
 
 echo "== Success! =="
