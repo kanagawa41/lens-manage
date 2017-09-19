@@ -20,7 +20,7 @@ valid_params () {
   local param_2=($@)
 
   # if文に[]をつけると意図しない動きになる
-  if ! `echo $param_2[@] | grep -qw "$param_1"` ; then
+  if ! `echo ${param_2[@]} | grep -qw "$param_1"` ; then
     SPECIFIC_STR=$(IFS=,; echo "${param_2[*]}")
     echo "有効な引数ではありません！'$SPECIFIC_STR'から指定して下さい。"
     exit 1
@@ -28,7 +28,7 @@ valid_params () {
 }
 
 if [ $# -ne 2 ]; then
-  echo "引数に'実行対象', 'プロジェクト名'を渡してください。"
+  echo "引数に'実行タイプ', 'プロジェクト名'を渡してください。"
   exit 1
 fi
 
@@ -91,7 +91,7 @@ if [ $1 = ${DEPS[0]} ]; then
 
   mkdir -p $BK_LOG
 
-elif [ $1 = ${DEPS[1]} || $1 = ${DEPS[2]} ]; then
+elif $1 = ${DEPS[1]} || $1 = ${DEPS[2]} ; then
   cp -r $ORG_LOG $BK_LOG
   rm -rf $PROJECT_PATH
   git clone $GIT_PROJECT_URL $PROJECT_NAME
