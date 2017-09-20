@@ -21,25 +21,25 @@ valid_params () {
 
   # if文に[]をつけると意図しない動きになる
   if ! `echo ${param_2[@]} | grep -qw "$param_1"` ; then
-    SPECIFIC_STR=$(IFS=,; echo "${param_2[*]}")
-    echo "有効な引数ではありません！'$SPECIFIC_STR'から指定して下さい。"
+    delimiter=", "; str=""; for var in ${param_2[@]}; do str+="${delimiter}'${var}'"; done; str=`echo $str | sed -e "s/^${delimiter}//"`
+    # SPECIFIC_STR=$(IFS=,; echo "${param_2[*]}")
+    echo "有効な引数ではありません。$strから指定して下さい。"
     exit 1
   fi
 }
 
+# 実行対象（順番は重要）
+DEPS=("init" "app" "manage")
+# プロジェクト名（順番は重要）
+PROJECTS=("lens-manage" "m-lens-manage")
 if [ $# -ne 2 ]; then
-  echo "引数に'実行タイプ', 'プロジェクト名'を渡してください。"
+  echo "引数に実行タイプ(${DEPS[@]}), プロジェクト名(${PROJECTS[@]})を渡してください。"
   exit 1
 fi
 
-# 実行対象（順番は重要）
-DEPS=("init" "app" "manage")
 valid_params $1 ${DEPS[@]}
-# プロジェクト名（順番は重要）
-PROJECTS=("lens-manage" "m-lens-manage")
 valid_params $2 ${PROJECTS[@]}
 
-exit 1
 ####################
 # Variables
 ####################
@@ -91,12 +91,12 @@ if [ $1 = ${DEPS[0]} ]; then
 
   mkdir -p $BK_LOG
 
-elif $1 = ${DEPS[1]} || $1 = ${DEPS[2]} ; then
+elif [ $1 = ${DEPS[1]} ] || [ $1 = ${DEPS[2]} ]; then
   cp -r $ORG_LOG $BK_LOG
   rm -rf $PROJECT_PATH
   git clone $GIT_PROJECT_URL $PROJECT_NAME
 
-  if [ $1 = ${DEPS[1]} ]
+  if [ $1 = ${DEPS[1]} ]; then
     # routesを修正
     cp -f $PROJECT_PATH/config routes-app.rb routes.rb
   fi
