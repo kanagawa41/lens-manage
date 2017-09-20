@@ -66,6 +66,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.find(:css, '.name1_').text.gsub(/\r|\n|\t/, ' ').strip
@@ -126,6 +127,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.all(:css, 'font[size="+1"]')[0].text.gsub(/\r|\n|\t/, ' ').strip
@@ -186,6 +188,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.find(:css, '.article-title a').text.gsub(/\r|\n|\t/, ' ').strip
@@ -255,6 +258,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.find(:css, '.gridly-copy h2 a').text.gsub(/\r|\n|\t/, ' ').strip
@@ -331,6 +335,7 @@ class TaskSwitchPageInfo
             stock_state: nil,
             price: 0,
             m_shop_info_id: $shop_id,
+            metadata: article.text,
           }
           # lens_info[:lens_name] = article.find(:css, '.upper a').text.gsub(/\r|\n|\t/, ' ').strip
           lens_info[:lens_name] = article.find(:css, 'div.upper')['innerHTML'].match(lens_name_pattern)[1]
@@ -393,6 +398,7 @@ class TaskSwitchPageInfo
             price: 0,
             m_shop_info_id: $shop_id,
             memo: nil,
+            metadata: article.text,
           }
           lens_info = nil
 
@@ -475,6 +481,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.find(:css, 'td[bgcolor="#ffff00"] b').text.gsub(/\r|\n|\t/, ' ').strip
@@ -542,6 +549,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.find(:css, '.item_name').text.gsub(/\r|\n|\t/, ' ').strip
@@ -598,6 +606,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.find(:css, '.compact').text.gsub(/\r|\n|\t/, ' ').strip
@@ -663,6 +672,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             lens_info[:lens_name] = article.find(:css, '.itemTitle').text.gsub(/\r|\n|\t/, ' ').strip
@@ -733,6 +743,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              metadata: article.text,
             }
 
             infos = article.all(:css, 'td')
