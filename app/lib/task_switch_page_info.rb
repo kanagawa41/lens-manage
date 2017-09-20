@@ -23,6 +23,8 @@ class TaskSwitchPageInfo
       target_9 collect_targets
     elsif shop_id == 10 # 大貫カメラ
       target_10 collect_targets
+    elsif shop_id == 11 # カメラのマツバラ光機
+      target_11 collect_targets
     else
       raise "#{shop_id}(存在しない)"
     end
@@ -674,6 +676,84 @@ class TaskSwitchPageInfo
 
             # upsert
             if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
+            else
+              m_lens_info = MLensInfo.new(lens_info)
+            end
+
+            m_lens_info.save!
+
+            success_num += 1
+          rescue => e
+            pp e.message
+            fail_num += 1
+          end
+        end
+      end
+    end
+
+    CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # カメラのマツバラ光機
+  def self.target_11(collect_targets)
+    sold_out_pattern = Regexp.new("Sold out", Regexp::IGNORECASE)
+
+    session = TaskCommon::get_session
+
+    success_num = 0
+    fail_num = 0
+    collect_targets.each do |collect_target|
+      next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
+
+      Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
+        sleep [*2..5].sample # アクセスタイミングを分散させる
+
+        # 対象URLに遷移する
+        session.visit collect_target.list_url
+
+        first_flag = false
+        # レンズ情報を取得する
+        session.all(:css, 'table[bgcolor="#C0C0C0"] tr').each do |article|
+          # 区別ができない要素があるため、tdの個数で除外する
+          # http://www.m-camera.com/hasselblad/hassel-lens.html
+          next if article.all(:css, 'td').size < 4
+
+          # ヘッダーを除外
+          unless first_flag
+            first_flag = true
+            next
+          end
+
+          begin
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: collect_target.list_url,
+              lens_pic_url: nil,
+              stock_state: nil,
+              price: 0,
+              m_shop_info_id: $shop_id,
+            }
+
+            infos = article.all(:css, 'td')
+
+            # 複数の要素が見つかる場合がある
+            lens_info[:lens_name] = infos[0].all(:css, 'b')[0].text.gsub(/\r|\n|\t/, ' ').strip
+
+            raw_price = infos[1].text
+            if raw_price =~ sold_out_pattern
+              lens_info[:price] = raw_price.delete("^0-9")
+              lens_info[:stock_state] = 0
+            else
+              lens_info[:price] = raw_price.delete("^0-9")
+              lens_info[:stock_state] = 1
+            end
+
+            # 複数の要素が見つかる場合がある
+            lens_info[:lens_pic_url] = infos[2].all(:css, 'img')[0][:src]
+
+            # upsert
+            if m_lens_info = MLensInfo.where(lens_pic_url: lens_info[:lens_pic_url], m_shop_info_id: $shop_id).first
               m_lens_info.attributes = lens_info
             else
               m_lens_info = MLensInfo.new(lens_info)
