@@ -22,7 +22,6 @@ valid_params () {
   # if文に[]をつけると意図しない動きになる
   if ! `echo ${param_2[@]} | grep -qw "$param_1"` ; then
     delimiter=", "; str=""; for var in ${param_2[@]}; do str+="${delimiter}'${var}'"; done; str=`echo $str | sed -e "s/^${delimiter}//"`
-    # SPECIFIC_STR=$(IFS=,; echo "${param_2[*]}")
     echo "有効な引数ではありません。$strから指定して下さい。"
     exit 1
   fi
@@ -72,8 +71,6 @@ ifrm () {
     echo "== ${1} exist and delete it. =="
     rm -rf $1
   fi
-
-  return 0
 }
 
 ####################
