@@ -113,7 +113,12 @@ elif [ $1 = ${DEPS[1]} ] || [ $1 = ${DEPS[2]} ]; then
   fi
 
   cd $PROJECT_PATH
-  ./up.sh $1 production
+
+  if [ $1 = ${DEPS[1]} ]; then
+    ./up.sh production
+  else
+    ./up.sh production 3002
+  fi
 fi
 
 echo "== Success! =="
