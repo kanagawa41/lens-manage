@@ -17,7 +17,7 @@ valid_params () {
   # if文に[]をつけると意図しない動きになる
   if ! `echo $param_2[@] | grep -qw "$param_1"` ; then
     delimiter=", "; str=""; for var in ${param_2[@]}; do str+="${delimiter}'${var}'"; done; str=`echo $str | sed -e "s/^${delimiter}//"`
-    echo "有効な引数ではありません！'$str'から指定して下さい。"
+    echo "有効な引数ではありません！$strから指定して下さい。"
     exit 1
   fi
 }
@@ -29,6 +29,7 @@ if [ $# -lt 1 ]; then
   exit 1
 fi
 
+# FIXME: なぜかうまく作動しない
 valid_params $1 ${ENVS[@]}
 
 

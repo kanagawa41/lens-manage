@@ -95,7 +95,7 @@ elif [ $1 = ${DEPS[1]} ] || [ $1 = ${DEPS[2]} ]; then
 
   if [ $1 = ${DEPS[1]} ]; then
     # routesを修正
-    cp -f $PROJECT_PATH/config routes-app.rb routes.rb
+    cp -f $PROJECT_PATH/config/routes-app.rb $PROJECT_PATH/config/routes.rb
   fi
 
   # バックアップを移行する
