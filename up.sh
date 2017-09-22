@@ -30,7 +30,7 @@ if [ $# -lt 1 ]; then
 fi
 
 # FIXME: なぜかうまく作動しない
-valid_params $1 ${ENVS[@]}
+#valid_params $1 ${ENVS[@]}
 
 
 ####################
