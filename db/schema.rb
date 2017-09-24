@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170920130711) do
+ActiveRecord::Schema.define(version: 20170924095830) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -114,6 +114,20 @@ ActiveRecord::Schema.define(version: 20170920130711) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "search_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "search_char"
+    t.string "search_condition_json"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "transition_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_lens_info_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["m_lens_info_id"], name: "index_transition_histories_on_m_lens_info_id"
+  end
+
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_shop_infos"
@@ -121,4 +135,5 @@ ActiveRecord::Schema.define(version: 20170920130711) do
   add_foreign_key "image_download_histories", "m_shop_infos"
   add_foreign_key "m_images", "m_lens_infos"
   add_foreign_key "m_lens_infos", "m_shop_infos"
+  add_foreign_key "transition_histories", "m_lens_infos"
 end

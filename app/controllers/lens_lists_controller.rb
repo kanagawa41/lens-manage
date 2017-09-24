@@ -14,6 +14,11 @@ class LensListsController < ApplicationController
     end
   end
 
+  def open_info
+    m_lens_info = LensListsService.open_info(params[:lens_info_id])
+    redirect_to m_lens_info[:lens_info_url]
+  end
+
   def about
     @title = 'サイトについて'
     @hide_search_bar = true
