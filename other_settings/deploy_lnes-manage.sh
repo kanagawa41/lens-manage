@@ -14,7 +14,10 @@
 ####################
 # base setting
 ####################
-# 実行対象（順番は重要）
+# シェルパス
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+# 実行対象
+# キー：引数、値：プロジェクト名
 declare -A TYPES=([app]="lens-manage" [manage]="m-lens-manage")
 # GITプロジェクト名
 GIT_PROJECT_URL=https://github.com/kanagawa41/lens-manage.git
@@ -70,8 +73,6 @@ fi
 ####################
 # Variables
 ####################
-# シェルパス
-SCRIPT_DIR=$(cd $(dirname $0); pwd)
 # プロジェクト名
 PROJECT_NAME=$target_project
 
@@ -146,7 +147,7 @@ else
   if [ "${target_type}" = "app" ]; then
     ./up.sh production
   else
-    ./up.sh production 3002
+    ./up.sh production 3002 --migrate
   fi
 
 fi
