@@ -41,34 +41,33 @@ function usage()
 ####################
 # Parameter check
 ####################
+target_project=${TYPES[$1]}
+if [ "${target_project}" = "" ]; then
+  usage
+  exit 1
+fi
+
+target_type=$1
+shift
+
 declare -i argc=0
 declare -a argv=()
 while (( $# > 0 ))
 do
     case "$1" in
         -*)
-            if [[ "$1" =~ '-i' ]] || [[ "$1" =~ '--init' ]]; then
+            if [[ "$1" =~ '--init' ]]; then
                 i_flag='TRUE'
             fi
             shift
             ;;
-        *)
-            ((++argc))
-            argv=("${argv[@]}" "$1")
-            shift
-            ;;
+        # *)
+        #     ((++argc))
+        #     argv=("${argv[@]}" "$1")
+        #     shift
+        #     ;;
     esac
 done
-
-####################
-# Parameter varidations
-####################
-target_type=${argv[0]}
-target_project=${TYPES[${argv[0]}]}
-if [ "${target_project}" = "" ]; then
-  usage
-  exit 1
-fi
 
 ####################
 # Variables
@@ -147,7 +146,7 @@ else
   if [ "${target_type}" = "app" ]; then
     ./up.sh production
   else
-    ./up.sh production 3002 --migrate
+    ./up.sh production -p 3002 --migrate
   fi
 
 fi
