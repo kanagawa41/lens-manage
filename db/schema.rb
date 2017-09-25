@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170924095830) do
+ActiveRecord::Schema.define(version: 20170925140811) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(version: 20170924095830) do
 
   create_table "search_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "search_char"
+    t.integer "result_num", default: 0
     t.string "search_condition_json"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -29,12 +29,12 @@ cmdname=`basename $0`
 function usage()
 {
   type_str="$(IFS=,; echo "${PROJECTS[*]}")"
-  echo "Usage: ${cmdname} [OPTIONS] TYPE"
+  echo "Usage: ${cmdname} TYPE [OPTIONS]"
   echo "  This script is ~."
-  echo "Options:"
-  echo "  -i, initialize"
   echo "TYPE:"
   echo "  using ${type_str}"
+  echo "Options:"
+  echo "  --init, initialize"
   exit 1
 }
 

@@ -1,6 +1,6 @@
 class LensListsController < ApplicationController
   layout "to_c"
-  before_action :init_setting
+  before_action :init_setting, :normalize_page
 
   def top
     @m_lens_infos = LensListsService.top
@@ -8,10 +8,8 @@ class LensListsController < ApplicationController
 
   def index
     @title = 'レンズを探す'
-    if @q = params[:q]
-      @m_lens_infos = LensListsService.index(params[:q], params[:page])
-      @q = params[:q]
-    end
+    @m_lens_infos = LensListsService.index(params[:q], params[:page])
+    @q = params[:q]
   end
 
   def open_info
@@ -33,6 +31,12 @@ class LensListsController < ApplicationController
   private 
   def init_setting
     @title = 'トップ'
+  end
+
+  # page パラメータを手動で設定された場合の対策
+  def normalize_page
+    page = params[:page].to_i
+    params[:page] = (page <= 1 || page > Kaminari.config.max_pages.to_i) ? nil : page
   end
 
 end
