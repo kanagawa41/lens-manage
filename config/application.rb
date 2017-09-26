@@ -26,5 +26,8 @@ module MerManage
     I18n.default_locale = :en
 
     config.assets.initialize_on_precompile = false
+
+    # タイムゾーンの設定
+    config.time_zone = 'Tokyo'
   end
 end
