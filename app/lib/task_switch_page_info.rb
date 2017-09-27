@@ -66,8 +66,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.find(:css, '.name1_').text.gsub(/\r|\n|\t/, ' ').strip
             article.all(:css, 'a').each do |info_anchor|
@@ -85,6 +85,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -127,8 +129,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.all(:css, 'font[size="+1"]')[0].text.gsub(/\r|\n|\t/, ' ').strip
             lens_info[:lens_info_url] = collect_target.list_url
@@ -145,6 +147,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -188,8 +192,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.find(:css, '.article-title a').text.gsub(/\r|\n|\t/, ' ').strip
             article.all(:css, '.article-first-image a').each do |info_anchor|
@@ -216,6 +220,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -260,6 +266,7 @@ class TaskSwitchPageInfo
               m_shop_info_id: $shop_id,
               metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.find(:css, '.gridly-copy h2 a').text.gsub(/\r|\n|\t/, ' ').strip
             article.all(:css, '.gridly-copy h2 a').each do |info_anchor|
@@ -277,6 +284,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -335,8 +344,9 @@ class TaskSwitchPageInfo
             stock_state: nil,
             price: 0,
             m_shop_info_id: $shop_id,
-            metadata: article.text,
           }
+          metadata = article.text
+
           # lens_info[:lens_name] = article.find(:css, '.upper a').text.gsub(/\r|\n|\t/, ' ').strip
           lens_info[:lens_name] = article.find(:css, 'div.upper')['innerHTML'].match(lens_name_pattern)[1]
           lens_info[:lens_info_url] = article.find(:css, 'a.image-inner')[:href]
@@ -356,6 +366,8 @@ class TaskSwitchPageInfo
           end
 
           m_lens_info.save!
+
+          upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
           success_num += 1
         rescue => e
@@ -398,8 +410,9 @@ class TaskSwitchPageInfo
             price: 0,
             m_shop_info_id: $shop_id,
             memo: nil,
-            metadata: article.text,
           }
+          metadata = article.text
+
           lens_info = nil
 
           start_flag = false
@@ -429,6 +442,8 @@ class TaskSwitchPageInfo
                   end
 
                   m_lens_info.save!
+
+                  upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
                   success_num += 1
 
@@ -481,8 +496,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.find(:css, 'td[bgcolor="#ffff00"] b').text.gsub(/\r|\n|\t/, ' ').strip
             # FIXME 多分ここが取得できない場合がある。
@@ -510,6 +525,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -549,8 +566,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.find(:css, '.item_name').text.gsub(/\r|\n|\t/, ' ').strip
             lens_info[:lens_info_url] = article.find(:css, '.item_name a')[:href].to_s
@@ -568,6 +585,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -606,8 +625,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.find(:css, '.compact').text.gsub(/\r|\n|\t/, ' ').strip
             lens_info[:lens_info_url] = article.find(:css, '.product-image a')[:href]
@@ -628,6 +647,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -672,8 +693,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             lens_info[:lens_name] = article.find(:css, '.itemTitle').text.gsub(/\r|\n|\t/, ' ').strip
             lens_info[:lens_info_url] = article.find(:css, '.itemTitle a')[:href]
@@ -692,6 +713,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e
@@ -743,8 +766,8 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
-              metadata: article.text,
             }
+            metadata = article.text
 
             infos = article.all(:css, 'td')
 
@@ -772,6 +795,8 @@ class TaskSwitchPageInfo
 
             m_lens_info.save!
 
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
+
             success_num += 1
           rescue => e
             pp e.message
@@ -782,6 +807,18 @@ class TaskSwitchPageInfo
     end
 
     CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # メタデータをupsertする
+  def self.upsert_warehouse(attributes)
+    # upsert
+    if collect_warehouse = CollectWarehouse.where(m_lens_info_id: attributes[:m_lens_info_id]).first
+      collect_warehouse.attributes = attributes
+    else
+      collect_warehouse = CollectWarehouse.new(attributes)
+    end
+
+    collect_warehouse.save!
   end
 
 end

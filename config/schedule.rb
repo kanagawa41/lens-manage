@@ -12,15 +12,20 @@ set :environment, :production
 # FIXME: 本システムに合わせて作り直す
 
 # ページ数取得
-every '5 0 * * * ' do
+every '5 0 */2 * * ' do
   rake "fetch_lens_info:all:page_num"
 end
-every '10 0 * * * ' do
+every '10 0 */2 * * ' do
   rake "fetch_lens_info:all:page_info"
 end
 
+# レンズ情報解析
+every '6 0 */3 * * ' do
+  rake "analytics_lens:all:lnes_info"
+end
+
 # 画像取得
-every '1 1 * * * ' do
+every '1 1 */3 * * ' do
   rake "fetch_lens_info:all:lens_image"
 end
 

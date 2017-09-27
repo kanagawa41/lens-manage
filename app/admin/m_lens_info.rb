@@ -8,6 +8,8 @@ ActiveAdmin.register MLensInfo do
   filter :stock_state
   filter :price
   filter :m_shop_info_id, as: :select, collection: MShopInfo.all.order(id: :asc).map{ |parent| [parent.shop_name, parent.id] }
+  filter :f_num
+  filter :focal_length
   filter :disabled
   filter :updated_at
 
@@ -28,9 +30,10 @@ ActiveAdmin.register MLensInfo do
       link_to model_name.m_shop_info.id, admin_m_shop_info_path(model_name.m_shop_info)
     end
 
-    column :disabled
+    column :f_num
+    column :focal_length
     column :memo
-    column :metadata
+    column :disabled
     column :updated_at
 
     actions defaults: false do |model|
@@ -50,7 +53,6 @@ ActiveAdmin.register MLensInfo do
       f.input :m_shop_info_id, as: :select, collection: MShopInfo.all.map { |model| [model.shop_name, model.id] }
       f.input :disabled
       f.input :memo
-      f.input :metadata
     end
     f.actions
   end

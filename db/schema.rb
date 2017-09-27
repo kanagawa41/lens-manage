@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170925140811) do
+ActiveRecord::Schema.define(version: 20170927165802) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -63,11 +63,11 @@ ActiveRecord::Schema.define(version: 20170925140811) do
   end
 
   create_table "collect_warehouses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "m_shop_info_id"
-    t.string "row_collect_text"
+    t.bigint "m_lens_info_id"
+    t.text "metadata", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["m_shop_info_id"], name: "index_collect_warehouses_on_m_shop_info_id"
+    t.index ["m_lens_info_id"], name: "index_collect_warehouses_on_m_lens_info_id"
   end
 
   create_table "image_download_histories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -97,8 +97,9 @@ ActiveRecord::Schema.define(version: 20170925140811) do
     t.string "stock_state"
     t.integer "price"
     t.bigint "m_shop_info_id"
+    t.string "f_num"
+    t.string "focal_length"
     t.boolean "disabled", default: false, null: false
-    t.text "metadata", limit: 4294967295
     t.datetime "created_at", null: false
     t.string "memo"
     t.datetime "updated_at", null: false
@@ -131,7 +132,7 @@ ActiveRecord::Schema.define(version: 20170925140811) do
 
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
-  add_foreign_key "collect_warehouses", "m_shop_infos"
+  add_foreign_key "collect_warehouses", "m_lens_infos"
   add_foreign_key "image_download_histories", "m_lens_infos"
   add_foreign_key "image_download_histories", "m_shop_infos"
   add_foreign_key "m_images", "m_lens_infos"
