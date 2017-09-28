@@ -42,8 +42,7 @@
                 <%= text_field_tag 'q', @q, placeholder: 'レンズ名を入力' %>
               </div>
               <div class="2u 12u(medium)">
-                <%# FIXME: ボタンの大きさを調節する %>
-                <%= submit_tag 'レンズを探す', class: "button icon", id: "search_exec" %>
+                <%= link_to 'レンズを探す', 'javascript:void(0);', class: "button icon", id: "search_exec" %>
               </div>
             </div>
             <%= render :partial => 'search_detail_condition' %>
@@ -64,6 +63,9 @@
             $('#search_exec').click();
             return false;
           }
+        });
+        $('#search_exec').on('click', function(){
+          $('#lens_lists_index').submit();
         });
         var currentPath = '<%= request.path %>';
         $('#nav li a').each(function(i, element){
