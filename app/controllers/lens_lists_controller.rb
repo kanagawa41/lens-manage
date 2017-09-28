@@ -8,8 +8,11 @@ class LensListsController < ApplicationController
 
   def index
     @title = 'レンズを探す'
-    @m_lens_infos = LensListsService.index(params[:q], params[:page])
+    @m_lens_infos = LensListsService.index(params, params[:page])
     @q = params[:q]
+    @f_num = params[:f_num]
+    @focal_length = params[:focal_length]
+    @m_lens_info = MLensInfo
   end
 
   def open_info

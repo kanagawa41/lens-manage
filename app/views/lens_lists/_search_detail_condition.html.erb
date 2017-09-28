@@ -1,0 +1,14 @@
+<%# 検索の時にしか表示しない %>
+<% if request.path_info == '/lens_lists/index' %>
+<!-- Search Detail -->
+<div id="search_detail" class="container">
+  <div class="row">
+    <div class="3u 12u(medium)">
+      <%= label :index, :focal_length, "焦点距離" %><%= collection_select(nil, :focal_length, @m_lens_info.find_focal_lengthes, :focal_length, :focal_length, include_blank: true, selected: @focal_length) %>
+    </div>
+    <div class="3u 12u(medium)">
+      <%= label :index, :f_num, "F値" %><%= collection_select(nil, :f_num, @m_lens_info.find_f_nums, :f_num, :f_num, include_blank: true, selected: @f_num) %>
+    </div>
+  </div>
+</div>
+<% end %>

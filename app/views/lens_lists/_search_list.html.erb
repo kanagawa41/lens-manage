@@ -17,17 +17,26 @@
           <div class="inner">
             <header>
               <h2><%= m_lens_info.lens_name %></h2>
-              <% if m_lens_info.price %>
-              <p>値段：<%= m_lens_info.price.to_s(:delimited) %>円</p>
+              <% if m_lens_info.price.present? %>
+                <% if m_lens_info.price == 0 %>
+                  <p>値段： -</p>
+                <% else %>
+                  <p>値段： <%= m_lens_info.price.to_s(:delimited) %>円</p>
+                <% end %>
               <% else %>
-              <p>値段：-</p>
+                <p>値段： -</p>
               <% end %>
               <% if m_lens_info.stock_state.nil? %>
-              <p>在庫：×</p>
+                <p>在庫： ×</p>
               <% elsif m_lens_info.stock_state.to_i == 1 %>
-              <p>在庫：〇</p>
+                <p>在庫： 〇</p>
               <% elsif m_lens_info.stock_state.to_i == 0 %>
-              <p>在庫：×</p>
+                <p>在庫： ×</p>
+              <% end %>
+              <% if m_lens_info.focal_length.present? && m_lens_info.f_num.present? %>
+                <p>焦点距離/F値：<%= m_lens_info.focal_length %> / <%= m_lens_info.f_num %></p>
+              <% else %>
+                <p>焦点距離/F値： -</p>
               <% end %>
               <p>サイト：<a href="<%= m_lens_info.m_shop_info.shop_url %>" target="_blank_shop"><%= m_lens_info.m_shop_info.shop_name %></a></p>
               <p class="no">No.<%= m_lens_info.id %></p>

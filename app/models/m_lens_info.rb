@@ -12,4 +12,32 @@ class MLensInfo < ApplicationRecord
     errors.add(:lens_info_url, "blank!") if !lens_info_url.nil? && lens_info_url.blank?
     errors.add(:price, "blank!") if !price.nil? && price.blank?
   end
+
+  # 条件検索を行う
+  def self.set_search_conditions(query, f_num, focal_length)
+    m_lens_info = MLensInfo.where(disabled: false)
+    if query.present?
+      m_lens_info = m_lens_info.where("lens_name like ?", "%" + query + "%")
+    end
+    if f_num.present?
+      m_lens_info = m_lens_info.where("f_num like ?", "%" + f_num + "%")
+    end
+    if focal_length.present?
+      m_lens_info = m_lens_info.where("focal_length like ?", "%" + focal_length + "%")
+    end
+    m_lens_info
+  end
+
+  # F値一覧を取得する
+  def self.find_f_nums
+    MLensInfo.select(:f_num).where.not(f_num: [nil, '']).where(disabled: false).group(:f_num).order(:f_num).all
+  end
+
+  # 焦点距離一覧を取得する
+  def self.find_focal_lengthes
+    MLensInfo.select(:focal_length).where.not(focal_length: [nil, '']).where(disabled: false).group(:focal_length).all
+  end
+
+  private
+
 end
