@@ -2,12 +2,13 @@ ActiveAdmin.register MLensInfo do
   permit_params :lens_name, :lens_pic_url, :lens_info_url, :stock_state, :price, :m_shop_info_id, :disabled, :memo, :metadata
   actions :all
 
+  filter :id
   filter :lens_name
   filter :lens_pic_url
   filter :lens_info_url
   filter :stock_state
   filter :price
-  filter :m_shop_info_id, as: :select, collection: MShopInfo.all.order(id: :asc).map{ |parent| [parent.shop_name, parent.id] }
+  filter :m_shop_info_id, as: :select, collection: MShopInfo.all.order(id: :asc).map{ |parent| ["#{parent.shop_name}(#{parent.id})", parent.id] }
   filter :f_num
   filter :focal_length
   filter :disabled
@@ -34,6 +35,7 @@ ActiveAdmin.register MLensInfo do
     column :focal_length
     column :memo
     column :disabled
+    column :created_at
     column :updated_at
 
     actions defaults: false do |model|

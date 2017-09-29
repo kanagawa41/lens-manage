@@ -19,6 +19,9 @@ ActiveAdmin.register_page "Dashboard" do
           li do
             link_to("Image Download Histories", admin_image_download_histories_path)
           end
+          li do
+            link_to("Collect Warehouses", admin_collect_warehouses_path)
+          end
         end
       end
       li do
