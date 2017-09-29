@@ -8,6 +8,12 @@ Rails.application.routes.draw do
 
   root :to => 'admin/dashboard#index'
 
+  resources :admin do
+    collection do
+      get 'conoha_list'
+    end
+  end
+
   resources :lens_lists do
     collection do
       get 'index'

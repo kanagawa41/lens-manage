@@ -1,0 +1,26 @@
+<div class="box container">
+  <div class="row">
+    <div class="12u 12u(medium)">
+      <label><strong>コノハストレージ情報</strong></label>
+      <div>コンテナ名：<%= @container_name %></div>
+      <div>容量：<%= number_to_human_size(@conoha_container.container_metadata[:bytes]) %></div>
+      <div>アイテム数：<%= @conoha_container.container_metadata[:count] %></div>
+      <div>メタデータ：<%= @conoha_container.container_metadata[:metadata] %></div>
+    </div>
+  </div>
+</div>
+
+<div class="box container" style="margin-top: 20px;">
+  <div class="row">
+    <div class="12u 12u(medium)">
+      <label><strong>アイテム一覧</strong></label>
+      <div id="jstree_demo_div"></div>
+    </div>
+  </div>
+</div>
+<script>
+  $(function(){
+    LensLists.dataTree = <%= raw @js_tree_json %>;
+    LensLists.init();
+  });
+</script>

@@ -3,6 +3,13 @@ ActiveAdmin.register_page "Dashboard" do
   menu priority: 1, label: proc{ I18n.t("active_admin.dashboard") }
 
   content title: proc{ I18n.t("active_admin.dashboard") } do
+    label "管理"
+    ul do
+      li do
+        link_to("Conohaストレージ情報", conoha_list_admin_index_path)
+      end
+    end
+
     label "テーブル"
     ul do
       li do

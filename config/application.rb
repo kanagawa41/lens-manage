@@ -29,5 +29,10 @@ module MerManage
 
     # タイムゾーンの設定
     config.time_zone = 'Tokyo'
+
+    # controller から lib配下を呼び込むためのおまじない
+    # https://stackoverflow.com/questions/17007685/rails-4-uninitialized-constant-for-module
+    config.autoload_paths << Rails.root.join("lib")
+    config.eager_load_paths << Rails.root.join("lib")
   end
 end
