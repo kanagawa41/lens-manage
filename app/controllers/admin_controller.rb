@@ -14,10 +14,7 @@ class AdminController < ApplicationController
       service_type: "object-store",
     )
 
-    # FIXME: テスト完了後は元に戻す
-    # @container_name = conoha_obs_conf[:container_name]
-    # @conoha_container = os.container(@container_name)
-    @container_name = "test"
+    @container_name = conoha_obs_conf[:container_name]
     @conoha_container = os.container(@container_name)
 
     @js_tree_json = AdminService::conoha_list @conoha_container.objects
