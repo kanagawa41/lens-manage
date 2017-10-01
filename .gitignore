@@ -26,5 +26,5 @@
 !/vendor/bundle/.keep
 nohup.out
 /test/*
-nohup.out
+_up.log
 public/assets/*

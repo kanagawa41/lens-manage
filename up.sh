@@ -50,6 +50,9 @@ do
             if [[ "$1" =~ '--migrate' ]]; then
                 m_flag='TRUE'
             fi
+            if [[ "$1" =~ '--clean' ]]; then
+                c_flag='TRUE'
+            fi
             shift
             ;;
         *)
@@ -72,54 +75,143 @@ if [ "${p_flag}" = "TRUE" ]; then
 else
   PORT=""
 fi
+UP_LOG="_up.log"
 
 ####################
 # Functions
 ####################
-# nothing
+# 存在すれば削除する
+ifrm () {
+  if [ -e $1 ]; then
+    echo "== ${1} exist and delete it. =="
+    rm -rf $1
+  fi
+}
 
+# タイトルメッセージを出力
+putst () {
+  if [ "${1}" = "" ]; then
+    echo ""
+  else
+    echo "== ${1} =="
+  fi
+}
+# インフォメッセージを出力
+putsi () {
+  if [ "${1}" = "" ]; then
+    echo ""
+  else
+    echo "==> ${1}"
+  fi
+}
+# 処理終了を出力
+putsd () {
+  putsi "done."
+}
+# サーバープロセスをkillする。方法は二つ(1.pidを確認 2.動作しているプロセスを指定文字でグレップ)
+# 引数: pidパス、プロジェクト名
+kills () {
+  if [ -e $1 ]; then
+    kill `cat "${1}"`
+    putsi "The way of pid."
+    return 0
+  fi
+
+  psinfo=`ps aux | grep -w $2 | grep -v grep`
+    if [ ! "${psinfo}" = "" ]; then
+    # FIXME: 実行結果を渡そうとするとエラーが発生する
+    ps aux | grep -w $2 | grep -v grep | awk '{ print "kill -9", $2 }' | sh
+    putsi "The way of ps."
+    return 0
+  fi
+
+  putsi "Not kill."
+}
 
 ####################
 # Main
 ####################
-echo "== Start stand up! =="
+putst "**Start stand up**"
 
 if [ "${target_env}" = "test" ]; then
-  echo "== rails =="
-  ps aux | grep -w "\[$PROJECT_NAME\]" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
-  RAILS_ENV=${target_env} bundle exec rails assets:clean
-  rm -rf public/assets
+  putst "Process kill"
+  kills "tmp/pids/server.pid" "puma"
+  putsd
 
-  RAILS_ENV=${target_env} nohup bundle exec rails s -b 0.0.0.0 $PORT &
+  if [ "${c_flag}" = "TRUE" ]; then
+    putst "Clean assets"
+    RAILS_ENV=${target_env} bundle exec rails assets:clean
+    ifrm public/assets
+    putsd
+  fi
 
-  if [ ! $? = 0 ] ; then echo "FAILD: set up rails."; exit 1; fi
+  putst "Up server"
+  bundle exec rails s -b 0.0.0.0 $PORT -e ${target_env} -d > $UP_LOG 2>&1
+
+  if [ ! $? = 0 ] ; then putsi "FAILD: set up rails."; exit 1; fi
 
   SELF_IP=`hostname -I | cut -f2 -d' '` #自身のＩＰを取得
-  if [ -n "$PORT" ]; then
-    echo "IP is $SELF_IP"
+  if [ "${PORT}" = "" ]; then
+    putsi "IP is $SELF_IP"
+  else
+    putsi "IP is $SELF_IP:${argv[0]}"
   fi
+  putsd
 
 elif [ "${target_env}" = "development" ]; then
-  ps aux | grep -w "\[$PROJECT_NAME\]" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
-  bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
-  bundle exec rails assets:precompile RAILS_ENV=${target_env}
-  RAILS_ENV=${target_env} nohup bundle exec puma -w 4 $PORT &
+  putst "Process kill"
+  kills "/home/app/run/$PROJECT_NAME.pid" "\[${PROJECT_NAME}\]"
+  putsd
 
-  if [ ! $? = 0 ] ; then echo "FAILD: set up rails."; exit 1; fi
+  if [ "${c_flag}" = "TRUE" ]; then
+    putst "Clean assets"
+    bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
+    ifrm public/assets
+    putsd
+  fi
+
+  putst "Assets compile"
+  bundle exec rails assets:precompile RAILS_ENV=${target_env}
+  putsd
+
+  putst "Up server"
+  RAILS_ENV=${target_env} bundle exec puma -w 4 $PORT -d > $UP_LOG 2>&1
+  if [ ! $? = 0 ] ; then putsi "FAILD: set up rails."; exit 1; fi
+  putsd
 
 elif [ "${target_env}" = "production" ]; then
-  cat /home/app/run/$PROJECT_NAME.pid | awk '{ print "kill -9", $0 }' | sh
-  bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
+  putst "Process kill"
+  kills "/home/app/run/$PROJECT_NAME.pid" "\[${PROJECT_NAME}\]"
+  putsd
+
+  if [ "${c_flag}" = "TRUE" ]; then
+    putst "Clean assets"
+    bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
+    ifrm public/assets
+    putsd
+  fi
+
+  putst "Assets compile"
   bundle exec rails assets:precompile RAILS_ENV=${target_env}
+  putsd
+
   if [ "${m_flag}" = "TRUE" ]; then
+    putst "Migration"
     bundle exec rails db:migrate RAILS_ENV=${target_env}
     bundle exec rails db:migrate:status RAILS_ENV=${target_env}
+    putsd
   fi
-  RAILS_ENV=${target_env} bundle exec whenever --update-crontab
-  # ポートを指定するとsockが使用できない
-  SECRET_KEY_BASE=`bundle exec rails secret` RAILS_SERVE_STATIC_FILES=true RAILS_ENV=${target_env} nohup bundle exec puma -w 4 $PORT &
 
-  if [ ! $? = 0 ] ; then echo "FAILD: set up rails."; exit 1; fi
+  putst "Update crontab"
+  RAILS_ENV=${target_env} bundle exec whenever --update-crontab
+  putsd
+
+  putst "Up server"
+  # ポートを指定するとsockが使用できない
+  SECRET_KEY_BASE=`bundle exec rails secret` RAILS_SERVE_STATIC_FILES=true RAILS_ENV=${target_env} bundle exec puma -w 4 $PORT -d > $UP_LOG 2>&1
+  if [ ! $? = 0 ] ; then putsi "FAILD: set up rails."; exit 1; fi
+  putsd
 
 fi
-echo "== Stand up as ${target_env} =="
+
+putst "Stand up as ${target_env}"
