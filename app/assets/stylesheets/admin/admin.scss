@@ -1,2 +1,7 @@
 // Active Admin's got SASS!
 @import "admin/jstree/style";
+
+#file-list {
+  overflow: scroll;
+  height: 500px;
+}

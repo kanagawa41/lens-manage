@@ -10,11 +10,11 @@
   </div>
 </div>
 
-<div class="box container" style="margin-top: 20px;">
+<div id="file-list" class="box container" style="margin-top: 20px;">
   <div class="row">
     <div class="12u 12u(medium)">
       <label><strong>アイテム一覧</strong></label>
-      <div id="jstree_demo_div"></div>
+      <div id="folder-tree"></div>
     </div>
   </div>
 </div>
@@ -24,3 +24,4 @@
     modules.admin.init();
   });
 </script>
+<%= raw @raw_container_objects %>
