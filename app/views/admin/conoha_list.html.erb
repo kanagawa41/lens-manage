@@ -20,7 +20,7 @@
 </div>
 <script>
   $(function(){
-    Admin.dataTree = <%= raw @js_tree_json %>;
-    Admin.init();
+    modules.admin.dataTree = <%= raw @js_tree_json %>;
+    modules.admin.init();
   });
 </script>

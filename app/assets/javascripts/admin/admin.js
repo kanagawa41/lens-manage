@@ -1,14 +1,17 @@
-var Admin = function() {
-  this.dataTree = null
+'use strict';
+
+var modules = modules || {};
+
+modules.admin = (function () {
+var module = {}
+
+module.dataTree = null;
+
+module.init = function() {
+  module.initElements();
 }
 
-Admin.init = function() {
-  this.initElements();
-}
-
-Admin.initElements = function() {
-  dataTree = this.dataTree;
-console.log(dataTree);
+module.initElements = function() {
   $('#jstree_demo_div').jstree({ 'core' : {
     // 'data' : [
     //    { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
@@ -21,6 +24,9 @@ console.log(dataTree);
     //    { "id" : "ajson8", "parent" : "ajson7", "text" : "file" },
     // ]
     'data' : 
-      dataTree
+      module.dataTree
   } });
 }
+
+return module;
+}());

@@ -1,9 +1,12 @@
-var LensLists = function() {
+'use strict';
+
+var modules = modules || {};
+
+modules.lensLists = (function () {
+var module = {}
+
+module.init = function() {
 }
 
-LensLists.init = function() {
-  this.initElements();
-}
-
-LensLists.initElements = function() {
-}
+return module;
+}());
