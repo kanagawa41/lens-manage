@@ -28,7 +28,7 @@ GIT_PROJECT_URL=https://github.com/kanagawa41/lens-manage.git
 cmdname=`basename $0`
 function usage()
 {
-  type_str="$(IFS=,; echo "${PROJECTS[*]}")"
+  type_str="$(IFS=,; echo "${!TYPES[*]}")"
   echo "Usage: ${cmdname} TYPE [OPTIONS]"
   echo "  This script is ~."
   echo "TYPE:"

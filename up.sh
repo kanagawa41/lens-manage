@@ -18,12 +18,19 @@ function usage()
 {
   env_str="$(IFS=,; echo "${ENVS[*]}")"
   echo "Usage: ${cmdname} ENV [OPTIONS]"
-  echo "  This script is ~."
+  echo ""
   echo "ENV:"
-  echo "  using ${env_str}"
+  echo "  using ${env_str}."
+  echo ""
   echo "Options:"
-  echo "  -p, port(e.g. 3000)"
-  echo "  --migrate, If ENV was production, execute 'rails db:migrate'"
+  echo "  -p, Server port(e.g. 3000)."
+  echo "  --migrate, If ENV was production, execute 'rails db:migrate'."
+  echo "  --clean, Execute 'rails assets:clean'."
+  echo "  --nokill, Don't kill process of server ahead of up it."
+  echo ""
+  echo "Examples:"
+  echo "  up.sh test"
+  echo "  up.sh test -p 3000 --migrate --clean --nokill"
   exit 1
 }
 
@@ -52,6 +59,9 @@ do
             fi
             if [[ "$1" =~ '--clean' ]]; then
                 c_flag='TRUE'
+            fi
+            if [[ "$1" =~ '--nokill' ]]; then
+                nk_flag='TRUE'
             fi
             shift
             ;;
@@ -111,6 +121,11 @@ putsd () {
 # サーバープロセスをkillする。方法は二つ(1.pidを確認 2.動作しているプロセスを指定文字でグレップ)
 # 引数: pidパス、プロジェクト名
 kills () {
+  if [ "${nk_flag}" = "TRUE" ]; then
+    putsi "Not kill."
+    return 0
+  fi
+
   if [ -e $1 ]; then
     kill `cat "${1}"`
     putsi "The way of pid."
