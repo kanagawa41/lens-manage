@@ -8,7 +8,7 @@
 ####################
 # シェルパス
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
-ENVS=("local" "development" "production")
+ENVS=("test" "development" "production")
 
 ####################
 # usage
@@ -84,10 +84,13 @@ fi
 ####################
 echo "== Start stand up! =="
 
-if [ "${target_env}" = "local" ]; then
+if [ "${target_env}" = "test" ]; then
   echo "== rails =="
   ps aux | grep -w "\[$PROJECT_NAME\]" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
-  nohup bundle exec rails s -b 0.0.0.0 $PORT &
+  RAILS_ENV=${target_env} bundle exec rails assets:clean
+  rm -rf public/assets
+
+  RAILS_ENV=${target_env} nohup bundle exec rails s -b 0.0.0.0 $PORT &
 
   if [ ! $? = 0 ] ; then echo "FAILD: set up rails."; exit 1; fi
 
@@ -95,27 +98,28 @@ if [ "${target_env}" = "local" ]; then
   if [ -n "$PORT" ]; then
     echo "IP is $SELF_IP"
   fi
-  echo "== Stand up as local =="
+
 elif [ "${target_env}" = "development" ]; then
   ps aux | grep -w "\[$PROJECT_NAME\]" | grep -v grep | awk '{ print "kill -9", $2 }' | sh
-  nohup bundle exec puma -w 4 $PORT &
+  bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
+  bundle exec rails assets:precompile RAILS_ENV=${target_env}
+  RAILS_ENV=${target_env} nohup bundle exec puma -w 4 $PORT &
 
   if [ ! $? = 0 ] ; then echo "FAILD: set up rails."; exit 1; fi
 
-  echo "== Stand up as development =="
 elif [ "${target_env}" = "production" ]; then
   cat /home/app/run/$PROJECT_NAME.pid | awk '{ print "kill -9", $0 }' | sh
-  bundle exec rails assets:clean RAILS_ENV=production # クリーンしても直近３バージョンは保持される
-  bundle exec rails assets:precompile RAILS_ENV=production
+  bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
+  bundle exec rails assets:precompile RAILS_ENV=${target_env}
   if [ "${m_flag}" = "TRUE" ]; then
-    bundle exec rails db:migrate RAILS_ENV=production
-    bundle exec rails db:migrate:status RAILS_ENV=production
+    bundle exec rails db:migrate RAILS_ENV=${target_env}
+    bundle exec rails db:migrate:status RAILS_ENV=${target_env}
   fi
-  RAILS_ENV=production bundle exec whenever --update-crontab
+  RAILS_ENV=${target_env} bundle exec whenever --update-crontab
   # ポートを指定するとsockが使用できない
-  SECRET_KEY_BASE=`bundle exec rails secret` RAILS_SERVE_STATIC_FILES=true RAILS_ENV=production nohup bundle exec puma -w 4 $PORT &
+  SECRET_KEY_BASE=`bundle exec rails secret` RAILS_SERVE_STATIC_FILES=true RAILS_ENV=${target_env} nohup bundle exec puma -w 4 $PORT &
 
   if [ ! $? = 0 ] ; then echo "FAILD: set up rails."; exit 1; fi
 
-  echo "== Stand up as production =="
 fi
+echo "== Stand up as ${target_env} =="
