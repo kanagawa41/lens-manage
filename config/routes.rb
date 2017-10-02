@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :admin do
     collection do
       get 'conoha_list'
+      post 'delete_objects'
     end
   end
 

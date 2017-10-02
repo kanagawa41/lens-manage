@@ -8,7 +8,7 @@ default: &default
   nginx:
     pid_dir: /home/app/run
   cache:
-    conoha_object_list: /tmp/cache/conoha_object_list.txt
+    conoha_container_data: /tmp/cache/conoha_container_data.json
 
 test:
   <<: *default

@@ -1,24 +1,37 @@
+<!-- 概要  -->
 <div class="box container">
   <div class="row">
     <div class="12u 12u(medium)">
-      <label><strong>コノハストレージ情報</strong></label>
-      <div>コンテナ名：<%= @container_name %></div>
-      <div>容量：<%= number_to_human_size(@conoha_container.container_metadata[:bytes]) %></div>
-      <div>アイテム数：<%= @conoha_container.container_metadata[:count] %></div>
-      <div>メタデータ：<%= @conoha_container.container_metadata[:metadata] %></div>
+      <% if @file_stamp %>
+        <label><strong>コノハストレージ情報</strong></label>&nbsp;&nbsp;<label><font color="red">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</font></label>&nbsp;&nbsp;<%= link_to "最新を取得", conoha_list_admin_index_path(force_fetch_flag: true), { style: "font-weight: bold; border-bottom:1px dotted;" } %>
+</div>
+      <% else %>
+        <label><strong>コノハストレージ情報</strong></label>
+      <% end %>
+      <div>
+        <span><b>コンテナ名</b>：<%= @container_metadata[:name] %></span>
+        <span style="padding-left: 0.5em"><b>容量</b>：<%= number_to_human_size(@container_metadata[:bytes]) %></span>
+        <span style="padding-left: 0.5em"><b>アイテム数</b>：<%= @container_metadata[:count] %></span>
+        <span style="padding-left: 0.5em"><b>メタデータ</b>：<%= @container_metadata[:metadata] %></span>
+      </div>
     </div>
   </div>
 </div>
 
-<div id="file-list" class="box container" style="margin-top: 20px;">
+<!-- ツリー -->
+<div class="box container" style="margin-top: 20px;">
   <div class="row">
     <div class="12u 12u(medium)">
-      <% if @cache_flag %>
-        <label><strong>アイテム一覧</strong></label>&nbsp;&nbsp;<label><font color="red">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</font></label>&nbsp;&nbsp;<%= link_to "最新を取得", conoha_list_admin_index_path(force_fetch_flag: true), { style: "font-weight: bold; border-bottom:1px dotted;" } %>
+      <label><strong>アイテム一覧</strong></label>
+    </div>
+    <div class="12u 12u(medium)">
+      <a class="button icon" id="obj_delete_btn" href="javascript:void(0);">削除</a>
+    </div>
+  </div>
 </div>
-      <% else %>
-        <label><strong>アイテム一覧</strong></label>
-      <% end %>
+<div id="file-list" class="box container">
+  <div class="row">
+    <div class="12u 12u(medium)">
       <div id="folder-tree"></div>
     </div>
   </div>

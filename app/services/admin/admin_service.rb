@@ -2,33 +2,47 @@ module AdminService
   # include BaseService
   module_function
 
-  def conoha_list(conoha_container, force_fetch_flag)
-    # 情報をキャッシュしている
-    cache_path = "#{Rails.root}#{Rails.application.config.common.cache[:conoha_object_list]}"
-    if File.exist?(cache_path) && !force_fetch_flag
-      container_objects = []
-      File.open(cache_path, "r") do |f|
-        f.each_line{|line|
-          container_objects << line.chomp
-        }
-      end
+  # キャッシュパス
+  CACHE_CONTAINER_DATA_PATH = "#{Rails.root}#{Rails.application.config.common.cache[:conoha_container_data]}".freeze
+  # オブジェクトストレージのコンフィグ
+  CONOHA_OBS_CONF = Rails.application.config.api.conoha_object_strage.freeze
 
-      file_stamp = File.mtime(cache_path)
-      cache_flag = true
+  def conoha_list(force_fetch_flag)
+    if File.exist?(CACHE_CONTAINER_DATA_PATH) && !force_fetch_flag
+      container_json = File.read(CACHE_CONTAINER_DATA_PATH).chomp
+      container_data = JSON.parse(container_json, {:symbolize_names => true})
+      file_stamp = File.mtime(CACHE_CONTAINER_DATA_PATH)
     else
-      container_objects = conoha_container.objects
-      File.open(cache_path, "w") do |f|
-        f.puts container_objects
-      end
-      cache_flag = false
+      container_data = fetch_container_data
+      File.open(CACHE_CONTAINER_DATA_PATH, "w"){|f| f.puts container_data.to_json }
     end
 
-    [JsTreeDataMaker.make(container_objects), cache_flag, file_stamp]
-  rescue => e
-    logger.error e.message
+    [JsTreeDataMaker.make(container_data[:objects]), container_data[:metadata], file_stamp]
   end
 
-  private
+  # オブジェクトストレージの接続情報
+  def fetch_container_data
+    container = fetch_container_info
+    container_metadata = container.container_metadata
+    container_metadata[:name] = CONOHA_OBS_CONF[:container_name]
+    container_data = {
+      objects: container.objects,
+      metadata: container_metadata,
+    }
+  end
+
+  # オブジェクトストレージの接続情報
+  def fetch_container_info
+    os = OpenStack::Connection.create(
+      username: CONOHA_OBS_CONF[:user_id],
+      api_key: CONOHA_OBS_CONF[:password],
+      authtenant_id: CONOHA_OBS_CONF[:tenant_id],
+      auth_url: CONOHA_OBS_CONF[:auth_url],
+      service_type: "object-store",
+    )
+
+    os.container(CONOHA_OBS_CONF[:container_name])
+  end
 
   module JsTreeDataMaker extend self
     def make(tree_arry)
