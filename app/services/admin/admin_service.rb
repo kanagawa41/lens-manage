@@ -3,66 +3,116 @@ module AdminService
   module_function
 
   def conoha_list(tree_arry)
-    to_jstree_json tree_arry
+    TreeMaker.make tree_arry
   end
 
   private
 
-  # jstreeのdataに使用するjson文字列にして返却する
-  #
-  # production
-  # production/DKC
-  # production/DKC/DKC_16150.jpg
-  # ↓　↓　↓　↓　↓
-  #[
-  # {"id"=>"production", "parent"=>"#", "text"=>"production(6)"},
-  # {"id"=>"production_DKC", "parent"=>"production", "text"=>"DKC(10)"},
-  # {"id"=>"f_DKC_16150.jpg", "parent"=>"production_DKC", "text"=>"DKC_16150.jpg"},
-  def self.to_jstree_json(tree_arry)
+  module TreeMaker extend self
+    def make(tree_arry)
+      tree = []
+      folders = {"#"=> []}
+      tree_arry.each do |path|
+        # ルートを追加
+        pn = Pathname.new("./#{path}")
 
-    tree = []
-    folders = {}
-    tree_arry.each do |line|
-      pn = Pathname.new(line)
-      save_dirname = safe_path_name pn.dirname.to_s
-      save_basename = safe_path_name pn.basename.to_s
+        dirname = pn.dirname.to_s
+        basename = pn.basename.to_s
 
-      has_parent = folders.has_key? save_dirname
-      if has_parent
-        parent = save_dirname
-      else
-        parent = "#"
+        if folders.has_key? dirname
+          set_data(pn, folders, tree)
+        else
+          re_make_folder(Pathname.new(pn), folders, tree)
+        end
       end
 
-      if File.extname(pn.to_s) == "" || pn.dirname.to_s == "." # フォルダ
-        folders[save_dirname] << pn.basename.to_s if has_parent
-        folders[safe_path_name(line.to_s)] = []
-        file_data = { "id"=>safe_path_name(pn.to_s), "parent"=>parent, "text"=>pn.basename.to_s, "icon"=>"jstree-folder" }
-      else # ファイル
-        folders[save_dirname] << pn.basename.to_s if has_parent
-        file_data = { "id"=>"#{parent}_f_#{save_basename}", "parent"=>parent, "text"=>pn.basename.to_s, "icon"=>"jstree-file" }
+      folders.each do |key, val|
+        tree.each do |r|
+          if r["id"] == key
+            if val.size == 0
+              r["text"] = "#{r["text"]}"
+            else
+              r["text"] = "#{r["text"]} (#{val.size})" 
+            end
+          end
+        end
       end
 
-      tree << file_data
+      tree
     end
 
-    # FIXME: パスを名前から導き出すので、数値を名前として表示できない。
-    # folders.each do |key, val|
-    #   tree.each do |r|
-    #     if r["id"] == key
-    #       if val.size == 0
-    #         r["text"] = "#{r["text"]}"
-    #       else
-    #         r["text"] = "#{r["text"]}(#{val.size})" 
-    #       end
-    #     end
-    #   end
-    # end
+    # 再帰的に親フォルダを作成する
+    def re_make_folder(pathname, folders, tree)
+      # development*/lens-manage/production/DKC/DKC2/DKC3
+      dirname = pathname.dirname.to_s
+      # DKC_16150.jpg
+      basename = pathname.basename.to_s
 
-    tree.to_json
-  end
+      # 親がルート
+      # 再起終了
+      if dirname == "."
+        set_folder_data(pathname, folders, tree)
+        return
+      end
 
-  def self.safe_path_name(path_str)
-    path_str.gsub(/\/|\.|\*|:|,|;|\?|"|<|>|\|/, '_')
+      # 親が存在する
+      # 再起終了
+      if folders.has_key? dirname
+        # 自身を作成
+        set_data(pathname, folders, tree)
+      else
+        # 自分を作成する
+        # development*/lens-manage/production/DKC/DKC2/DKC3
+        parent_dirname = set_new_data(pathname, folders, tree)
+
+        # 親の親をも作成
+        # development*/lens-manage/production/DKC/DKC2
+        re_make_folder(Pathname.new(parent_dirname), folders, tree)
+      end
+    end
+
+    def set_data(pathname, folders, tree)
+      if File.extname(pathname.to_s) == "" # フォルダ
+        set_folder_data(pathname, folders, tree)
+      else
+        set_file_data(pathname, folders, tree)
+      end
+    end
+
+    def set_new_data(pn, folders, tree)
+      dirname = pn.dirname.to_s == "." ? "#" : pn.dirname.to_s
+      basename = pn.basename.to_s
+
+      folders[dirname] = [basename]
+      if File.extname(pn.to_s) == "" # フォルダ
+        tree << { "id"=>pn.to_s, "parent"=>dirname, "text"=>basename, "icon"=>"jstree-folder" }
+      else
+        tree << { "id"=>pn.to_s, "parent"=>dirname, "text"=>basename, "icon"=>"jstree-file" }
+      end
+      dirname
+    end
+
+    def set_folder_data(pn, folders, tree)
+      dirname = pn.dirname.to_s == "." ? "#" : pn.dirname.to_s
+      basename = pn.basename.to_s
+
+      # 以前に既に設定済み
+      unless folders[dirname].include?(basename)
+        folders[dirname] << basename
+        tree << { "id"=>pn.to_s, "parent"=>dirname, "text"=>basename, "icon"=>"jstree-folder" }
+      end
+    end
+
+    def set_file_data(pn, folders, tree)
+      dirname = pn.dirname.to_s == "." ? "#" : pn.dirname.to_s
+      basename = pn.basename.to_s
+
+      folders[dirname] << basename
+      tree << { "id"=>pn.to_s, "parent"=>dirname, "text"=>basename, "icon"=>"jstree-file" }
+    end
+
+    def safe_path_name(path_str)
+      path_str.gsub(/\/|\.|\*|:|,|;|\?|"|<|>|\|/, '_')
+    end
   end
 end

@@ -17,7 +17,7 @@ class AdminController < ApplicationController
     @container_name = conoha_obs_conf[:container_name]
     @conoha_container = os.container(@container_name)
 
-    @js_tree_json = AdminService::conoha_list @conoha_container.objects
+    @js_tree = AdminService::conoha_list @conoha_container.objects
     @raw_container_objects = @conoha_container.objects
   end
 end

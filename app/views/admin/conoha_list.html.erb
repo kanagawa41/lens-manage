@@ -20,8 +20,7 @@
 </div>
 <script>
   $(function(){
-    modules.admin.dataTree = <%= raw @js_tree_json %>;
+    modules.admin.dataTree = JSON.parse('<%= raw @js_tree.to_json %>');
     modules.admin.init();
   });
 </script>
-<%= raw @raw_container_objects %>
