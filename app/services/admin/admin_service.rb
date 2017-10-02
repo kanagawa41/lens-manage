@@ -2,13 +2,35 @@ module AdminService
   # include BaseService
   module_function
 
-  def conoha_list(tree_arry)
-    TreeMaker.make tree_arry
+  def conoha_list(conoha_container, force_fetch_flag)
+    # 情報をキャッシュしている
+    cache_path = "#{Rails.root}#{Rails.application.config.common.cache[:conoha_object_list]}"
+    if File.exist?(cache_path) && !force_fetch_flag
+      container_objects = []
+      File.open(cache_path, "r") do |f|
+        f.each_line{|line|
+          container_objects << line.chomp
+        }
+      end
+
+      file_stamp = File.mtime(cache_path)
+      cache_flag = true
+    else
+      container_objects = conoha_container.objects
+      File.open(cache_path, "w") do |f|
+        f.puts container_objects
+      end
+      cache_flag = false
+    end
+
+    [JsTreeDataMaker.make(container_objects), cache_flag, file_stamp]
+  rescue => e
+    logger.error e.message
   end
 
   private
 
-  module TreeMaker extend self
+  module JsTreeDataMaker extend self
     def make(tree_arry)
       tree = []
       folders = {"#"=> []}

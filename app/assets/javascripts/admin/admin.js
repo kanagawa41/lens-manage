@@ -16,6 +16,7 @@ module.initElements = function() {
   // http://final.hateblo.jp/entry/2016/01/13/212400
   $('#folder-tree').jstree({ 'core' : {
     'themes': {'stripes':true},
+    'plugins' : ["checkbox", "wholerow"],
     // 'data' : [
     //    { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" },
     //    { "id" : "ajson2", "parent" : "#", "text" : "Root node 2" },

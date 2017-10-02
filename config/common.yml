@@ -7,6 +7,8 @@ default: &default
       font_path: /app/assets/fonts/ipag.ttc
   nginx:
     pid_dir: /home/app/run
+  cache:
+    conoha_object_list: /tmp/cache/conoha_object_list.txt
 
 test:
   <<: *default
