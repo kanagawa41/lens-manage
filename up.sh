@@ -8,7 +8,7 @@
 ####################
 # シェルパス
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
-ENVS=("test" "development" "production")
+ENVS=("dev" "test" "production")
 
 ####################
 # usage
@@ -29,8 +29,8 @@ function usage()
   echo "  --nokill, Don't kill process of server ahead of up it."
   echo ""
   echo "Examples:"
-  echo "  up.sh test"
-  echo "  up.sh test -p 3000 --migrate --clean --nokill"
+  echo "  up.sh dev"
+  echo "  up.sh dev -p 3000 --migrate --clean --nokill"
   exit 1
 }
 
@@ -148,15 +148,16 @@ kills () {
 ####################
 putst "**Start stand up**"
 
-if [ "${target_env}" = "test" ]; then
+if [ "${target_env}" = "dev" ]; then
+  target_env=development
+
   putst "Process kill"
   kills "tmp/pids/server.pid" "puma"
   putsd
 
   if [ "${c_flag}" = "TRUE" ]; then
     putst "Clean assets"
-    RAILS_ENV=${target_env} bundle exec rails assets:clean
-    ifrm public/assets
+    bundle exec rails assets:clobber RAILS_ENV=${target_env}
     putsd
   fi
 
@@ -173,15 +174,16 @@ if [ "${target_env}" = "test" ]; then
   fi
   putsd
 
-elif [ "${target_env}" = "development" ]; then
+elif [ "${target_env}" = "test" ]; then
+  target_env=test
+
   putst "Process kill"
   kills "/home/app/run/$PROJECT_NAME.pid" "\[${PROJECT_NAME}\]"
   putsd
 
   if [ "${c_flag}" = "TRUE" ]; then
     putst "Clean assets"
-    bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
-    ifrm public/assets
+    bundle exec rails assets:clobber RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
     putsd
   fi
 
@@ -195,14 +197,15 @@ elif [ "${target_env}" = "development" ]; then
   putsd
 
 elif [ "${target_env}" = "production" ]; then
+  target_env=production
+
   putst "Process kill"
   kills "/home/app/run/$PROJECT_NAME.pid" "\[${PROJECT_NAME}\]"
   putsd
 
   if [ "${c_flag}" = "TRUE" ]; then
     putst "Clean assets"
-    bundle exec rails assets:clean RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
-    ifrm public/assets
+    bundle exec rails assets:clobber RAILS_ENV=${target_env} # クリーンしても直近３バージョンは保持される
     putsd
   fi
 

@@ -88,4 +88,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # https://qiita.com/yuuna/items/9a2954300a130a9637b8
+  # nginxで見つからないとunicornにいちいち問い合わせがいくのでサーバーの負荷が劇的にあがってしまう。
+  config.serve_static_assets = false
 end
