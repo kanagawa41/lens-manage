@@ -5,13 +5,35 @@ var modules = modules || {};
 modules.admin = (function () {
 var module = {}
 
-module.dataTree = null;
 
-module.init = function() {
-  module.initElements();
+// AJAXのリクエストパラメータのひな形
+module.getAjaxTemplate = function() {
+  return {
+    type: 'GET',
+    url: '',
+    crossDomain: true,
+    timeout: 1000 * 60 * 5, // 5分
+    cache: false,
+    data: {
+    },
+    crossDomain: true,
+    headers: {
+      'Content-Type' : 'application/json; charset=UTF-8'
+    }
+  };
 }
 
-module.initElements = function() {
+// AJAXの接続失敗の処理
+var AJAX_FAIL = function(XMLHttpRequest, textStatus, errorThrown ) {
+  alert('AJAXの接続が失敗しました。');
+}
+
+
+module.init = function() {
+}
+
+// ツリーを作成する
+module.makeJstree = function(dataTree) {
   // FIXME: 最初は上階層しか表示せずに、下階層はAjaxで取得できるようにしたい
   // http://final.hateblo.jp/entry/2016/01/13/212400
   $('#folder-tree').jstree({
@@ -26,11 +48,12 @@ module.initElements = function() {
       //    { "id" : "ajson7", "parent" : "ajson6", "text" : "file" },
       //    { "id" : "ajson8", "parent" : "ajson7", "text" : "file" },
       // ]
-      'data': module.dataTree,
+      'data': dataTree,
     },
     'plugins' : ["checkbox", "wholerow"],
   });
 
+  // 選択されたファイルのリスト保管する
   var selected_file_data = [];
   $('#folder-tree').on("changed.jstree", function (e, data) {
     selected_file_data = [];
@@ -50,9 +73,27 @@ module.initElements = function() {
     // console.log(JSON.stringify(selected_file_data));
   });
 
+  // 選択された
   $('#obj_delete_btn').on('click', function(){
     alert(JSON.stringify(selected_file_data));
   });
+}
+
+// 対象のオブジェクトを削除する
+module.clickDeleteBtn = function() {
+  var ajaxRequest = module.getAjaxTemplate();
+  ajaxRequest['type'] = 'POST';
+  ajaxRequest['url'] = '/admin/delete_objects';
+  ajaxRequest['data'] = {
+    "test": "test"
+  }
+
+  $.ajax(ajaxRequest
+  ).done(function(response, textStatus, jqXHR) {
+    if(response != null && response.length > 0){
+      alert(response);
+    }
+  }).fail(AJAX_FAIL);
 }
 
 return module;

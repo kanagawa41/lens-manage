@@ -20,11 +20,12 @@ module LensManage
       g.helper false
       g.test_framework false
     end
-    
+
     I18n.available_locales = %i(ja en)
     I18n.enforce_available_locales = true
     I18n.default_locale = :en
 
+    # 部分的にアプリケーションを読み込むことが可能になります。 ただし、これを行うとテンプレートはアプリケーションオブジェクト、またはメソッドを参照することが出来ません。
     config.assets.initialize_on_precompile = false
 
     # タイムゾーンの設定

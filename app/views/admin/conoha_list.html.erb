@@ -38,7 +38,6 @@
 </div>
 <script>
   $(function(){
-    modules.admin.dataTree = JSON.parse('<%= raw @js_tree.to_json %>');
-    modules.admin.init();
+    modules.admin.makeJstree(JSON.parse('<%= raw @js_tree.to_json %>'));
   });
 </script>
