@@ -157,6 +157,7 @@ if [ "${target_env}" = "dev" ]; then
 
   if [ "${c_flag}" = "TRUE" ]; then
     putst "Clean assets"
+    bundle exec rails tmp:cache:clear RAILS_ENV=${target_env}
     bundle exec rails assets:clobber RAILS_ENV=${target_env}
     putsd
   fi

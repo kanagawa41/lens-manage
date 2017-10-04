@@ -91,7 +91,7 @@ module.clickDeleteBtn = function() {
   $.ajax(ajaxRequest
   ).done(function(response, textStatus, jqXHR) {
     if(response != null && response.length > 0){
-      alert(response);
+      console.log(response);
     }
   }).fail(AJAX_FAIL);
 }

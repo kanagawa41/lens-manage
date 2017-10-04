@@ -56,7 +56,6 @@ Rails.application.configure do
   config.logger = Logger.new('log/development.log', 'daily')
 
   # assetsをまとめない
-  # config.assets.enabled = false
   # config.assets.digest = false
   # config.assets.compress = false
   # config.assets.compile = true
