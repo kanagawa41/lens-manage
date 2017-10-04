@@ -28,6 +28,10 @@ var AJAX_FAIL = function(XMLHttpRequest, textStatus, errorThrown ) {
   alert('AJAXの接続が失敗しました。');
 }
 
+// CSRFトークンを取得
+module.getCsrfToken = function() {
+  return $('meta[name="csrf-token"]').attr('content');
+}
 
 module.init = function() {
 }
@@ -73,10 +77,14 @@ module.makeJstree = function(dataTree) {
     // console.log(JSON.stringify(selected_file_data));
   });
 
-  // 選択された
-  $('#obj_delete_btn').on('click', function(){
-    alert(JSON.stringify(selected_file_data));
-  });
+  $('#obj_delete_btn').on('ajax:success', function(event, data, status, xhr) {
+  }
+
+  // // 選択された
+  // $('#obj_delete_btn').on('click', function(){
+  //   module.clickDeleteBtn(selected_file_data);
+  //   // console.log(JSON.stringify(selected_file_data));
+  // });
 }
 
 // 対象のオブジェクトを削除する
@@ -84,14 +92,18 @@ module.clickDeleteBtn = function() {
   var ajaxRequest = module.getAjaxTemplate();
   ajaxRequest['type'] = 'POST';
   ajaxRequest['url'] = '/admin/delete_objects';
+  ajaxRequest['headers']['X-CSRF-Token'] = module.getCsrfToken();
   ajaxRequest['data'] = {
-    "test": "test"
+    admin: [
+    {
+    }
+    ]
   }
 
   $.ajax(ajaxRequest
   ).done(function(response, textStatus, jqXHR) {
-    if(response != null && response.length > 0){
       console.log(response);
+    if(response != null && response.length > 0){
     }
   }).fail(AJAX_FAIL);
 }

@@ -12,6 +12,7 @@ class AdminController < ApplicationController
 
   # TODO: ajax通信で実行できるようにする
   def delete_objects
+    render json: { test: "test" }
   end
 
   private
