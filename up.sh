@@ -163,7 +163,8 @@ if [ "${target_env}" = "dev" ]; then
   fi
 
   putst "Up server"
-  bundle exec rails s -b 0.0.0.0 $PORT -e ${target_env} -d > $UP_LOG 2>&1
+  # 「-d」でデーモン化すると、css、jsの読み込みがされなくなる(precompileすれば大丈夫)
+  bundle exec rails s -b 0.0.0.0 $PORT -e ${target_env} > $UP_LOG 2>&1 &
 
   if [ ! $? = 0 ] ; then putsi "FAILD: set up rails."; exit 1; fi
 
