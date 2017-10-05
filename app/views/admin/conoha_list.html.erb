@@ -3,7 +3,7 @@
   <div class="row">
     <div class="12u 12u(medium)">
       <% if @file_stamp %>
-        <label><strong>コノハストレージ情報</strong></label>&nbsp;&nbsp;<label><font color="red">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</font></label>&nbsp;&nbsp;<%= link_to "最新を取得", conoha_list_admin_index_path(force_fetch_flag: true), { style: "font-weight: bold; border-bottom:1px dotted;" } %>
+        <label><strong>コノハストレージ情報</strong></label>&nbsp;&nbsp;<label><font color="red">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</font></label>&nbsp;&nbsp;<%= link_to "最新を取得", conoha_list_admin_index_path(force_fetch_flag: true), { style: 'font-weight: bold; border-bottom:1px dotted;', id: "fetch_recent_list" } %>
 </div>
       <% else %>
         <label><strong>コノハストレージ情報</strong></label>

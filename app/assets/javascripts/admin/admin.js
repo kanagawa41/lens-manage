@@ -9,7 +9,7 @@ var module = {}
 // AJAXのリクエストパラメータのひな形
 module.getAjaxTemplate = function() {
   return {
-    type: 'GET',
+    type: 'get',
     url: '',
     crossDomain: true,
     timeout: 1000 * 60 * 5, // 5分
@@ -18,8 +18,8 @@ module.getAjaxTemplate = function() {
     },
     crossDomain: true,
     headers: {
-      'Content-Type' : 'application/json; charset=UTF-8'
-    }
+      'content-type' : 'application/json; charset=UTF-8'
+    },
   };
 }
 
@@ -70,40 +70,60 @@ module.makeJstree = function(dataTree) {
       // get the actual node object from the <li> ID
       var full_node = objTreeView.jstree(true).get_node(selectedNodes[i]);
       // Get the full path of the selected node and put it into an array
-      selected_file_data[i] = objTreeView.jstree(true).get_path(full_node, "/").replace(/ \(\d+\)\//g, '/');
+      // 下記のようにフォルダ名後ろのファイル数は削除する。
+      // development* (1)/lens-manage (1)/production/DKC (1)/DKC_16150.jpg
+      // development* (1)
+      // FIXME: フォルダのみのパスは除外する必要がある。
+      selected_file_data[i] = objTreeView.jstree(true).get_path(full_node, "/").replace(/ \(\d+\)\//g, '/').replace(/ \(\d+\)$/g, '');
     }
     // Convert the array to a JSON string so that we can pass the data back to the server 
     // once the user submits the form data
     // console.log(JSON.stringify(selected_file_data));
   });
 
-  $('#obj_delete_btn').on('ajax:success', function(event, data, status, xhr) {
-  }
-
-  // // 選択された
-  // $('#obj_delete_btn').on('click', function(){
-  //   module.clickDeleteBtn(selected_file_data);
-  //   // console.log(JSON.stringify(selected_file_data));
-  // });
+  // 選択された
+  $('#obj_delete_btn').on('click', function(){
+    module.clickDeleteBtn(selected_file_data);
+    // console.log(JSON.stringify(selected_file_data));
+  });
 }
 
 // 対象のオブジェクトを削除する
-module.clickDeleteBtn = function() {
+module.clickDeleteBtn = function(selected_file_data) {
+  var data = { admin: {
+    file_paths: selected_file_data,
+  }};
+
   var ajaxRequest = module.getAjaxTemplate();
-  ajaxRequest['type'] = 'POST';
+  ajaxRequest['type'] = 'post';
   ajaxRequest['url'] = '/admin/delete_objects';
-  ajaxRequest['headers']['X-CSRF-Token'] = module.getCsrfToken();
-  ajaxRequest['data'] = {
-    admin: [
-    {
-    }
-    ]
-  }
+  ajaxRequest['headers']['x-csrf-token'] = module.getCsrfToken();
+  ajaxRequest['data'] = JSON.stringify(data);
 
   $.ajax(ajaxRequest
   ).done(function(response, textStatus, jqXHR) {
-      console.log(response);
-    if(response != null && response.length > 0){
+    if(response == null){
+      alert('AJAXの接続が失敗しました。');
+      console.log(jqXHR);
+      return;
+    }
+    if(response['errors'] != null){
+      alert(response['errors'].join(','));
+      console.log(jqXHR);
+      return;
+    }
+    var message = "";
+    if(response['data']['no_exist_objects'].length > 0){
+      message += "存在しないパス: " + response['data']['no_exist_objects'].join(',')
+    }
+    if(response['data']['ignore_objects'].length > 0){
+      message += "無視したパス: " + response['data']['ignore_objects'].join(',')
+    }
+    if(message == ""){
+      alert("削除が成功しました。OKを押下するとリロードを行います。");
+      location.href = $('#fetch_recent_list').attr("href");
+    }else{
+      alert(message);
     }
   }).fail(AJAX_FAIL);
 }

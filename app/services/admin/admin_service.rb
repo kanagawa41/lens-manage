@@ -2,6 +2,9 @@ module AdminService
   # include BaseService
   module_function
 
+  # Baseに記載する
+  require 'open_stack'
+
   # キャッシュパス
   CACHE_CONTAINER_DATA_PATH = "#{Rails.root}#{Rails.application.config.common.cache[:conoha_container_data]}".freeze
   # オブジェクトストレージのコンフィグ
@@ -18,6 +21,40 @@ module AdminService
     end
 
     [JsTreeDataMaker.make(container_data[:objects]), container_data[:metadata], file_stamp]
+  end
+
+  def delete_objects(file_paths)
+    container = fetch_container_info
+    ignore_objects = []
+    no_exist_objects = []
+
+    container_json = File.read(CACHE_CONTAINER_DATA_PATH).chomp
+    cache_objects = JSON.parse(container_json, {:symbolize_names => true})[:objects]
+
+    file_paths.each do |file_path|
+      # キャッシュと整合性チェックする。
+      # フォルダを削除しようとした際に不要なものが紛れる。しかし、表示の構成上、含まれてしまうため
+      unless cache_objects.include? file_path
+        ignore_objects << file_path
+        next
+      end
+
+      # unless container.object_exists?(file_path)
+      #   no_exist_objects << file_path
+      #   next
+      # end
+
+      begin
+        # 削除
+        container.delete_object(file_path)
+      rescue OpenStack::Exception::ItemNotFound => e
+        # オブジェクトが存在しない
+        no_exist_objects << file_path
+      end
+
+    end
+
+    [no_exist_objects, ignore_objects]
   end
 
   # オブジェクトストレージの接続情報
