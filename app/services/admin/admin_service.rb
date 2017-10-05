@@ -10,14 +10,15 @@ module AdminService
   # オブジェクトストレージのコンフィグ
   CONOHA_OBS_CONF = Rails.application.config.api.conoha_object_strage.freeze
 
-  def conoha_list(force_fetch_flag)
-    if File.exist?(CACHE_CONTAINER_DATA_PATH) && !force_fetch_flag
+  def conoha_list
+    if File.exist?(CACHE_CONTAINER_DATA_PATH)
       container_json = File.read(CACHE_CONTAINER_DATA_PATH).chomp
       container_data = JSON.parse(container_json, {:symbolize_names => true})
       file_stamp = File.mtime(CACHE_CONTAINER_DATA_PATH)
     else
       container_data = fetch_container_data
       File.open(CACHE_CONTAINER_DATA_PATH, "w"){|f| f.puts container_data.to_json }
+      file_stamp = File.mtime(CACHE_CONTAINER_DATA_PATH)
     end
 
     [JsTreeDataMaker.make(container_data[:objects]), container_data[:metadata], file_stamp]
@@ -55,6 +56,13 @@ module AdminService
     end
 
     [no_exist_objects, ignore_objects]
+  end
+
+  def fetch_tree_datas_ajax
+    container_data = fetch_container_data
+    File.open(CACHE_CONTAINER_DATA_PATH, "w"){|f| f.puts container_data.to_json }
+
+    [JsTreeDataMaker.make(container_data[:objects]), container_data[:metadata], File.mtime(CACHE_CONTAINER_DATA_PATH)]
   end
 
   # オブジェクトストレージの接続情報

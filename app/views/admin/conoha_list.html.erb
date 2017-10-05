@@ -1,18 +1,16 @@
 <!-- 概要  -->
-<div class="box container">
+<div id="overview" class="box container">
   <div class="row">
     <div class="12u 12u(medium)">
-      <% if @file_stamp %>
-        <label><strong>コノハストレージ情報</strong></label>&nbsp;&nbsp;<label><font color="red">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</font></label>&nbsp;&nbsp;<%= link_to "最新を取得", conoha_list_admin_index_path(force_fetch_flag: true), { style: 'font-weight: bold; border-bottom:1px dotted;', id: "fetch_recent_list" } %>
+    <label><strong>コノハストレージ情報</strong></label>&nbsp;&nbsp;
+    <label id="cache-name">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</label>&nbsp;&nbsp;
+    <a id="fetch_recent_list" href="javascript:void(0);" style="font-weight: bold; border-bottom:1px dotted;">最新を取得</a>
 </div>
-      <% else %>
-        <label><strong>コノハストレージ情報</strong></label>
-      <% end %>
       <div>
-        <span><b>コンテナ名</b>：<%= @container_metadata[:name] %></span>
-        <span style="padding-left: 0.5em"><b>容量</b>：<%= number_to_human_size(@container_metadata[:bytes]) %></span>
-        <span style="padding-left: 0.5em"><b>アイテム数</b>：<%= @container_metadata[:count] %></span>
-        <span style="padding-left: 0.5em"><b>メタデータ</b>：<%= @container_metadata[:metadata] %></span>
+        <span class="strage-info"><label class="info-name">コンテナ名</label>：<label id="con-name"><%= @container_metadata[:name] %></label></span>
+        <span class="strage-info"><label class="info-name">容量</label>：<label id="con-capacity"><%= number_to_human_size(@container_metadata[:bytes]) %></label></span>
+        <span class="strage-info"><label class="info-name">アイテム数</label>：<label id="con-item-num"><%= @container_metadata[:count] %></label></span>
+        <span class="strage-info"><label class="info-name">メタデータ</label>：<label id="con-metadata"><%= @container_metadata[:metadata] %></label></span>
       </div>
     </div>
   </div>
@@ -32,12 +30,15 @@
 <div id="file-list" class="box container">
   <div class="row">
     <div class="12u 12u(medium)">
-      <div id="folder-tree"></div>
+      <div id="folder-tree-wrap">
+        <div id="folder-tree"></div>
+      </div>
     </div>
   </div>
 </div>
 <script>
   $(function(){
+    modules.admin.init();
     modules.admin.makeJstree(JSON.parse('<%= raw @js_tree.to_json %>'));
   });
 </script>

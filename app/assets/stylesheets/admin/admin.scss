@@ -5,3 +5,16 @@
   overflow: scroll;
   height: 500px;
 }
+
+#overview {
+	#cache-name {
+		color: red;
+	}
+
+	.strage-info {
+	  padding-left: 0.5em;
+		.info-name {
+		  font-weight: bold;
+		}
+	}
+}

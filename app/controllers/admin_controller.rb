@@ -4,14 +4,11 @@ class AdminController < ApplicationController
   # 参考
   # https://github.com/ruby-openstack/ruby-openstack/wiki/Object-Storage
   def conoha_list
-    @js_tree, @container_metadata, @file_stamp = AdminService::conoha_list(params[:force_fetch_flag])
-    if params[:force_fetch_flag]
-      redirect_to action: "conoha_list"
-    end
+    @js_tree, @container_metadata, @file_stamp = AdminService::conoha_list
   end
 
-  # TODO: ajax通信で実行できるようにする
-  def delete_objects
+  # オブジェクトの削除
+  def delete_objects_ajax
     if request.xhr?
       render json: { errors: ["Ajax通信のみ許容"] }, :status => 403
       return
@@ -26,6 +23,22 @@ class AdminController < ApplicationController
     render json: { data: {
       no_exist_objects: no_exist_objects,
       ignore_objects: ignore_objects,
+    }}
+  end
+
+  # ツリーの更新(Ajax)
+  def fetch_tree_datas_ajax
+    if request.xhr?
+      render json: { errors: ["Ajax通信のみ許容"] }, :status => 403
+      return
+    end
+
+    js_tree, container_metadata, file_stamp = AdminService::fetch_tree_datas_ajax
+
+    render json: { data: {
+      js_tree: js_tree,
+      container_metadata: container_metadata,
+      file_stamp: file_stamp.strftime("%Y年%m月%d日 %H:%M:%S"),
     }}
   end
 
