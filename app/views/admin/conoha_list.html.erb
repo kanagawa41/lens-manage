@@ -2,10 +2,12 @@
 <div id="overview" class="box container">
   <div class="row">
     <div class="12u 12u(medium)">
-    <label><strong>コノハストレージ情報</strong></label>&nbsp;&nbsp;
-    <label id="cache-name">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</label>&nbsp;&nbsp;
-    <a id="fetch_recent_list" href="javascript:void(0);" style="font-weight: bold; border-bottom:1px dotted;">最新を取得</a>
-</div>
+      <div>
+        <%= link_to '管理画面TOPへ', admin_dashboard_path %>
+      </div>
+      <label><strong>コノハストレージ情報</strong></label>&nbsp;&nbsp;
+      <label id="cache-name">(キャッシュ:&nbsp;<%= @file_stamp.strftime("%Y年%m月%d日 %H:%M:%S") %>)</label>&nbsp;&nbsp;
+      <a id="fetch_recent_list" href="javascript:void(0);" style="font-weight: bold; border-bottom:1px dotted;">最新を取得</a>
       <div>
         <span class="strage-info"><label class="info-name">コンテナ名</label>：<label id="con-name"><%= @container_metadata[:name] %></label></span>
         <span class="strage-info"><label class="info-name">容量</label>：<label id="con-capacity"><%= number_to_human_size(@container_metadata[:bytes]) %></label></span>

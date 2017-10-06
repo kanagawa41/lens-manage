@@ -27,7 +27,7 @@ ActiveAdmin.register MImage do
     # # belongs_to でつながっている parent_model のリンク付きの項目
     column :path do |model_name|
       letter_code = m_shop_infos[model_name.m_lens_info.m_shop_info_id]
-      image_tag "#{IMAGE_REFER_PATH}/#{letter_code}/#{model_name.path}" if model_name.path.present?
+      image_tag "#{Rails.application.config.common.images[:src_path]}/#{letter_code}/c_#{model_name.m_lens_info.m_image.path}", alt: model_name.m_lens_info.lens_name
     end
 
     actions defaults: false do |model|

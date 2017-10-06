@@ -1,4 +1,7 @@
 ActiveAdmin.register CollectResult do
+  permit_params :m_shop_info_id, :success_num, :fail_num
+
+  filter :m_shop_info_id, as: :select, collection: MShopInfo.all.order(id: :asc).map{ |parent| ["#{parent.shop_name}(#{parent.id})", parent.id] }
 
   index do
     selectable_column
