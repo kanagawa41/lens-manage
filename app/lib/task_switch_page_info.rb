@@ -518,7 +518,7 @@ class TaskSwitchPageInfo
             end
 
             # upsert
-            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+            if m_lens_info = MLensInfo.where(lens_name: lens_info[:lens_name], m_shop_info_id: $shop_id).first
               m_lens_info.attributes = lens_info
             else
               m_lens_info = MLensInfo.new(lens_info)

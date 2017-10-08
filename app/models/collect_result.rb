@@ -8,7 +8,8 @@ class CollectResult < ApplicationRecord
       FROM collect_results AS cr
       INNER JOIN m_shop_infos AS msi
       ON msi.id = cr.m_shop_info_id
-      WHERE NOT EXISTS (
+      WHERE msi.disabled = false
+      AND NOT EXISTS (
         SELECT 1
         FROM collect_results AS scr
         WHERE cr.m_shop_info_id = scr.m_shop_info_id
