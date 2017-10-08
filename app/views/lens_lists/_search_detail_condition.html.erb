@@ -1,14 +1,38 @@
 <%# 検索の時にしか表示しない %>
 <% if request.path_info == '/lens_lists/index' %>
 <!-- Search Detail -->
-<div id="search_detail" class="container">
-  <div class="row">
-    <div class="3u 12u(medium)">
-      <%= label :index, :focal_length, "焦点距離" %><%= collection_select(nil, :focal_length, @m_lens_info.find_focal_lengthes, :focal_length, :focal_length, include_blank: true, selected: @focal_length) %>
-    </div>
-    <div class="3u 12u(medium)">
-      <%= label :index, :f_num, "F値" %><%= collection_select(nil, :f_num, @m_lens_info.find_f_nums, :f_num, :f_num, include_blank: true, selected: @f_num) %>
-    </div>
+<div class="container" style="margin-top: 1em;">
+  <div class="11u 12u(medium)" style="text-align: right;">
+    <a href="javascript:void(0);" id="detail_search">絞り込み</a>
   </div>
 </div>
+
+<div class="modal fade" id="modal_box">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">検索を絞り込む</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="row">
+            <div class="3u 6u(medium)">
+              <%= label :index, :focal_length, "焦点距離" %><%= collection_select(nil, :focal_length, @m_lens_info.find_focal_lengthes, :focal_length, :focal_length, include_blank: true, selected: @focal_length) %>
+            </div>
+            <div class="3u 6u(medium)">
+            <%= label :index, :f_num, "F値" %><%= collection_select(nil, :f_num, @m_lens_info.find_f_nums, :f_num, :f_num, include_blank: true, selected: @f_num) %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="detail_reset_btn" type="button" class="btn btn-default">リセット</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        <button id="detail_search_btn" type="button" class="btn btn-primary">検索</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <% end %>

@@ -1,0 +1,15 @@
+@import "common/bootstrap";
+
+.modal-header {
+    border-radius: 5px 5px 0px 0px;
+    background: #ff4486;
+    color: #fff;
+}
+.modal-footer {
+    border-radius: 0px 0px 5px 5px;
+    background-color: #eee;
+    color: #666;    
+}
+.modal-dialog select {
+    border: solid 1px #333;
+}

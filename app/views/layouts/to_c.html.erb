@@ -42,7 +42,7 @@
                 <%= text_field_tag 'q', @q, placeholder: 'レンズ名を入力' %>
               </div>
               <div class="2u 12u(medium)">
-                <%= link_to 'レンズを探す', 'javascript:void(0);', class: "button icon", id: "search_exec" %>
+                <%= link_to '検索', 'javascript:void(0);', class: "button icon fa-search", id: "search_exec" %>
               </div>
             </div>
             <%= render :partial => 'search_detail_condition' %>
@@ -58,6 +58,8 @@
 
     <script>
       (function($) {
+        modules.lensLists.init();
+
         $('#q').keypress( function ( e ) {
           if (e.which == 13) { // Enter
             $('#search_exec').click();
