@@ -87,7 +87,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "レンズ情報収集最終日" do
           recs = ''
-          CollectResult.to_hash.recent_collect_day.each do |r|
+          CollectResult.recent_collect_day.to_hash.each do |r|
             recs << "<div width='100px'>"
             recs << "<span>#{r["shop_name"]}(#{r["shop_id"]})</span><span>：#{distance_of_time_in_words_to_now(r["updated_at"], scope: 'datetime.distance_in_words')}</span><span> ( <label style='color: lime;'>#{r["success_num"]}</label> : <label style='color: red;'>#{r["fail_num"]}</label> )</span>"
             recs << "</div>"
