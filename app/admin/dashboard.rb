@@ -86,10 +86,27 @@ ActiveAdmin.register_page "Dashboard" do
       # 各ショップの最終更新日
       column do
         panel "レンズ情報収集最終日" do
+          target_ids = []
           recs = ''
+          # 収集結果
           CollectResult.recent_collect_day.to_hash.each do |r|
+            target_ids << r["shop_id"]
             recs << "<div width='100px'>"
             recs << "<span>#{r["shop_name"]}(#{r["shop_id"]})</span><span>：#{distance_of_time_in_words_to_now(r["updated_at"], scope: 'datetime.distance_in_words')}</span><span> ( <label style='color: #3ec93e;'>#{r["success_num"]}</label> : <label style='color: red;'>#{r["fail_num"]}</label> )</span>"
+            recs << "</div>"
+          end
+          # 取集対象外のショップ
+          MShopInfo.where(disabled: true).all.each do |r|
+            target_ids << r[:id]
+            recs << "<div width='100px'>"
+            recs << "<span style='color: #8e9498;'>#{r[:shop_name]}(#{r[:id]})：無効中</span>"
+            recs << "</div>"
+          end
+          # まだ収集できていないショップ
+          MShopInfo.where.not(id: target_ids).all.each do |r|
+            target_ids << r[:id]
+            recs << "<div width='100px'>"
+            recs << "<span style='color: red;'>#{r[:shop_name]}(#{r[:id]})：収集していない</span>"
             recs << "</div>"
           end
           recs.html_safe
