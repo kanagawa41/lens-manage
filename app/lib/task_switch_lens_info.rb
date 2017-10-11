@@ -28,6 +28,8 @@ class TaskSwitchLensInfo
         target_10 m_lens_info
       elsif shop_id == 11 # カメラのマツバラ光機
         target_11 m_lens_info
+      elsif shop_id == 12 # OSカメラ
+        target_12 m_lens_info
       else
         raise "#{shop_id}(存在しない)"
       end
@@ -107,12 +109,13 @@ class TaskSwitchLensInfo
     fixed_format1 m_lens_info
   end
 
-  private
-
-  # 検索を掛ける前に統一にする
-  def self.safe_lnes_name(lens_name)
-    lens_name.gsub(/ｍｍ|MM/, 'mm').gsub(/Ｆ|ｆ/, 'f').gsub(/．/, '.').gsub(/／/, '/').gsub(/ー/, '-').tr("０-９", "0-9").downcase
+  # OSカメラ
+  def self.target_12(m_lens_info)
+    # \d+/　、　/\d.?(?:\d+)?
+    fixed_format4 m_lens_info
   end
+
+  private
 
   # 200(focal)/10(F)
   def self.fixed_format1(m_lens_info)
@@ -138,6 +141,19 @@ class TaskSwitchLensInfo
     save_selected_info(m_lens_info, focal_length_pattern, f_num_pattern)
   end
 
+  # 200mm(focal) f 10(F)
+  def self.fixed_format4(m_lens_info)
+    focal_length_pattern = Regexp.new("(#{NUM_MATCH_STR})mm", Regexp::IGNORECASE)
+    f_num_pattern = Regexp.new("f\s+(#{NUM_MATCH_STR})", Regexp::IGNORECASE)
+
+    save_selected_info(m_lens_info, focal_length_pattern, f_num_pattern)
+  end
+
+  # 検索を掛ける前に統一にする
+  def self.safe_lnes_name(lens_name)
+    lens_name.gsub(/ｍｍ|MM/, 'mm').gsub(/Ｆ|ｆ/, 'f').gsub(/．/, '.').gsub(/／/, '/').gsub(/ー/, '-').tr("０-９", "0-9").downcase
+  end
+
   def self.save_selected_info(m_lens_info, focal_length_pattern, f_num_pattern)
     lens_name = safe_lnes_name(m_lens_info[:lens_name])
 
@@ -153,14 +169,15 @@ class TaskSwitchLensInfo
 
     return if focal_length == "" || f_num == ""
 
-    # 焦点距離に「.」は通常含まれないので、逆転している可能性がある
-    if focal_length =~ /\./
-      tmp_focal_length = focal_length
-      tmp_f_num = f_num
+    # COMMENT: たまに含まれている場合があるので無効
+    # # 焦点距離に「.」は通常含まれないので、逆転している可能性がある
+    # if focal_length =~ /\./
+    #   tmp_focal_length = focal_length
+    #   tmp_f_num = f_num
 
-      focal_length = tmp_f_num
-      f_num = tmp_focal_length
-    end
+    #   focal_length = tmp_f_num
+    #   f_num = tmp_focal_length
+    # end
 
     m_lens_info[:focal_length] = focal_length
     m_lens_info[:f_num] = f_num

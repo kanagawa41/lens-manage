@@ -28,9 +28,9 @@ ActiveAdmin.register CollectTarget do
     column :created_at
 
     actions defaults: false do |model|
-      item 'view', admin_m_lens_info_path(model), class: 'view_link member_link'
-      item 'edit', edit_admin_m_lens_info_path(model), class: 'edit_link member_link'
-      item 'delete', admin_m_lens_info_path(model), class: 'delete_link member_link', method: :delete, :confirm => "All grades, uploads and tracks will be deleted with this content.Are you sure you want to delete this Content?"
+      item 'view', admin_collect_target_path(model), class: 'view_link member_link'
+      item 'edit', edit_admin_collect_target_path(model), class: 'edit_link member_link'
+      item 'delete', admin_collect_target_path(model), class: 'delete_link member_link', method: :delete, :confirm => "All grades, uploads and tracks will be deleted with this content.Are you sure you want to delete this Content?"
     end
   end
 

@@ -25,6 +25,8 @@ class TaskSwitchPageInfo
       target_10 collect_targets
     elsif shop_id == 11 # カメラのマツバラ光機
       target_11 collect_targets
+    elsif shop_id == 12 # OSカメラ
+      target_12 collect_targets
     else
       raise "#{shop_id}(存在しない)"
     end
@@ -807,6 +809,82 @@ class TaskSwitchPageInfo
     end
 
     CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # OSカメラ
+  def self.target_12(collect_targets)
+    session = TaskCommon::get_session
+
+    success_num = 0
+    fail_num = 0
+    collect_targets.each do |collect_target|
+      next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
+
+      Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
+        sleep [*2..5].sample # アクセスタイミングを分散させる
+
+        # 対象URLに遷移する
+        session.visit collect_target.list_url
+
+        # レンズ情報を取得する
+        session.all(:css, 'table tr[bgcolor="#000000"]').each do |article|
+          # 区別ができない要素があるため、tdの個数で除外する
+          next if article.all(:css, 'td').size < 6
+
+          begin
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: nil,
+              lens_pic_url: nil,
+              stock_state: nil, # 在庫不明
+              price: 0,
+              m_shop_info_id: $shop_id,
+              memo: nil,
+            }
+            metadata = article.text
+
+            infos = article.all(:css, 'td')
+
+            lens_info[:lens_info_url] = infos[0].find(:css, 'a')[:href]
+            lens_info[:lens_pic_url] = infos[0].find(:css, 'img')[:src]
+
+            lens_info[:memo] = safe_lens_name infos[1].text
+
+            lens_info[:lens_name] = safe_lens_name infos[2].text
+
+            lens_info[:price] = safe_price infos[5].text
+
+            # upsert
+            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
+            else
+              m_lens_info = MLensInfo.new(lens_info)
+            end
+
+            m_lens_info.save!
+
+            upsert_warehouse(m_lens_info_id: m_lens_info.id, metadata: metadata)
+
+            success_num += 1
+          rescue => e
+            pp e.message
+            fail_num += 1
+          end
+        end
+      end
+    end
+
+    CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # 安全に金額の値を取得する
+  def self.safe_price(price_str)
+    price_str.delete("^0-9")
+  end
+
+  # 安全に金額の値を取得する
+  def self.safe_lens_name(lens_name_str)
+    lens_name_str.gsub(/\r|\n|\t/, ' ').strip
   end
 
   # メタデータをupsertする

@@ -1,6 +1,10 @@
 ActiveAdmin.register MShopInfo do
   permit_params :shop_name, :letter_code, :shop_url, :disabled
+
+  active_admin_import validate: true, batch_transaction: true
+
   actions :all
+
 
   filter :shop_name
   filter :letter_code
