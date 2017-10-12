@@ -30,6 +30,8 @@ class TaskSwitchLensInfo
         target_11 m_lens_info
       elsif shop_id == 12 # OSカメラ
         target_12 m_lens_info
+      elsif shop_id == 14 # KING-2
+        target_14 m_lens_info
       else
         raise "#{shop_id}(存在しない)"
       end
@@ -115,6 +117,12 @@ class TaskSwitchLensInfo
     fixed_format4 m_lens_info
   end
 
+  # KING-2
+  def self.target_14(m_lens_info)
+    # 28mm/f2.8
+    fixed_format2 m_lens_info
+  end
+
   private
 
   # 200(focal)/10(F)
@@ -144,7 +152,7 @@ class TaskSwitchLensInfo
   # 200mm(focal) f 10(F)
   def self.fixed_format4(m_lens_info)
     focal_length_pattern = Regexp.new("(#{NUM_MATCH_STR})mm", Regexp::IGNORECASE)
-    f_num_pattern = Regexp.new("f\s+(#{NUM_MATCH_STR})", Regexp::IGNORECASE)
+    f_num_pattern = Regexp.new("f\s*(#{NUM_MATCH_STR})", Regexp::IGNORECASE)
 
     save_selected_info(m_lens_info, focal_length_pattern, f_num_pattern)
   end

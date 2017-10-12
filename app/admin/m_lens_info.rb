@@ -28,7 +28,7 @@ ActiveAdmin.register MLensInfo do
 
     # # belongs_to でつながっている parent_model のリンク付きの項目
     column :m_shop_info_id do |model|
-      link_to "model.shop_name(#{model.m_shop_info.id})", admin_m_shop_info_path(model.m_shop_info)
+      link_to "#{model.m_shop_info.shop_name}(#{model.m_shop_info_id})", admin_m_shop_info_path(model.m_shop_info)
     end
 
     column :f_num
