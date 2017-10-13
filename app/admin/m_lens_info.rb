@@ -12,7 +12,7 @@ ActiveAdmin.register MLensInfo do
   filter :f_num
   filter :focal_length
   filter :disabled
-  filter :updated_at
+  filter :old_flag
 
   index do
     selectable_column
@@ -42,8 +42,8 @@ ActiveAdmin.register MLensInfo do
       end
     end
 
-    column :memo
     column :disabled
+    column :old_flag
     column :created_at
     column :updated_at
 
@@ -62,8 +62,11 @@ ActiveAdmin.register MLensInfo do
       f.input :stock_state
       f.input :price
       f.input :m_shop_info_id, as: :select, collection: MShopInfo.all.map { |model| [model.shop_name, model.id] }
+      f.input :f_num
+      f.input :focal_length
       f.input :disabled
       f.input :memo
+      f.input :old_flag
     end
     f.actions
   end

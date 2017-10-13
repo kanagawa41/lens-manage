@@ -3,6 +3,9 @@ class TaskSwitchPageInfo
     collect_targets = CollectTarget.select(:id, :list_url, :start_page_num, :end_page_num).where(m_shop_info_id: shop_id).all
 
     $shop_id = shop_id
+    # 更新されたレンズID
+    $fetch_lens_ids = []
+
     if shop_id == 1 # レモン社
       target_1 collect_targets
     elsif shop_id == 2 # モリッツ
@@ -32,6 +35,10 @@ class TaskSwitchPageInfo
     else
       raise "#{shop_id}(存在しない)"
     end
+
+    old_lens_ids = MLensInfo.select(:id).where(m_shop_info_id: $shop_id, old_flag: false).all.map{|r| r[:id]} - $fetch_lens_ids
+    # 今回更新されなかったレンズを古いとみなす
+    MLensInfo.where(m_shop_info_id: $shop_id).where(id: old_lens_ids).update(old_flag: true)
   rescue => e
     raise "m_shop_info_idが#{$shop_id}のページ数が取得できませんでした。: #{e.message}"
   end
@@ -70,6 +77,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -89,6 +97,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -133,6 +143,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -151,6 +162,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -196,6 +209,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -224,6 +238,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -269,6 +285,7 @@ class TaskSwitchPageInfo
               price: 0,
               m_shop_info_id: $shop_id,
               metadata: article.text,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -288,6 +305,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -348,6 +367,7 @@ class TaskSwitchPageInfo
             stock_state: nil,
             price: 0,
             m_shop_info_id: $shop_id,
+            old_flag: false,
           }
           metadata = article.text
 
@@ -370,6 +390,8 @@ class TaskSwitchPageInfo
           end
 
           m_lens_info.save!
+
+          $fetch_lens_ids << m_lens_info.id
 
           upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -414,6 +436,7 @@ class TaskSwitchPageInfo
             price: 0,
             m_shop_info_id: $shop_id,
             memo: nil,
+            old_flag: false,
           }
           metadata = article.text
 
@@ -446,6 +469,8 @@ class TaskSwitchPageInfo
                   end
 
                   m_lens_info.save!
+
+                  $fetch_lens_ids << m_lens_info.id
 
                   upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -500,6 +525,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -529,6 +555,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -570,6 +598,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -589,6 +618,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -629,6 +660,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -651,6 +683,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -697,6 +731,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -717,6 +752,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -770,6 +807,7 @@ class TaskSwitchPageInfo
               stock_state: nil,
               price: 0,
               m_shop_info_id: $shop_id,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -798,6 +836,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
@@ -842,6 +882,7 @@ class TaskSwitchPageInfo
               price: 0,
               m_shop_info_id: $shop_id,
               memo: nil,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -864,6 +905,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse(m_lens_info_id: m_lens_info.id, metadata: metadata)
 
@@ -906,6 +949,7 @@ class TaskSwitchPageInfo
               price: 0,
               m_shop_info_id: $shop_id,
               memo: nil,
+              old_flag: false,
             }
             metadata = article.text
 
@@ -926,6 +970,8 @@ class TaskSwitchPageInfo
             end
 
             m_lens_info.save!
+
+            $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse(m_lens_info_id: m_lens_info.id, metadata: metadata)
 
