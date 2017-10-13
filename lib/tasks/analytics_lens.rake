@@ -26,13 +26,18 @@ namespace :analytics_lens do
   task :lens_related_word_with_google, ['target_shop_id'] => :environment do |task, args|
     TaskCommon::set_log 'analytics_lens/lens_related_word_with_google'
 
+    # Googleに関連性を検索しに行く
     def search_google_related_words_for_lens(search_word)
-      session = TaskCommon::get_session
+      begin
+        session = TaskCommon::get_session
 
-      # ”レンズ”をつけて検索結果をいい感じにする
-      session.visit "https://www.google.co.jp/search?q=#{URI.escape(search_word + " レンズ")}"
+        # ”レンズ”をつけて検索結果をいい感じにする
+        session.visit "https://www.google.co.jp/search?q=#{URI.escape(search_word + " レンズ")}"
 
-      session.all("._Bmc").map{|r| r.text}
+        session.all("._Bmc").map{|r| r.text}
+      rescue => e
+        return []
+      end
     end
 
     shop_id = args[:target_shop_id].to_i
