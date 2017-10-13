@@ -1,5 +1,23 @@
-namespace :test do
+namespace :mytest do
   desc "テスト"
+
+  # Googleの検索結果
+  task exec12: :environment do
+    def search_google_related_words_for_lens(search_word)
+      session = TaskCommon::get_session
+
+      session.visit "https://www.google.co.jp/search?q=#{URI.escape(search_word + " レンズ")}"
+
+      session.all("._Bmc").map{|r| r.text}
+    end
+
+    # pp fetch_google_related_words "COLOR-YASHINON-DX 45mm f1.7 SONY α Eマウント改造"
+    # pp fetch_google_related_words "COLOR-YASHINON-DX"
+    # pp fetch_google_related_words "Meyer-optik DOMIPLAN 50mm/f2.8 ZEBRA"
+    # pp fetch_google_related_words "Meyer-optik DOMIPLAN"
+    pp search_google_related_words_for_lens "ZEISS 【中古】(ツアイス) ZEISS マクロプラナー50/2 ZF2(ニコンAis)"
+
+  end
 
   # コンテナから削除する。
   task exec11: :environment do

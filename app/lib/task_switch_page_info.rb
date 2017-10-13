@@ -59,7 +59,7 @@ class TaskSwitchPageInfo
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
 
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
@@ -127,7 +127,7 @@ class TaskSwitchPageInfo
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
 
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -194,7 +194,7 @@ class TaskSwitchPageInfo
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
 
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
@@ -269,7 +269,7 @@ class TaskSwitchPageInfo
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
 
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -339,7 +339,7 @@ class TaskSwitchPageInfo
     collect_targets_arr.each do |collect_target|
       next unless collect_target["start_page_num"].present? && collect_target["end_page_num"].present?
 
-      sleep [*2..5].sample # アクセスタイミングを分散させる
+      TaskCommon::access_sleep
 
       # 対象URLに遷移する
       session.visit collect_target["list_url"]
@@ -421,7 +421,7 @@ class TaskSwitchPageInfo
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
 
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -510,7 +510,7 @@ class TaskSwitchPageInfo
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
 
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -583,7 +583,7 @@ class TaskSwitchPageInfo
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
 
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -645,7 +645,7 @@ class TaskSwitchPageInfo
       next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
@@ -710,7 +710,7 @@ class TaskSwitchPageInfo
       next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
@@ -781,7 +781,7 @@ class TaskSwitchPageInfo
       next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -863,7 +863,7 @@ class TaskSwitchPageInfo
       next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url
@@ -933,7 +933,7 @@ class TaskSwitchPageInfo
       next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
 
       Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
-        sleep [*2..5].sample # アクセスタイミングを分散させる
+        TaskCommon::access_sleep
 
         # 対象URLに遷移する
         session.visit collect_target.list_url

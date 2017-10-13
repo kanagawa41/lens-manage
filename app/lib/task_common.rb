@@ -28,9 +28,13 @@ class TaskCommon
     session = Capybara::Session.new(:poltergeist)
   end
 
+  # アクセスタイミングを分散させる
+  def self.access_sleep
+    sleep [*2..5].sample
+  end
+
   # ログ出力先設定
   def self.set_log(log_name)
-    FileUtils.mkdir_p("log/#{log_name}") unless FileTest.exist?("log/#{log_name}")
     Rails.logger = Logger.new("log/#{log_name}.log", 'daily')
   end
 end

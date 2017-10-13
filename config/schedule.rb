@@ -30,6 +30,11 @@ every '21 1 */2 * * ' do
   rake "fetch_lens_info:all:lens_image"
 end
 
+# レンズ関連ワード解析
+every '31 3 */2 * * ' do
+  rake "analytics_lens:all:lens_related_word_with_google"
+end
+
 # # 毎日00:05分
 # every '5 0 * * * ' do
 #   rake "brand_group:fetch"

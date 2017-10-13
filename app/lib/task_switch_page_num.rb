@@ -91,7 +91,7 @@ class TaskSwitchPageNum
 
     def self.search_page(next_page)
       count_up
-      sleep [*2..5].sample # アクセスタイミングを分散させる
+      TaskCommon::access_sleep
 
       # 対象URLに遷移する
       $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)
@@ -140,7 +140,7 @@ class TaskSwitchPageNum
 
     def self.search_page(next_page)
       count_up
-      sleep [*2..5].sample # アクセスタイミングを分散させる
+      TaskCommon::access_sleep
 
       # 対象URLに遷移する
       $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)
@@ -188,7 +188,7 @@ class TaskSwitchPageNum
 
     def self.search_page(next_page)
       count_up
-      sleep [*2..5].sample # アクセスタイミングを分散させる
+      TaskCommon::access_sleep
 
       # 対象URLに遷移する
       $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)

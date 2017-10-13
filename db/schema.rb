@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171013080951) do
+ActiveRecord::Schema.define(version: 20171013113228) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -41,6 +41,14 @@ ActiveRecord::Schema.define(version: 20171013080951) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
+
+  create_table "analytics_lens_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_lens_info_id", null: false
+    t.text "google_related_words", limit: 4294967295, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["m_lens_info_id"], name: "index_analytics_lens_infos_on_m_lens_info_id"
   end
 
   create_table "collect_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -131,6 +139,7 @@ ActiveRecord::Schema.define(version: 20171013080951) do
     t.index ["m_lens_info_id"], name: "index_transition_histories_on_m_lens_info_id"
   end
 
+  add_foreign_key "analytics_lens_infos", "m_lens_infos"
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_lens_infos"

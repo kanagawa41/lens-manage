@@ -1,6 +1,7 @@
 class MLensInfo < ApplicationRecord
   belongs_to :m_shop_info
   has_one :m_image
+  has_one :analytics_lens_info
 
   validate :none_nil_but_blank?
 

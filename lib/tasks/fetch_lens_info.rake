@@ -22,7 +22,7 @@ namespace :fetch_lens_info do
     task lens_image: :environment do
       MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
         Rails.logger.info "#{m.shop_name}の画像を取得"
-        `bundle exec rails fetch_lens_info:lens_image[#{m.id}] RAILS_ENV=#{Rails.env}`        
+        `bundle exec rails fetch_lens_info:lens_image[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
   end
@@ -94,7 +94,7 @@ namespace :fetch_lens_info do
 
         image_chunk = File.open(image_path)
         new_obj = cont.create_object(
-          "#{private_objs_path}/#{image_name}", 
+          "#{private_objs_path}/#{image_name}",
           {
             content_type: MimeMagic.by_magic(image_chunk).type
           },
@@ -102,7 +102,7 @@ namespace :fetch_lens_info do
         )
         c_image_chunk = File.open(c_image_path)
         new_obj = cont.create_object(
-          "#{objs_path}/#{File.basename(c_image_path)}", 
+          "#{objs_path}/#{File.basename(c_image_path)}",
           {
             content_type: MimeMagic.by_magic(c_image_chunk).type
           },
