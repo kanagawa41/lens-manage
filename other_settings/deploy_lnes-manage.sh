@@ -105,6 +105,7 @@ ifrm () {
 echo "== Start deployment! =="
 
 if [ "${i_flag}" = "TRUE" ]; then
+  # 古いのが残っているかもなので一応削除
   ifrm $PROJECT_PATH
   ifrm $BK_PROJECT_PATH
   git clone $GIT_PROJECT_URL $PROJECT_NAME
@@ -117,9 +118,10 @@ if [ "${i_flag}" = "TRUE" ]; then
   mkdir -p $BK_LOG
 
 else
-  cp -r $ORG_LOG $BK_LOG
+  cp -r $ORG_LOG/* $BK_LOG
+  git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"
   rm -rf $PROJECT_PATH
-  git clone $GIT_PROJECT_URL $PROJECT_NAME
+  mv -f "${PROJECT_NAME}_NEW" $PROJECT_NAME
 
   if [ "${target_type}" = "app" ]; then
     # routesを修正
