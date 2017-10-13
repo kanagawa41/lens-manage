@@ -19,16 +19,12 @@ namespace :analytics_lens do
   task :lens_info, ['target_shop_id'] => :environment do |task, args|
     TaskCommon::set_log 'analytics_lens/lens_info'
 
-    Rails.logger.info "#{m.shop_name}のページ数を取得"
-
     TaskSwitchLensInfo::fetch args[:target_shop_id].to_i
   end
 
   desc "レンズのGoogleの見解を解析する"
   task :lens_related_word_with_google, ['target_shop_id'] => :environment do |task, args|
     TaskCommon::set_log 'analytics_lens/lens_related_word_with_google'
-
-    Rails.logger.info "#{m.shop_name}のページ数を取得"
 
     def search_google_related_words_for_lens(search_word)
       session = TaskCommon::get_session
