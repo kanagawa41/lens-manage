@@ -87,12 +87,27 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "レンズ情報収集最終日" do
           target_ids = []
+
           recs = ''
-          # 収集結果
+          recs << "<div width='100px' style='font-weight: bold;'>"
+          recs << "各ショップの最終収集日の結果。"
+          recs << "</div>"
+          recs << "<br>"
+          recs << "<div width='100px' style='font-weight: bold;'>"
+          recs << "ショップ名(ショップID): 成功数/失敗数 (全体数)"
+          recs << "</div>"
+           # 収集結果
           CollectResult.recent_collect_day.to_hash.each do |r|
             target_ids << r["shop_id"]
             recs << "<div width='100px'>"
-            recs << "<span>#{r["shop_name"]}(#{r["shop_id"]})</span><span>：#{distance_of_time_in_words_to_now(r["updated_at"], scope: 'datetime.distance_in_words')}</span><span> ( <label style='color: #3ec93e;'>#{r["success_num"]}</label> : <label style='color: red;'>#{r["fail_num"]}</label> )</span>"
+            recs << "<span>#{r["shop_name"]}(#{r["shop_id"]})</span>"
+            recs << "<span>：#{distance_of_time_in_words_to_now(r["updated_at"], scope: 'datetime.distance_in_words')}</span> "
+            recs << "<span>"
+            recs << "<label style='color: #3ec93e;'>#{r["success_num"]}</label>"
+            recs << " : "
+            recs << "<label style='color: red;'>#{r["fail_num"]}</label> "
+            recs << "(#{r["success_num"] + r["fail_num"]})"
+            recs << "</span>"
             recs << "</div>"
           end
           # 取集対象外のショップ
@@ -113,5 +128,50 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
     end
+
+    columns do
+      # 画像保持
+      column do
+        panel "画像保持" do
+          query = <<-SQL
+            SELECT
+              mli.m_shop_info_id,
+              msi.shop_name,
+              sum(
+                CASE WHEN mi.id is NULL THEN 1
+                ELSE 0 END
+              ) as not_exist_image,
+              sum(
+                CASE WHEN mi.id is NOT NULL THEN 1
+                ELSE 0 END
+              ) as exist_image
+            FROM m_lens_infos AS mli
+            INNER JOIN m_shop_infos AS msi ON msi.id = mli.m_shop_info_id
+            LEFT OUTER JOIN m_images AS mi ON mi.m_lens_info_id = mli.id
+            GROUP BY mli.m_shop_info_id
+          SQL
+
+          recs = ''
+          recs << "<div width='100px' style='font-weight: bold;'>"
+          recs << "各ショップの画像の取得程度を集計の結果。"
+          recs << "</div>"
+          recs << "<br>"
+          recs << "<div width='100px' style='font-weight: bold;'>"
+          recs << "ショップ名(ショップID): 画像あり/画像なし (全体数)"
+          recs << "</div>"
+          ActiveRecord::Base.connection.select_all(query).each do |r|
+            recs << "<div width='100px'>"
+            recs << "#{r["shop_name"]}(#{r["m_shop_info_id"]}): "
+            recs << "<span style='color: #3ec93e;'>#{r["exist_image"]}</span>"
+            recs << " / "
+            recs << "<span style='color: red;'>#{r["not_exist_image"]}</span> "
+            recs << "(#{r["exist_image"] + r["not_exist_image"]})"
+            recs << "</div>"
+          end
+          recs.html_safe
+        end
+      end
+    end
+
   end
 end

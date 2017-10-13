@@ -33,6 +33,15 @@ ActiveAdmin.register MLensInfo do
 
     column :f_num
     column :focal_length
+
+    column :exist_image do |model|
+      if m_image = MImage.where(m_lens_info_id: model.id).first
+        link_to "○", admin_m_image_path(m_image)
+      else
+        label "×"
+      end
+    end
+
     column :memo
     column :disabled
     column :created_at
