@@ -11,7 +11,9 @@ class TaskSwitchPageNum
     elsif shop_id == 9 # フラッシュバックカメラ
       target_9 collect_targets
     elsif shop_id == 10 # 大貫カメラ
-      target_10 collect_targets
+      target_10
+    elsif shop_id == 13 # ブリコラージュ工房NOCTO
+      target_13
     elsif shop_id == 14 # KING-2
       target_14 collect_targets
     else
@@ -23,6 +25,9 @@ class TaskSwitchPageNum
 
   private
 
+  # 動的なページの値にマッチさせる
+  PAGE_MATCH_STR = "\\[\\$page\\]"
+
   # レモン社
   def self.target_1(collect_targets)
     page_pattern = Regexp.new("p=(\\d+)")
@@ -31,7 +36,7 @@ class TaskSwitchPageNum
 
     collect_targets.each do |collect_target|
       # 対象URLに遷移する
-      session.visit collect_target.list_url.gsub(/\[\$page\]/, '1')
+      session.visit collect_target.list_url.gsub(/#{PAGE_MATCH_STR}/, '1')
 
       # 全てのアンカーを取得する 
       session.all(:css, '.navipage_ .navipage_last_ a').each do |anchor|
@@ -94,7 +99,7 @@ class TaskSwitchPageNum
       TaskCommon::access_sleep
 
       # 対象URLに遷移する
-      $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)
+      $session.visit $target_url.gsub(/#{PAGE_MATCH_STR}/, next_page.to_s)
 
       last_page = 1
       # 全てのアンカーを取得する 
@@ -143,7 +148,7 @@ class TaskSwitchPageNum
       TaskCommon::access_sleep
 
       # 対象URLに遷移する
-      $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)
+      $session.visit $target_url.gsub(/#{PAGE_MATCH_STR}/, next_page.to_s)
 
       last_page = 1
       # 全てのアンカーを取得する 
@@ -174,6 +179,29 @@ class TaskSwitchPageNum
     end
   end
 
+  # ブリコラージュ工房NOCTO
+  def self.target_13
+    collect_targets = CollectTarget.where(m_shop_info_id: $shop_id).all
+
+    session = TaskCommon::get_session
+
+    collect_targets.each do |collect_target|
+      # 対象URLに遷移する
+      session.visit collect_target.list_url.gsub(/#{PAGE_MATCH_STR}/, '1')
+
+      max_page = 1
+      # 全てのアンカーを取得する 
+      session.all(:css, 'select[name="page2"] option').each do |select|
+        max_page = select[:value]
+      end
+
+      collect_target.start_page_num = 1
+      collect_target.end_page_num = max_page
+
+      collect_target.save!
+    end
+  end
+
   # KING-2
   def self.target_14(collect_targets)
     $continue_page_pattern = Regexp.new("次へ")
@@ -191,7 +219,7 @@ class TaskSwitchPageNum
       TaskCommon::access_sleep
 
       # 対象URLに遷移する
-      $session.visit $target_url.gsub(/\[\$page\]/, next_page.to_s)
+      $session.visit $target_url.gsub(/#{PAGE_MATCH_STR}/, next_page.to_s)
 
       pages = []
       next_page_flag = false

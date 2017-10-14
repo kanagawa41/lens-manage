@@ -30,6 +30,8 @@ class TaskSwitchPageInfo
       target_11 collect_targets
     elsif shop_id == 12 # OSカメラ
       target_12 collect_targets
+    elsif shop_id == 13 # ブリコラージュ工房NOCTO
+      target_13 collect_targets
     elsif shop_id == 14 # KING-2
       target_14 collect_targets
     else
@@ -44,6 +46,9 @@ class TaskSwitchPageInfo
   end
 
   private
+
+  # 動的なページの値にマッチさせる
+  PAGE_MATCH_STR = "\\[\\$page\\]"
 
   # レモン社
   def self.target_1(collect_targets)
@@ -62,7 +67,7 @@ class TaskSwitchPageInfo
         TaskCommon::access_sleep
 
         # 対象URLに遷移する
-        session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
+        session.visit collect_target.list_url.gsub(/#{PAGE_MATCH_STR}/, num.to_s)
 
         # FIXME: HTTPステータスで判断したい
         # raise "#{shop_id}-#{num}" if session.page.status_code != 200
@@ -197,7 +202,7 @@ class TaskSwitchPageInfo
         TaskCommon::access_sleep
 
         # 対象URLに遷移する
-        session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
+        session.visit collect_target.list_url.gsub(/#{PAGE_MATCH_STR}/, num.to_s)
 
         # レンズ情報を取得する
         session.all(:css, '.article-inner').each do |article|
@@ -648,7 +653,7 @@ class TaskSwitchPageInfo
         TaskCommon::access_sleep
 
         # 対象URLに遷移する
-        session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
+        session.visit collect_target.list_url.gsub(/#{PAGE_MATCH_STR}/, num.to_s)
 
         # レンズ情報を取得する
         session.all(:css, 'table.shortlist tr[valign="middle"]').each do |article|
@@ -713,7 +718,7 @@ class TaskSwitchPageInfo
         TaskCommon::access_sleep
 
         # 対象URLに遷移する
-        session.visit collect_target.list_url.gsub(/\[\$page\]/, num.to_s)
+        session.visit collect_target.list_url.gsub(/#{PAGE_MATCH_STR}/, num.to_s)
 
         first_flag = false
         # レンズ情報を取得する
@@ -909,6 +914,74 @@ class TaskSwitchPageInfo
             $fetch_lens_ids << m_lens_info.id
 
             upsert_warehouse(m_lens_info_id: m_lens_info.id, metadata: metadata)
+
+            success_num += 1
+          rescue => e
+            pp e.message
+            fail_num += 1
+          end
+        end
+      end
+    end
+
+    CollectResult.new(m_shop_info_id: $shop_id, success_num: success_num, fail_num: fail_num).save!
+  end
+
+  # ブリコラージュ工房NOCTO
+  def self.target_13(collect_targets)
+    sold_out_pattern = Regexp.new("品切れ")
+    no_image_url = "\\/images\\/common\\/nonimg90\\.gif"
+    
+    session = TaskCommon::get_session
+
+    success_num = 0
+    fail_num = 0
+    collect_targets.each do |collect_target|
+      next unless collect_target.start_page_num.present? && collect_target.end_page_num.present?
+
+      Range.new(collect_target.start_page_num, collect_target.end_page_num).each do |num|
+        sleep [*2..5].sample # アクセスタイミングを分散させる
+
+        # 対象URLに遷移する
+        session.visit collect_target.list_url.gsub(/#{PAGE_MATCH_STR}/, num.to_s)
+
+        # レンズ情報を取得する
+        session.all(:css, '#M_categoryList table tr td table').each do |article|
+          begin
+            lens_info = {
+              lens_name: nil,
+              lens_info_url: nil,
+              lens_pic_url: nil,
+              stock_state: nil,
+              price: 0,
+              m_shop_info_id: $shop_id,
+            }
+            metadata = article.text
+
+            lens_info[:lens_info_url] = article.all(:css, 'table tr td a')[0][:href]
+
+            pic_url = article.all(:css, 'table tr td img')[0][:src]
+
+            if pic_url.present?
+              lens_info[:lens_pic_url] = pic_url unless pic_url.match(/#{no_image_url}/)
+            end
+
+            name_and_price = article.all(:css, 'td table tr.woong')
+
+            lens_info[:lens_name] = safe_lens_name name_and_price[0].find(:css, 'a').text
+            lens_info[:stock_state] = !sold_out_pattern.match(name_and_price[0].text).present?
+            lens_info[:price] = safe_price safe_lens_name name_and_price[3].text
+
+            # upsert
+            if m_lens_info = MLensInfo.where(lens_info_url: lens_info[:lens_info_url], m_shop_info_id: $shop_id).first
+              m_lens_info.attributes = lens_info
+            else
+              m_lens_info = MLensInfo.new(lens_info)
+            end
+
+            m_lens_info.save!
+
+            upsert_warehouse({ m_lens_info_id: m_lens_info.id, metadata: metadata })
 
             success_num += 1
           rescue => e

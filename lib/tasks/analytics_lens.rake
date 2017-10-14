@@ -26,16 +26,17 @@ namespace :analytics_lens do
   task :lens_related_word_with_google, ['target_shop_id'] => :environment do |task, args|
     TaskCommon::set_log 'analytics_lens/lens_related_word_with_google'
 
+    $session = TaskCommon::get_session
+
     # Googleに関連性を検索しに行く
     def search_google_related_words_for_lens(search_word)
       begin
-        session = TaskCommon::get_session
-
         # ”レンズ”をつけて検索結果をいい感じにする
-        session.visit "https://www.google.co.jp/search?q=#{URI.escape(search_word + " レンズ")}"
+        $session.visit "https://www.google.co.jp/search?q=#{URI.escape(search_word + " レンズ")}"
 
-        session.all("._Bmc").map{|r| r.text}
+        $session.all("._Bmc").map{|r| r.text}
       rescue => e
+        Rails.logger.error e.message
         return []
       end
     end
@@ -50,16 +51,17 @@ namespace :analytics_lens do
       AND mli.m_shop_info_id = #{shop_id}
     SQL
 
-    analytics_lnes_infos = []
-    ActiveRecord::Base.connection.select_all(query).each do |lens_info|
+    ActiveRecord::Base.connection.select_all(query).each_slice(10).to_a.each do |lens_info_group|
       TaskCommon::access_sleep
 
-      related_words = search_google_related_words_for_lens lens_info["lens_name"]
+      analytics_lnes_infos = []
+      lens_info_group.each do |lens_info|
+        related_words = search_google_related_words_for_lens lens_info["lens_name"]
 
-      analytics_lnes_infos << AnalyticsLensInfo.new(m_lens_info_id: lens_info["id"], google_related_words: related_words.join(','))
+        analytics_lnes_infos << {m_lens_info_id: lens_info["id"], google_related_words: related_words.join(',')}
+      end
+      AnalyticsLensInfo.import analytics_lnes_infos.map{|r| AnalyticsLensInfo.new(r)}
     end
-
-    AnalyticsLensInfo.import analytics_lnes_infos
   end
 
 end

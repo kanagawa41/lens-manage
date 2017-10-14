@@ -3,6 +3,15 @@ ActiveAdmin.register MShopInfo do
 
   active_admin_import validate: true, batch_transaction: true
 
+  # # csvの内容をカスタマイズ
+  csv :force_quotes => true, :humanize_name => false do
+    column :id
+    column :shop_name
+    column :letter_code
+    column :shop_url
+    column(:disabled){ |model| model.disabled ? 1 : 0 } # true, falseだとインポートできない
+  end
+
   actions :all
 
 
