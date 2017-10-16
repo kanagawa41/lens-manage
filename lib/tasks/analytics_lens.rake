@@ -59,11 +59,109 @@ namespace :analytics_lens do
         search_result = search_google_for_lens lens_info["lens_name"]
 
         analytics_lnes_infos << {m_lens_info_id: lens_info["id"], google_related_words: search_result[:related_words].join(','), google_match_words: search_result[:match_words].join(',')}
-      break # 全部を取得しようとしたら、Googleがレスポンスを返さなくなるため
+# FIXME: 試験完了後に削除
+break # 全部を取得しようとしたら、Googleがレスポンスを返さなくなるため
       end
 
       AnalyticsLensInfo.import analytics_lnes_infos.map{|r| AnalyticsLensInfo.new(r)}
       break # 全部を取得しようとしたら、Googleがレスポンスを返さなくなるため
     end
   end
+
+  # 1.1-2.2　にマッチできる
+  NUM_MATCH_STR = "[0-9][+-]?[0-9]*+[\.]?[0-9]*[+-]?[0-9]*"
+
+  desc "Googleの結果から重要度ランキングを抽出する"
+  task :word_ranking, ['target_shop_id'] => :environment do |task, args|
+    TaskCommon::set_log 'analytics_lens/word_ranking'
+
+    # 除外したい文字
+    def exclude_word?(word)
+      # 日本語系
+      if ["改造", "タイプ", "おすすめ", "ほぼ", "新品", "中古", "ニュー", "オールド", "販売", "ジャンク", "使い捨て"].include? word
+        return true
+      end
+      # カメラ系
+      if ["レンズ", "カメラ", "マウント", "広角"].include? word
+        return true
+      end
+      # 英語系
+      if ["av", "dx", "type", "mount", "new", "old"].include? word
+        return true
+      end
+      # 特殊記号
+      if ["..."].include? word
+        return true
+      end
+
+      # f2や28mmなどは除外
+      if word.match(/#{NUM_MATCH_STR}\s*mm|f\s*#{NUM_MATCH_STR}/)
+        return true
+      end
+    end
+
+    AnalyticsLensInfo.all.each do |r|
+      google_match_words = r.google_match_words
+
+      ranking = {}
+      google_match_words.split(',').each do |word|
+        # 空白無視
+        next unless word.present?
+
+        word.gsub(/(\s|　)+/, ' ').split(' ').each do |s_word|
+          # 数値のみ無視
+          next if s_word.match(/^#{NUM_MATCH_STR}+$/)
+
+          match_count = google_match_words.scan(/#{s_word}/).size
+
+          # 全角から半角へ変換
+          s_word = s_word.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z').tr('．＠', '.@')
+          # 小文字へ変換
+          s_word = s_word.downcase
+
+          if ranking.has_key? s_word
+            ranking[s_word] = match_count + ranking[s_word]
+          else
+            ranking[s_word] = match_count
+          end
+        end
+      end
+
+      # キー名で昇順
+      ranking = Hash[ranking.sort_by{ |_, v| -v }]
+
+      # 文字１が文字２に含まれている場合は、文字１の派生として扱う。
+      ranking.each do |k, v|
+        ranking.each do |k2, v2|
+          next if k == k2
+
+          if k2.include?(k)
+            ranking[k] = ranking[k] + ranking[k2]
+            ranking.delete k2
+          end
+        end
+      end
+
+      # 意味のない文字の除外
+      ranking.each do |k, v|
+        # 対象文字が小さすぎ
+        if k.size == 1
+          ranking.delete k
+          next
+        end
+
+        # 含ませたくない文字が含まれている
+        if exclude_word? k
+          ranking.delete k
+          next
+        end
+      end
+
+      # 一致数で降順
+      ranking.sort{|(k1, v1), (k2, v2)| v2 <=> v1 }
+# FIXME: DBに登録する
+pp ranking
+    end
+  end
+
 end
