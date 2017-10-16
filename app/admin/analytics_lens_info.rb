@@ -6,6 +6,7 @@ ActiveAdmin.register AnalyticsLensInfo do
     column :id
     column :google_related_words
     column :google_match_words
+    column :ranking_words
   end
 
   index do
@@ -19,6 +20,7 @@ ActiveAdmin.register AnalyticsLensInfo do
 
     column :google_related_words
     column :google_match_words
+    column :ranking_words
     column :created_at
 
     actions defaults: false do |model|
@@ -33,6 +35,7 @@ ActiveAdmin.register AnalyticsLensInfo do
       f.input :m_lens_info_id, as: :select, collection: MLensInfo.all.map { |model| [model.lens_name, model.id] }
       f.input :google_related_words
       f.input :google_match_words
+      f.input :ranking_words
     end
     f.actions
   end

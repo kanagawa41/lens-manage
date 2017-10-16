@@ -20,7 +20,7 @@ every '10 0 */2 * * ' do
   rake "fetch_lens_info:all:page_info"
 end
 
-# レンズ情報解析
+# レンズ情報解析(f値、焦点距離)
 every '11 1 */2 * * ' do
   rake "analytics_lens:all:lnes_info"
 end
@@ -33,6 +33,11 @@ end
 # レンズ関連ワード解析
 every '5 4-23/1 * * * ' do
   rake "analytics_lens:all:lens_related_word_with_google"
+end
+
+# レンズ関連ワード解析2
+every '45 4-23/1 * * * ' do
+  rake "analytics_lens:all:word_ranking"
 end
 
 # # 毎日00:05分

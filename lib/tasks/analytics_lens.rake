@@ -13,6 +13,13 @@ namespace :analytics_lens do
         `bundle exec rails analytics_lens:lens_related_word_with_google[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
+
+    desc "Googleの結果から重要度ランキングを全て抽出する"
+    task word_ranking: :environment do
+      MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
+        `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
+      end
+    end
   end
 
   desc "F値、焦点距離を解析する"
@@ -59,8 +66,6 @@ namespace :analytics_lens do
         search_result = search_google_for_lens lens_info["lens_name"]
 
         analytics_lnes_infos << {m_lens_info_id: lens_info["id"], google_related_words: search_result[:related_words].join(','), google_match_words: search_result[:match_words].join(',')}
-# FIXME: 試験完了後に削除
-break # 全部を取得しようとしたら、Googleがレスポンスを返さなくなるため
       end
 
       AnalyticsLensInfo.import analytics_lnes_infos.map{|r| AnalyticsLensInfo.new(r)}
@@ -71,37 +76,74 @@ break # 全部を取得しようとしたら、Googleがレスポンスを返さ
   # 1.1-2.2　にマッチできる
   NUM_MATCH_STR = "[0-9][+-]?[0-9]*+[\.]?[0-9]*[+-]?[0-9]*"
 
-  desc "Googleの結果から重要度ランキングを抽出する"
-  task :word_ranking, ['target_shop_id'] => :environment do |task, args|
-    TaskCommon::set_log 'analytics_lens/word_ranking'
+  # 日本語系
+  EX_JP = [
+    "改造", "タイプ", "おすすめ", "ほぼ", "新品", "中古", "ニュー", "オールド", "販売", "ジャンク",
+    "使い捨て", "年製", "フロント", "付き", "つき", "付け", "つけ", "眼鏡", "純正", "ミリ",
+    "リミテッド", "前後", "薄型", "軽量", "..."
+  ]
+  # カメラ系
+  EX_JP_LENS = [
+    "レンズ", "カメラ", "マウント", "キャップ", "最短", "パンケーキ", "オート"
+  ]
+  # 英語系
+  EX_EN = ["mc", "af", "av", "dx", "type", "mount", "new", "old"]
 
-    # 除外したい文字
-    def exclude_word?(word)
-      # 日本語系
-      if ["改造", "タイプ", "おすすめ", "ほぼ", "新品", "中古", "ニュー", "オールド", "販売", "ジャンク", "使い捨て"].include? word
-        return true
-      end
-      # カメラ系
-      if ["レンズ", "カメラ", "マウント", "広角"].include? word
-        return true
-      end
-      # 英語系
-      if ["av", "dx", "type", "mount", "new", "old"].include? word
-        return true
-      end
-      # 特殊記号
-      if ["..."].include? word
-        return true
-      end
-
-      # f2や28mmなどは除外
-      if word.match(/#{NUM_MATCH_STR}\s*mm|f\s*#{NUM_MATCH_STR}/)
+  # 除外したい文字
+  def exclude_word?(word)
+    # 日本語系(曖昧一致)
+    EX_JP.each do |exclude_word|
+      if word.include? exclude_word
         return true
       end
     end
 
-    AnalyticsLensInfo.all.each do |r|
-      google_match_words = r.google_match_words
+    # カメラ系(曖昧一致)
+    EX_JP_LENS.each do |exclude_word|
+      if word.include? exclude_word
+        return true
+      end
+    end
+
+    # 英語系(完全一致)
+    if EX_EN.include? word
+      return true
+    end
+
+    # 特殊記号
+    # f/2
+    if word.match(/[…\.\=\/【】\.@\(\)][．＠（）・]/)
+      return true
+    end
+
+    # f2、28mm、12cm
+    if word.match(/#{NUM_MATCH_STR}\s*mm|f\s*#{NUM_MATCH_STR}|#{NUM_MATCH_STR}\s*cm/)
+      return true
+    end
+
+    # 1974年
+    if word.match(/[0-9]+年/)
+      return true
+    end
+  end
+
+  desc "Googleの結果から重要度ランキングを抽出する"
+  task :word_ranking, ['target_shop_id'] => :environment do |task, args|
+    TaskCommon::set_log 'analytics_lens/word_ranking'
+
+    shop_id = args[:target_shop_id].to_i
+
+    query = <<-SQL
+      SELECT ali.id, ali.google_match_words
+      FROM m_lens_infos as mli
+      INNER JOIN analytics_lens_infos AS ali ON ali.m_lens_info_id = mli.id
+      WHERE ali.ranking_words IS NULL
+      AND mli.m_shop_info_id = #{shop_id}
+    SQL
+
+    analytics_lens_infos = []
+    ActiveRecord::Base.connection.select_all(query).to_a.each do |r|
+      google_match_words = r["google_match_words"]
 
       ranking = {}
       google_match_words.split(',').each do |word|
@@ -112,10 +154,11 @@ break # 全部を取得しようとしたら、Googleがレスポンスを返さ
           # 数値のみ無視
           next if s_word.match(/^#{NUM_MATCH_STR}+$/)
 
-          match_count = google_match_words.scan(/#{s_word}/).size
+          # 「64(3」のような文字が渡ることがあるため
+          match_count = google_match_words.scan(/#{Regexp.escape(s_word)}/).size
 
           # 全角から半角へ変換
-          s_word = s_word.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z').tr('．＠', '.@')
+          s_word = s_word.tr('０-９ａ-ｚＡ-Ｚ', '0-9a-zA-Z')
           # 小文字へ変換
           s_word = s_word.downcase
 
@@ -159,8 +202,8 @@ break # 全部を取得しようとしたら、Googleがレスポンスを返さ
 
       # 一致数で降順
       ranking.sort{|(k1, v1), (k2, v2)| v2 <=> v1 }
-# FIXME: DBに登録する
-pp ranking
+
+      AnalyticsLensInfo.find(r["id"]).update(ranking_words: ranking.keys)
     end
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016023932) do
+ActiveRecord::Schema.define(version: 20171016071117) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20171016023932) do
     t.bigint "m_lens_info_id", null: false
     t.text "google_related_words", limit: 4294967295, null: false
     t.text "google_match_words", limit: 4294967295, null: false
+    t.text "ranking_words", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["m_lens_info_id"], name: "index_analytics_lens_infos_on_m_lens_info_id"
