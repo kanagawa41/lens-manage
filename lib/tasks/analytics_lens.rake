@@ -87,7 +87,7 @@ namespace :analytics_lens do
     "レンズ", "カメラ", "マウント", "キャップ", "最短", "パンケーキ", "オート"
   ]
   # 英語系
-  EX_EN = ["mc", "af", "av", "dx", "type", "mount", "new", "old", "for"]
+  EX_EN = ["type", "mount", "new", "old", "for"]
 
   # 除外したい文字
   def exclude_word?(word)
