@@ -78,16 +78,16 @@ namespace :analytics_lens do
 
   # 日本語系
   EX_JP = [
-    "改造", "タイプ", "おすすめ", "ほぼ", "新品", "中古", "ニュー", "オールド", "販売", "ジャンク",
+    "...", "改造", "タイプ", "おすすめ", "ほぼ", "新品", "中古", "ニュー", "オールド", "販売",
     "使い捨て", "年製", "フロント", "付き", "つき", "付け", "つけ", "眼鏡", "純正", "ミリ",
-    "リミテッド", "前後", "薄型", "軽量", "..."
+    "リミテッド", "前後", "薄型", "軽量", "メガネ付", "ジャンク", "説明書", "簡易"
   ]
   # カメラ系
   EX_JP_LENS = [
     "レンズ", "カメラ", "マウント", "キャップ", "最短", "パンケーキ", "オート"
   ]
   # 英語系
-  EX_EN = ["mc", "af", "av", "dx", "type", "mount", "new", "old"]
+  EX_EN = ["mc", "af", "av", "dx", "type", "mount", "new", "old", "for"]
 
   # 除外したい文字
   def exclude_word?(word)
@@ -112,12 +112,12 @@ namespace :analytics_lens do
 
     # 特殊記号
     # f/2
-    if word.match(/[…\.\=\/【】\.@\(\)][．＠（）・]/)
+    if word.match(/[…\.\=\/【】\.@\(\)]|[．＠（）・]/)
       return true
     end
 
     # f2、28mm、12cm
-    if word.match(/#{NUM_MATCH_STR}\s*mm|f\s*#{NUM_MATCH_STR}|#{NUM_MATCH_STR}\s*cm/)
+    if word.match(/#{NUM_MATCH_STR}\s*m{1,2}|f\s*#{NUM_MATCH_STR}|#{NUM_MATCH_STR}\s*cm/)
       return true
     end
 
