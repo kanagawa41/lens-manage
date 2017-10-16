@@ -51,17 +51,17 @@ namespace :analytics_lens do
       AND mli.m_shop_info_id = #{shop_id}
     SQL
 
-    ActiveRecord::Base.connection.select_all(query).each_slice(10).to_a.each do |lens_info_group|
-      TaskCommon::access_sleep
-
+    ActiveRecord::Base.connection.select_all(query).each_slice(30).to_a.each do |lens_info_group|
       analytics_lnes_infos = []
       lens_info_group.each do |lens_info|
+        TaskCommon::access_sleep
         related_words = search_google_related_words_for_lens lens_info["lens_name"]
 
         analytics_lnes_infos << {m_lens_info_id: lens_info["id"], google_related_words: related_words.join(',')}
       end
+
       AnalyticsLensInfo.import analytics_lnes_infos.map{|r| AnalyticsLensInfo.new(r)}
+      break # 全部を取得しようとしたら、Googleがレスポンスを返さなくなるため
     end
   end
-
 end

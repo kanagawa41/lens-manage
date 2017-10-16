@@ -31,7 +31,7 @@ every '21 1 */2 * * ' do
 end
 
 # レンズ関連ワード解析
-every '31 3 */2 * * ' do
+every '5 4-23/1 * * * ' do
   rake "analytics_lens:all:lens_related_word_with_google"
 end
 
