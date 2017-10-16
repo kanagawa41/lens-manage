@@ -29,15 +29,16 @@ namespace :analytics_lens do
     $session = TaskCommon::get_session
 
     # Googleに関連性を検索しに行く
-    def search_google_related_words_for_lens(search_word)
+    def search_google_for_lens(search_word)
       begin
         # ”レンズ”をつけて検索結果をいい感じにする
         $session.visit "https://www.google.co.jp/search?q=#{URI.escape(search_word + " レンズ")}"
 
-        $session.all("._Bmc").map{|r| r.text}
+        # 関連性と強調単語
+        {related_words: $session.all(:css, "._Bmc").map{|r| r.text}, match_words: $session.all(:css, "b").map{|r| r.text}}
       rescue => e
         Rails.logger.error e.message
-        return []
+        return {related_words: [], match_words: []}
       end
     end
 
@@ -55,9 +56,10 @@ namespace :analytics_lens do
       analytics_lnes_infos = []
       lens_info_group.each do |lens_info|
         TaskCommon::access_sleep
-        related_words = search_google_related_words_for_lens lens_info["lens_name"]
+        search_result = search_google_for_lens lens_info["lens_name"]
 
-        analytics_lnes_infos << {m_lens_info_id: lens_info["id"], google_related_words: related_words.join(',')}
+        analytics_lnes_infos << {m_lens_info_id: lens_info["id"], google_related_words: search_result[:related_words].join(','), google_match_words: search_result[:match_words].join(',')}
+      break # 全部を取得しようとしたら、Googleがレスポンスを返さなくなるため
       end
 
       AnalyticsLensInfo.import analytics_lnes_infos.map{|r| AnalyticsLensInfo.new(r)}

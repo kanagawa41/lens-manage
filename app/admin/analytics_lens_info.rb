@@ -1,10 +1,11 @@
 ActiveAdmin.register AnalyticsLensInfo do
-  permit_params :m_lens_info_id, :google_related_words
+  permit_params :m_lens_info_id, :google_related_words, :google_match_words
 
   # # csvの内容をカスタマイズ
   csv :force_quotes => false, :humanize_name => false do
     column :id
     column :google_related_words
+    column :google_match_words
   end
 
   index do
@@ -17,6 +18,7 @@ ActiveAdmin.register AnalyticsLensInfo do
 
 
     column :google_related_words
+    column :google_match_words
     column :created_at
 
     actions defaults: false do |model|
@@ -30,6 +32,7 @@ ActiveAdmin.register AnalyticsLensInfo do
     f.inputs do
       f.input :m_lens_info_id, as: :select, collection: MLensInfo.all.map { |model| [model.lens_name, model.id] }
       f.input :google_related_words
+      f.input :google_match_words
     end
     f.actions
   end
