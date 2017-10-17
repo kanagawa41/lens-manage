@@ -13,12 +13,14 @@ namespace :analytics_lens do
         `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
+  end
 
+  namespace :reset do
     desc "リセット後にGoogleの結果から重要度ランキングを全て抽出する"
-    task reset_and_word_ranking: :environment do
+    task word_ranking: :environment do
       MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
- pp        AnalyticsLensInfo.includes(:m_lens_info).joins(:m_lens_info).where(m_shop_info_id: m.id).all
-        # `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
+        AnalyticsLensInfo.includes(:m_lens_info).joins(:m_lens_info).where("m_lens_infos.m_shop_info_id"=> m.id).update_all(ranking_words: nil)
+        `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
   end
