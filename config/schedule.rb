@@ -31,8 +31,9 @@ every '21 1 */2 * * ' do
 end
 
 # レンズ関連ワード解析
-every '5 4-23/1 * * * ' do
-  rake "analytics_lens:all:lens_related_word_with_google"
+# Google検索数の上限に引っかからないように調整する
+every '5,35 4-5,7-8,10-11,13-14,16-17,19-20,22-23/1 * * * ' do
+  rake "analytics_lens:lens_related_word_with_google"
 end
 
 # レンズ関連ワード解析2
