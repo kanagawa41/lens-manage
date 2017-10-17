@@ -16,9 +16,9 @@ class MLensInfo < ApplicationRecord
 
   # 条件検索を行う
   def self.set_search_conditions(query, f_num, focal_length)
-    m_lens_info = MLensInfo.where(disabled: false)
+    m_lens_info = MLensInfo.includes(:analytics_lens_info, :m_image, :m_shop_info).left_joins(:analytics_lens_info).where(disabled: false)
     if query.present?
-      m_lens_info = m_lens_info.where("lens_name like ?", "%" + query + "%")
+      m_lens_info = m_lens_info.where("lens_name like ? or ranking_words  like ?", "%" + query + "%", "%" + query + "%")
     end
     if f_num.present?
       m_lens_info = m_lens_info.where("f_num like ?", "%" + f_num + "%")

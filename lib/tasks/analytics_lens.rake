@@ -13,6 +13,14 @@ namespace :analytics_lens do
         `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
+
+    desc "リセット後にGoogleの結果から重要度ランキングを全て抽出する"
+    task reset_and_word_ranking: :environment do
+      MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
+ pp        AnalyticsLensInfo.includes(:m_lens_info).joins(:m_lens_info).where(m_shop_info_id: m.id).all
+        # `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
+      end
+    end
   end
 
   desc "F値、焦点距離を解析する"
@@ -81,7 +89,7 @@ namespace :analytics_lens do
     ActiveRecord::Base.connection.select_all(query).to_a.each do |r|
       ranking = LensInfoAnalysis::create_ranking r["google_match_words"]
 
-      AnalyticsLensInfo.find(r["id"]).update(ranking_words: ranking.keys)
+      AnalyticsLensInfo.find(r["id"]).update(ranking_words: ranking.keys.join(','))
     end
   end
 
