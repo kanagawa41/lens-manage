@@ -13,6 +13,13 @@ namespace :analytics_lens do
         `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
+
+    desc "タグ付けを全てに行う"
+    task add_tags: :environment do
+      MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
+        `bundle exec rails analytics_lens:add_tags[#{m.id}] RAILS_ENV=#{Rails.env}`
+      end
+    end
   end
 
   namespace :reset do
@@ -62,6 +69,8 @@ namespace :analytics_lens do
       update_m_lens_infos = []
       m_lens_info_group.each do |r|
         match_tags = []
+        next unless r.analytics_lens_info.ranking_words.present?
+
         r.analytics_lens_info.ranking_words.split(',').each do |word|
           m_proper_noun.each do |noun_id, target_words|
             target_words.split(',').each do |target_word|
@@ -79,6 +88,8 @@ namespace :analytics_lens do
           pp "セーブエラー(#{r.id})：#{r.messages}"
         end
       end
+      # COMMENT: 不可を感じる場合は指定回数で終了させる
+      # break
     end
   end
 
