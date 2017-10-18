@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171016071117) do
+ActiveRecord::Schema.define(version: 20171018023827) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -100,6 +100,13 @@ ActiveRecord::Schema.define(version: 20171016071117) do
     t.index ["path"], name: "index_m_images_on_path", unique: true
   end
 
+  create_table "m_lens_genres", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "group_no", null: false
+    t.string "genre_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "m_lens_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "lens_name"
     t.string "lens_pic_url"
@@ -115,6 +122,16 @@ ActiveRecord::Schema.define(version: 20171016071117) do
     t.string "memo"
     t.datetime "updated_at", null: false
     t.index ["m_shop_info_id"], name: "index_m_lens_infos_on_m_shop_info_id"
+  end
+
+  create_table "m_proper_nouns", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "m_lens_genre_id", null: false
+    t.string "name_jp", null: false
+    t.string "name_en"
+    t.text "relate_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["m_lens_genre_id"], name: "index_m_proper_nouns_on_m_lens_genre_id"
   end
 
   create_table "m_shop_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -149,5 +166,6 @@ ActiveRecord::Schema.define(version: 20171016071117) do
   add_foreign_key "image_download_histories", "m_shop_infos"
   add_foreign_key "m_images", "m_lens_infos"
   add_foreign_key "m_lens_infos", "m_shop_infos"
+  add_foreign_key "m_proper_nouns", "m_lens_genres"
   add_foreign_key "transition_histories", "m_lens_infos"
 end
