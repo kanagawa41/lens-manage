@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018023827) do
+ActiveRecord::Schema.define(version: 20171018071810) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -50,7 +50,7 @@ ActiveRecord::Schema.define(version: 20171018023827) do
     t.text "ranking_words", limit: 4294967295
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["m_lens_info_id"], name: "index_analytics_lens_infos_on_m_lens_info_id"
+    t.index ["m_lens_info_id"], name: "index_analytics_lens_infos_on_m_lens_info_id", unique: true
   end
 
   create_table "collect_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 20171018023827) do
     t.string "genre_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["genre_name"], name: "index_m_lens_genres_on_genre_name", unique: true
   end
 
   create_table "m_lens_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -131,6 +132,7 @@ ActiveRecord::Schema.define(version: 20171018023827) do
     t.text "relate_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["m_lens_genre_id", "name_jp"], name: "name_uniq_index", unique: true
     t.index ["m_lens_genre_id"], name: "index_m_proper_nouns_on_m_lens_genre_id"
   end
 
@@ -158,7 +160,6 @@ ActiveRecord::Schema.define(version: 20171018023827) do
     t.index ["m_lens_info_id"], name: "index_transition_histories_on_m_lens_info_id"
   end
 
-  add_foreign_key "analytics_lens_infos", "m_lens_infos"
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_lens_infos"
