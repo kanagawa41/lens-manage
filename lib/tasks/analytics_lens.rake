@@ -30,6 +30,14 @@ namespace :analytics_lens do
         `bundle exec rails analytics_lens:word_ranking[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
+
+    desc "リセット後にタグ付けを全てに行う"
+    task add_tags: :environment do
+      MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
+        MLensInfo.where(m_shop_info_id: m.id).update_all(tags: nil)
+        `bundle exec rails analytics_lens:add_tags[#{m.id}] RAILS_ENV=#{Rails.env}`
+      end
+    end
   end
 
   desc "F値、焦点距離を解析する"
