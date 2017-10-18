@@ -1,6 +1,37 @@
 namespace :mytest do
   desc "テスト"
 
+  # 名前を一括変換する
+  task exec14: :environment do
+    require 'nkf'
+
+    # 統一性が取れるように名前に変換をかける
+    def convert_unity_name(lens_name)
+      return nil unless lens_name.present?
+
+      convert_word = lens_name
+
+      # 英数を全角から半角へ変換
+      convert_word = convert_word.tr('０-９', '0-9')
+      # カタカナを半角から全角へ変換
+      convert_word = NKF.nkf('-wX', convert_word)
+      # アルファベットと記号を半角から全角へ変換
+      convert_word = NKF.nkf('-wZ0', convert_word)
+      # 小文字へ変換
+      convert_word = convert_word.downcase
+      # 全角空白を半角へ変換
+      convert_word = NKF.nkf('-wZ1', convert_word)
+    end
+
+    MLensInfo.all.each do |r|
+      r.lens_name = convert_unity_name r.lens_name
+
+      unless r.save
+        pp "セーブエラー：#{r.lens_name}"
+      end
+    end
+  end
+
   # Googleの検索検証
   task exec13: :environment do
     # words = "アリフレックスマウント（16mm） COOKE KINETAL 12.5mm/f1.8 後キャップ、フィルター付 ペンタックスQにオススメです レンズ,pentax q,q,pentax,...,COOKE KINETAL,Arriflexマウント,付き,レンズ,レンズ,オススメです,レンズ,16mm,レンズです,Pentax,キャップ,レンズ,...,です,フィルター,COOKE KINETAL,Arriflexマウント,付き,レンズ,PENTAX Q,レンズ,です,レンズ,オススメです,レンズ,...,です,キャップ,ペンタックスQ,レンズ,ARRIFLEXマウント,PENTAX レンズキャップ,Qマウントレンズ,PENTAX,レンズキャップ,Qマウントレンズ,レンズキャップ,マウントレンズ,レンズ,キャップ,です,フィルターPENTAX Q,おすすめ,レンズ,付け,マウント,mount,マウントレンズ,PENTAX Qにオススメです,マウントレンズ,16mm,ペンタックスQにオススメです,マウントレンズ,後,キャップ,マウント,レンズ,12.5mm/f1.8 後キャップ,PENTAX Q,マウント,レンズ,...,PENTAX Q,レンズ,マウント,16mm,レンズ,マウント,PENTAX Q,pentaxq,...,レンズ,PENTAX Q,です,PENTAX Q,マウントレンズ,レンズフィルター,レンズ,レンズ,レンズ,キャップ,レンズ,レンズ,です,Arriflex,マウント,Cooke,おすすめ,マウント キャップ,ペンタックスQ,レンズ,おすすめ,アリフレックスマウント（16mm） COOKE KINETAL 12.5mm/f1.8 後キャップ、フィルター付 ペンタックスQにオススメです レンズ"

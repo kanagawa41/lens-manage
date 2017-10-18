@@ -9,19 +9,27 @@ module LensInfoAnalysis extend self
 
   # 除外日本語系
   EX_JP = [
-    "改造", "タイプ", "新", "古", "ニュー", "オールド", "販売",
-    "使捨", "年", "製", "フロント", "付", "眼", "鏡", "純正", "ミリ",
-    "リミテッド", "前後", "型", "軽量", "メガネ", "ジャンク", "説明書", "簡易",
-    "オススメ", "世代", "メートル", "表示", "価格", "画像", "撮", "解放", "機", "薦", "勧", "円",
-    "ケース", "可能", "アダプタ", "交換", "表記", "その他", "装", "期", "構造", "問題", "種類", "場合",
-    "希少", "テレビ", "美品", "大学", "傷", "合", "用", "薄", "沈", "取扱", "版", "サイズ"
+    "改造", "新", "古", "販売", "使捨", "年", "製", "付", "眼", "鏡", "純正",
+    "前後", "型", "軽量", "説明書", "簡易", "世代", "表示", "価格", "画像", "撮",
+    "解放", "機", "薦", "勧", "円", "可能", "交換", "表記", "その他", "装", "期",
+    "構造", "問題", "種類", "場合", "希少", "美品", "大学", "傷", "合", "用",
+    "薄", "沈", "取扱", "版"
+  ].freeze
+  # 除外日本語系(一致)
+  EX_KN_JP = [
+    "タイプ", "ニュー", "オールド", "フロント", "ミリ", "リミテッド", "メガネ", "ジャンク",
+    "オススメ", "メートル", "ケース", "テレビ", "サイズ"
   ].freeze
   # 除外カメラ系
   EX_JP_LENS = [
-    "レンズ", "カメラ", "マウント", "キャップ", "最短", "フィルター", "フード", "ボケ", "無限", "ケラレ", "コーティング", "三脚", "雲台"
+    "最短", "無限", "三脚", "雲台"
+  ].freeze
+  # 除外カメラ系(一致)
+  EX_KN_LENS = [
+    "レンズ", "カメラ", "マウント", "キャップ", "フィルター", "フード", "ボケ", "ケラレ", "コーティング", "アダプタ"
   ].freeze
   # 除外英語系
-  EX_EN = ["type", "mount", "new", "old", "for", "www", "cap", "in","g\\.a\\.", "\\.\\.\\."].freeze
+  EX_EN = ["type", "mount", "new", "old", "for", "www", "cap", "in", "mm","g\\.a\\.", "\\.\\.\\."].freeze
 
   # カンマ(,)区切りの文字列からランキング付けを行う
   # e.g. レンズ,...,キャップ付,Cマウント,付き,マイクロフォーサーズ,レンズ,オススメです,レンズ,ボケ,TAYLOR,COOKE FILMO SPECIAL 1inch F1,8...
@@ -124,7 +132,16 @@ module LensInfoAnalysis extend self
     convert_word = convert_word.gsub(/\p{hiragana}/, ' ')
 
     # 特定のワードを除外
-    convert_word = exclude_word convert_word
+    convert_word = exclude_all_word convert_word
+
+    tmp_convert_words
+    convert_word.split(',').each do |r|
+      next if exclude_specific_word?
+
+      tmp_convert_words << r
+    end
+
+    convert_word = tmp_convert_words.join(',')
 
     # 複数の英単語が並んでいた場合は、一つの単語とする
     convert_word = convert_word.gsub(/((?:[a-z]+\s*){2,}+)/){"," + $1 + ","}
@@ -137,18 +154,15 @@ module LensInfoAnalysis extend self
     convert_word = convert_word.gsub(/,+/, ',')
   end
 
-  # 除外したい文字
-  def exclude_word(word)
-  	exclude_word = word
+  # 全体的な文字の除外
+  def exclude_all_word(words)
+    exclude_word = words
 
     # 日本語系
     exclude_word = exclude_word.gsub(/#{EX_JP.join('|')}/, ' ')
 
     # カメラ系
     exclude_word = exclude_word.gsub(/#{EX_JP_LENS.join('|')}/, ' ')
-
-    # 英語系
-    exclude_word = exclude_word.gsub(/#{EX_EN.join('|')}/, ' ')
 
     # 28mm
     lens_info_match1 = "#{NUM_MATCH_STR}\s*m{1,2}"
@@ -160,6 +174,20 @@ module LensInfoAnalysis extend self
 
     # 1974年
     exclude_word.gsub(/[0-9]+年/, ' ')
+  end
+
+  # ピンポイントの文字の除外対象か？
+  def exclude_specific_word?(word)
+    # 英語系
+    return true if word.match /#{EX_EN.join('|')}/
+
+    # 通常カタカナ
+    return true if word.match /#{EX_KN_JP.join('|')}/
+
+    # カメラ関係カタカナ
+    return true if word.match /#{EX_KN_LENS.join('|')}/
+
+    false
   end
 
 end

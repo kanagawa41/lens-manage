@@ -1,4 +1,6 @@
 class TaskSwitchPageInfo
+  require 'nkf'
+
   def self.fetch(shop_id)
     collect_targets = CollectTarget.select(:id, :list_url, :start_page_num, :end_page_num).where(m_shop_info_id: shop_id).all
 
@@ -1067,7 +1069,25 @@ class TaskSwitchPageInfo
 
   # 安全にレンズ名を取得する
   def self.safe_lens_name(lens_name_str)
-    lens_name_str.gsub(/\r|\n|\t/, ' ').strip
+    convert_unity_name(lens_name_str.gsub(/\r|\n|\t/, ' ').strip)
+  end
+
+  # 統一性が取れるように名前に変換をかける
+  def self.convert_unity_name(lens_name)
+    return nil unless lens_name.present?
+
+    convert_word = lens_name
+
+    # 英数を全角から半角へ変換
+    convert_word = convert_word.tr('０-９', '0-9')
+    # カタカナを半角から全角へ変換
+    convert_word = NKF.nkf('-wX', convert_word)
+    # アルファベットと記号を半角から全角へ変換
+    convert_word = NKF.nkf('-wZ0', convert_word)
+    # 小文字へ変換
+    convert_word = convert_word.downcase
+    # 全角空白を半角へ変換
+    convert_word = NKF.nkf('-wZ1', convert_word)
   end
 
   # メタデータをupsertする
