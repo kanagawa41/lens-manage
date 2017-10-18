@@ -13,6 +13,8 @@ Rails.application.routes.draw do
       get 'conoha_list'
       post 'delete_objects_ajax'
       get 'fetch_tree_datas_ajax'
+      get 'reset_tags_ajax'
+      get 'reset_word_ranking'
     end
   end
 

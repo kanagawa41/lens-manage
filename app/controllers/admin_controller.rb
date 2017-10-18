@@ -1,4 +1,6 @@
 class AdminController < ApplicationController
+  require 'rake'
+
   layout "basic"
 
   # 参考
@@ -39,6 +41,34 @@ class AdminController < ApplicationController
       js_tree: js_tree,
       container_metadata: container_metadata,
       file_stamp: file_stamp.strftime("%Y年%m月%d日 %H:%M:%S"),
+    }}
+  end
+
+  # タグのリセット(Ajax)
+  def reset_tags_ajax
+    if request.xhr?
+      render json: { errors: ["Ajax通信のみ許容"] }, :status => 403
+      return
+    end
+
+    Rake::Task.new('analytics_lens:reset:add_tags', Rake.application).invoke
+
+    render json: { data: {
+      response: "ok",
+    }}
+  end
+
+  # ワードランキングのリセット(Ajax)
+  def reset_word_ranking
+    if request.xhr?
+      render json: { errors: ["Ajax通信のみ許容"] }, :status => 403
+      return
+    end
+
+    Rake::Task.new('analytics_lens:reset:word_ranking', Rake.application).invoke
+
+    render json: { data: {
+      response: "ok",
     }}
   end
 

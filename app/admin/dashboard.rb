@@ -36,6 +36,19 @@ ActiveAdmin.register_page "Dashboard" do
                 li do
                   link_to("Collect Warehouses", admin_collect_warehouses_path)
                 end
+                li do
+                  link_to("Analytics LensInfos", admin_analytics_lens_infos_path)
+                end
+              end
+            end
+            li do
+              link_to("M Lens Genres", admin_m_lens_genres_path)
+            end
+            li do
+              ul do
+                li do
+                  link_to("M Proper Nouns", admin_m_proper_nouns_path)
+                end
               end
             end
             li do
@@ -48,6 +61,21 @@ ActiveAdmin.register_page "Dashboard" do
                 end
               end
             end
+          end
+        end
+      end
+
+      # タスクの実行
+      column do
+        panel "タスクの実行" do
+          div do
+            button("ワードランキングのリセット", :onclick=> "modules.activeAdmin.reset_word_ranking('ワードランキングリセット');")
+          end
+          div do
+            '<br>'.html_safe
+          end
+          div do
+            button("タグのリセット", :onclick=> "modules.activeAdmin.resetTags('タグリセット');")
           end
         end
       end
@@ -82,7 +110,9 @@ ActiveAdmin.register_page "Dashboard" do
           recs.html_safe
         end
       end
+    end
 
+    columns do
       # 各ショップの最終更新日
       column do
         panel "レンズ情報収集最終日" do
@@ -127,9 +157,7 @@ ActiveAdmin.register_page "Dashboard" do
           recs.html_safe
         end
       end
-    end
 
-    columns do
       # 画像保持
       column do
         panel "画像保持" do
