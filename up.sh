@@ -211,16 +211,16 @@ elif [ "${target_env}" = "production" ]; then
     putsd
   fi
 
-  putst "Assets compile"
-  bundle exec rails assets:precompile RAILS_ENV=${target_env}
-  putsd
-
   if [ "${m_flag}" = "TRUE" ]; then
     putst "Migration"
     bundle exec rails db:migrate RAILS_ENV=${target_env}
     bundle exec rails db:migrate:status RAILS_ENV=${target_env}
     putsd
   fi
+
+  putst "Assets compile"
+  bundle exec rails assets:precompile RAILS_ENV=${target_env}
+  putsd
 
   putst "Update crontab"
   RAILS_ENV=${target_env} bundle exec whenever --update-crontab
