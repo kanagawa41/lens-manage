@@ -32,9 +32,9 @@ ActiveAdmin.register MProperNoun do
     column :relate_name
 
     actions defaults: false do |model|
-      item 'view', admin_m_lens_genre_path(model), class: 'view_link member_link'
-      item 'edit', edit_admin_m_lens_genre_path(model), class: 'edit_link member_link'
-      item 'delete', admin_m_lens_genre_path(model), class: 'delete_link member_link', method: :delete, :confirm => "All grades, uploads and tracks will be deleted with this content.Are you sure you want to delete this Content?"
+      item 'view', admin_m_proper_noun_path(model), class: 'view_link member_link'
+      item 'edit', edit_admin_m_proper_noun_path(model), class: 'edit_link member_link'
+      item 'delete', admin_m_proper_noun_path(model), class: 'delete_link member_link', method: :delete, :confirm => "All grades, uploads and tracks will be deleted with this content.Are you sure you want to delete this Content?"
     end
   end
 

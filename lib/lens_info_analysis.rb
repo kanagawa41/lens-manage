@@ -134,11 +134,11 @@ module LensInfoAnalysis extend self
     # 特定のワードを除外
     convert_word = exclude_all_word convert_word
 
-    tmp_convert_words
-    convert_word.split(',').each do |r|
-      next if exclude_specific_word?
+    tmp_convert_words = []
+    convert_word.split(',').each do |word|
+      next if exclude_specific_word? word
 
-      tmp_convert_words << r
+      tmp_convert_words << word
     end
 
     convert_word = tmp_convert_words.join(',')

@@ -32,6 +32,56 @@ namespace :analytics_lens do
     TaskSwitchLensInfo::fetch args[:target_shop_id].to_i
   end
 
+  desc "タグ付けを行う"
+  task :add_tags, ['target_shop_id'] => :environment do |task, args|
+    TaskCommon::set_log 'analytics_lens/add_tags'
+
+    # タグ一覧を取得する
+    raw_m_proper_noun = MProperNoun.all.map do |r|
+      target_str = ''
+      if r.name_jp.present?
+        target_str += r.name_jp
+      end
+      if r.name_en.present?
+        target_str += ',' + r.name_en
+      end
+      if r.relate_name.present?
+        target_str += ',' + r.relate_name
+      end
+
+      [r.id, target_str]
+    end
+
+    m_proper_noun = Hash[raw_m_proper_noun]
+
+    shop_id = args[:target_shop_id].to_i
+
+    m_lens_info = MLensInfo.select(:ranking_words).includes(:analytics_lens_info).joins(:analytics_lens_info, :m_shop_info).where(tags: nil).where("m_shop_infos.id = ?", shop_id).all
+
+    m_lens_info.each_slice(100).to_a.each do |m_lens_info_group|
+      update_m_lens_infos = []
+      m_lens_info_group.each do |r|
+        match_tags = []
+        r.analytics_lens_info.ranking_words.split(',').each do |word|
+          m_proper_noun.each do |noun_id, target_words|
+            target_words.split(',').each do |target_word|
+              if word == target_word
+                match_tags << noun_id
+              end
+            end
+          end
+        end
+
+        next if match_tags.size == 0
+
+        r.tags = match_tags.uniq.sort.join(',')
+        unless r.save!
+          pp "セーブエラー(#{r.id})：#{r.messages}"
+        end
+      end
+    end
+  end
+
   desc "レンズのGoogleの見解を解析する(※ショップ指定なし)"
   task lens_related_word_with_google: :environment do |task, args|
     TaskCommon::set_log 'analytics_lens/lens_related_word_with_google'
