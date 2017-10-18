@@ -69,8 +69,9 @@ namespace :analytics_lens do
 
       analytics_lnes_infos << {m_lens_info_id: lens_info["id"], google_related_words: search_result[:related_words].join(','), google_match_words: search_result[:match_words].join(',')}
 
-      AnalyticsLensInfo.import analytics_lnes_infos.map{|r| AnalyticsLensInfo.new(r)}
     end
+
+    AnalyticsLensInfo.import analytics_lnes_infos.map{|r| AnalyticsLensInfo.new(r)}
   end
 
   desc "Googleの結果から重要度ランキングを抽出する"
