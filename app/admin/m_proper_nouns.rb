@@ -1,4 +1,6 @@
 ActiveAdmin.register MProperNoun do
+  config.per_page = 1000
+
   permit_params :m_lens_genre_id, :name_jp, :name_en, :relate_name
 
   active_admin_import validate: true, batch_transaction: true
