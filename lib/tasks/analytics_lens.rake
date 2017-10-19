@@ -93,7 +93,7 @@ namespace :analytics_lens do
 
         r.tags = match_tags.uniq.sort.join(',')
         unless r.save!
-          pp "セーブエラー(#{r.id})：#{r.messages}"
+          Rails.logger.error "セーブエラー(#{r.id})：#{r.messages}"
         end
       end
       # COMMENT: 不可を感じる場合は指定回数で終了させる

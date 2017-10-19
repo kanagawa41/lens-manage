@@ -51,11 +51,12 @@ class AdminController < ApplicationController
       return
     end
 
-    Rake::Task.new('analytics_lens:reset:add_tags', Rake.application).invoke
+    # バッチ実行
+    unless AdminService::reset_tags_ajax
+      render json: { errors: ["タグリセットに失敗しました。"] }
+    end
 
-    render json: { data: {
-      response: "ok",
-    }}
+    render json: { data: { response: "ok", } }
   end
 
   # ワードランキングのリセット(Ajax)
@@ -65,7 +66,10 @@ class AdminController < ApplicationController
       return
     end
 
-    Rake::Task.new('analytics_lens:reset:word_ranking', Rake.application).invoke
+    # バッチ実行
+    unless AdminService::reset_tags_ajax
+      render json: { errors: ["ワードランキングリセットに失敗しました。"] }
+    end
 
     render json: { data: {
       response: "ok",

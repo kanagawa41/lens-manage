@@ -9,6 +9,8 @@ default: &default
     pid_dir: /home/app/run
   cache:
     conoha_container_data: /tmp/cache/conoha_container_data.json
+  pid:
+    lock_file: /tmp/cache/lock_file.pid
 
 test:
   <<: *default

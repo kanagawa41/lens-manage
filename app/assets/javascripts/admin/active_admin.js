@@ -24,7 +24,8 @@ module.getAjaxTemplate = function() {
 
 // AJAXの接続失敗の処理
 var AJAX_FAIL = function(XMLHttpRequest, textStatus, errorThrown ) {
-  toastr.error('AJAXの接続が失敗しました。')
+  toastr.error('AJAXの接続が失敗しました。', '実行失敗', {timeOut: 0});
+  console.log(XMLHttpRequest);
 }
 
 // CSRFトークンを取得
@@ -41,11 +42,9 @@ var _action_name = '';
 
 module.taskExecute = function(action_name, url) {
   _action_name = action_name;
-  toastr.clear();
 
-  // 削除ボタン押下
+  // ボタン押下
   if(execute_flag){
-    toastr.info(_action_name + '中...')
     return;
   }else{
     if(!window.confirm(_action_name + 'を実行しますか？')){
@@ -57,7 +56,7 @@ module.taskExecute = function(action_name, url) {
       execute_flag = false;
     }, 10000);
 
-    toastr.info(_action_name + '中...')
+    toastr.info(_action_name + '中...', '', {timeOut: 0});
   }
 
   var ajaxRequest = module.getAjaxTemplate();
@@ -67,20 +66,20 @@ module.taskExecute = function(action_name, url) {
   $.ajax(ajaxRequest
   ).done(function(response, textStatus, jqXHR) {
     if(response == null){
-      toastr.error('AJAXの接続が失敗しました。')
+      toastr.error('レスポンスが存在しません。', '実行失敗', {timeOut: 0});
       console.log(jqXHR);
       return;
     }
     if(response['errors'] != null){
-      toastr.error(response['errors'].join(','));
+      toastr.error(response['errors'].join(','), '実行失敗', {timeOut: 0});
       console.log(jqXHR);
       return;
     }
 
     if(response['data']['response'] == "ok"){
-      toastr.success(_action_name + 'が完了しました。', '', {timeOut: 0})
+      toastr.success(_action_name + 'が完了しました。', '実行成功', {timeOut: 0});
     }else{
-      toastr.error('AJAXの接続が失敗しました。')
+      toastr.error('意図しないパラメータです。', '実行失敗', {timeOut: 0});
     }
   }).fail(AJAX_FAIL);
   return false;

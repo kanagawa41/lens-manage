@@ -1,5 +1,5 @@
 module AdminService
-  # include BaseService
+  include BaseService
   module_function
 
   # Baseに記載する
@@ -63,6 +63,18 @@ module AdminService
     File.open(CACHE_CONTAINER_DATA_PATH, "w"){|f| f.puts container_data.to_json }
 
     [JsTreeDataMaker.make(container_data[:objects]), container_data[:metadata], File.mtime(CACHE_CONTAINER_DATA_PATH)]
+  end
+
+  def reset_tags_ajax
+    `bundle exec rails analytics_lens:reset:add_tags RAILS_ENV=#{Rails.env}`
+
+    0 == $?.exitstatus
+  end
+
+  def reset_word_ranking
+    `bundle exec rails analytics_lens:reset:word_ranking RAILS_ENV=#{Rails.env}`
+
+    0 == $?.exitstatus
   end
 
   # オブジェクトストレージの接続情報
