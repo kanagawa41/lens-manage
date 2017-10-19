@@ -4,6 +4,7 @@ class LensListsController < ApplicationController
 
   def top
     @m_lens_infos = LensListsService.top
+    @proper_nouns = LensListsService.footer
   end
 
   def index
@@ -12,7 +13,29 @@ class LensListsController < ApplicationController
     @q = params[:q]
     @f_num = params[:f_num]
     @focal_length = params[:focal_length]
+    @proper_nouns = LensListsService.footer
     @m_lens_info = MLensInfo
+  end
+
+  def tag
+    @title = params[:tag]
+
+    # FIXME: 検索でおちている模様
+    # tag = params[:tag]
+    # m_proper_noun = MProperNoun.where(name_jp: tag).or(name_en: tag).first
+    # unless m_proper_noun.present?
+    #   render_404
+    #   return
+    # end
+
+    # @m_lens_infos = LensListsService.tag(params, params[:page], m_proper_noun)
+    @m_lens_infos = LensListsService.index(params, params[:page])
+    @q = params[:q]
+    @f_num = params[:f_num]
+    @focal_length = params[:focal_length]
+    @proper_nouns = LensListsService.footer
+    @m_lens_info = MLensInfo
+    render 'index'
   end
 
   def open_info

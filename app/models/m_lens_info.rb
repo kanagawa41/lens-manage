@@ -15,7 +15,7 @@ class MLensInfo < ApplicationRecord
   end
 
   # 条件検索を行う
-  def self.set_search_conditions(query, f_num, focal_length)
+  def self.set_search_conditions(query, f_num, focal_length, tag_id=nil)
     m_lens_info = MLensInfo.includes(:analytics_lens_info, :m_image, :m_shop_info).left_joins(:analytics_lens_info).where(disabled: false)
     if query.present?
       m_lens_info = m_lens_info.where("CONCAT(lens_name, ranking_words) like ?", "%" + query + "%")
@@ -25,6 +25,9 @@ class MLensInfo < ApplicationRecord
     end
     if focal_length.present?
       m_lens_info = m_lens_info.where("focal_length like ?", "%" + focal_length + "%")
+    end
+    if tag.present?
+      m_lens_info = m_lens_info.where("CONCAT(',', tags, ',') like ?", "%," + tag_id + ",%")
     end
     m_lens_info
   end

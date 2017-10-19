@@ -5,15 +5,15 @@
       <div class="6u 6u(medium) 12u$(small)">
 
         <!-- Links -->
-          <section class="widget links">
-            <h3>ナビゲーション</h3>
-            <ul class="style2">
-              <li><%= link_to 'トップ', '/lens_lists/top' %></li>
-              <li><%= link_to 'レンズを探す', '/lens_lists/index' %></li>
-              <li><%= link_to 'サイトについて', '/lens_lists/about' %></li>
-              <li><%= link_to 'お問い合わせ', '/lens_lists/contact' %></li>
-            </ul>
-          </section>
+        <section class="widget links">
+          <h3>ナビゲーション</h3>
+          <ul class="style2">
+            <li><%= link_to 'トップ', '/lens_lists/top' %></li>
+            <li><%= link_to 'レンズを探す', '/lens_lists/index' %></li>
+            <li><%= link_to 'サイトについて', '/lens_lists/about' %></li>
+            <li><%= link_to 'お問い合わせ', '/lens_lists/contact' %></li>
+          </ul>
+        </section>
 
       </div>
       <div class="6u 6u$(medium) 12u$(small)">
@@ -26,6 +26,23 @@
 
       </div>
     </div>
+    <% if @proper_nouns.present? %>
+    <div class="row">
+      <div class="12u 12u$(medium) 12u$(small)">
+
+        <!-- Proper nouns -->
+        <section class="widget links">
+          <h3>タグ</h3>
+          <ul class="style2">
+            <% @proper_nouns.each do |proper_noun| %>
+            <li><%= link_to proper_noun.name_jp, "/lens_lists/tag/#{proper_noun.name_jp}" %></li>
+            <% end %>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+    <% end %>
     <div class="row">
       <div class="12u">
         <div id="copyright">
