@@ -1,2 +1,0 @@
-class LnesList < ApplicationRecord
-end

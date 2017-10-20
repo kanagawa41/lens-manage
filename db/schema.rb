@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171018080220) do
+ActiveRecord::Schema.define(version: 20171020075941) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20171018080220) do
     t.string "f_num"
     t.string "focal_length"
     t.string "tags"
+    t.bigint "designation"
+    t.bigint "maker"
     t.boolean "disabled", default: false, null: false
     t.boolean "old_flag", default: false, null: false
     t.datetime "created_at", null: false
@@ -161,7 +163,6 @@ ActiveRecord::Schema.define(version: 20171018080220) do
     t.index ["m_lens_info_id"], name: "index_transition_histories_on_m_lens_info_id"
   end
 
-  add_foreign_key "analytics_lens_infos", "m_lens_infos"
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_lens_infos"

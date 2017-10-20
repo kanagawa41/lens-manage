@@ -1,5 +1,5 @@
 ActiveAdmin.register MLensInfo do
-  permit_params :lens_name, :lens_pic_url, :lens_info_url, :stock_state, :price, :m_shop_info_id, :disabled, :memo, :tags
+  permit_params :lens_name, :lens_pic_url, :lens_info_url, :stock_state, :price, :m_shop_info_id, :disabled, :memo, :tags, :designation, :maker
   actions :all
 
   filter :id
@@ -34,6 +34,8 @@ ActiveAdmin.register MLensInfo do
     column :f_num
     column :focal_length
     column :tags
+    column :designation
+    column :maker
 
     column :exist_image do |model|
       if m_image = MImage.where(m_lens_info_id: model.id).first
@@ -66,6 +68,8 @@ ActiveAdmin.register MLensInfo do
       f.input :f_num
       f.input :focal_length
       f.input :tags
+      f.input :designation
+      f.input :maker
       f.input :disabled
       f.input :memo
       f.input :old_flag

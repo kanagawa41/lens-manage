@@ -38,6 +38,16 @@
               <% else %>
                 <p>焦点距離/F値： -</p>
               <% end %>
+              <% if m_lens_info.designation.present? %>
+                <p>呼称： <%= m_lens_info.designation.name_jp %></p>
+              <% else %>
+                <p>呼称： -</p>
+              <% end %>
+              <% if m_lens_info.maker.present? %>
+                <p>メーカー： <%= m_lens_info.maker.name_jp %></p>
+              <% else %>
+                <p>メーカー： -</p>
+              <% end %>
               <p>サイト：<a href="<%= m_lens_info.m_shop_info.shop_url %>" target="_blank_shop"><%= m_lens_info.m_shop_info.shop_name %></a></p>
               <p class="no">No.<%= m_lens_info.id %></p>
             </header>

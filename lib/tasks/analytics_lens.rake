@@ -47,45 +47,6 @@ namespace :analytics_lens do
     TaskSwitchLensInfo::fetch args[:target_shop_id].to_i
   end
 
-  desc "タグ付けを行う"
-  task :add_tags, ['target_shop_id'] => :environment do |task, args|
-    TaskCommon::set_log 'analytics_lens/add_tags'
-
-    # タグ一覧を取得する
-    m_proper_noun = MProperNoun.fetch_tags
-
-    shop_id = args[:target_shop_id].to_i
-
-    m_lens_info = MLensInfo.select(:ranking_words).includes(:analytics_lens_info).joins(:analytics_lens_info, :m_shop_info).where(tags: nil).where("m_shop_infos.id = ?", shop_id).all
-
-    m_lens_info.each_slice(100).to_a.each do |m_lens_info_group|
-      update_m_lens_infos = []
-      m_lens_info_group.each do |r|
-        match_tags = []
-        next unless r.analytics_lens_info.ranking_words.present?
-
-        r.analytics_lens_info.ranking_words.split(',').each do |word|
-          m_proper_noun.each do |noun_id, target_words|
-            target_words.split(',').each do |target_word|
-              if word == target_word
-                match_tags << noun_id
-              end
-            end
-          end
-        end
-
-        next if match_tags.size == 0
-
-        r.tags = match_tags.uniq.sort.join(',')
-        unless r.save!
-          Rails.logger.error "セーブエラー(#{r.id})：#{r.messages}"
-        end
-      end
-      # COMMENT: 不可を感じる場合は指定回数で終了させる
-      # break
-    end
-  end
-
   desc "レンズのGoogleの見解を解析する(※ショップ指定なし)"
   task lens_related_word_with_google: :environment do |task, args|
     TaskCommon::set_log 'analytics_lens/lens_related_word_with_google'
@@ -147,6 +108,51 @@ namespace :analytics_lens do
       ranking = LensInfoAnalysis::create_ranking r["google_match_words"]
 
       AnalyticsLensInfo.find(r["id"]).update(ranking_words: ranking.keys.join(','))
+    end
+  end
+
+  desc "タグ付けを行う"
+  task :add_tags, ['target_shop_id'] => :environment do |task, args|
+    TaskCommon::set_log 'analytics_lens/add_tags'
+
+    # タグ一覧を取得する
+    m_proper_nouns = MProperNoun.fetch_tags
+
+    shop_id = args[:target_shop_id].to_i
+
+    m_lens_info = MLensInfo.select(:ranking_words).includes(:analytics_lens_info).joins(:analytics_lens_info, :m_shop_info).where(tags: nil).where("m_shop_infos.id = ?", shop_id).all
+
+    m_lens_info.each_slice(100).to_a.each do |m_lens_info_group|
+      update_m_lens_infos = []
+      m_lens_info_group.each do |r|
+        match_tags = []
+        next unless r.analytics_lens_info.ranking_words.present?
+
+        r.analytics_lens_info.ranking_words.split(',').each do |word|
+          m_proper_nouns.each do |noun_id, target_words|
+            target_words.split(',').each do |target_word|
+              if word == target_word
+                match_tags << noun_id
+              end
+            end
+          end
+        end
+
+        next if match_tags.size == 0
+
+        uniq_tags = match_tags.uniq
+
+        r.tags = uniq_tags.sort.join(',')
+
+        r.designation = uniq_tags.find{|r| MLensGenre.is_designation?(r)}
+        r.maker = uniq_tags.find{|r| MLensGenre.is_maker?(r)}
+
+        unless r.save!
+          Rails.logger.error "セーブエラー(#{r.id})：#{r.messages}"
+        end
+      end
+      # COMMENT: 不可を感じる場合は指定回数で終了させる
+      # break
     end
   end
 
