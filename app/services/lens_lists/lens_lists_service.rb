@@ -45,7 +45,12 @@ module LensListsService
     MLensInfo.set_search_conditions(nil, nil, nil, m_proper_noun.id).order(created_at: :desc).page(page)
   end
 
-  def footer
+  def category
+    # タグ一覧を取得する
+    MProperNoun.list_group_genre
+  end
+
+  def _footer
     # タグ一覧を取得する
     MProperNoun.list_group_genre
   end

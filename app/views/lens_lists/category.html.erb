@@ -1,0 +1,29 @@
+<div id="features-wrapper">
+  <div class="container">
+<% proper_nouns_group = @proper_nouns.group_by {|r| r.m_lens_genre.genre_name } %>
+<% i = 0 %>
+<% proper_nouns_group.each do |genre_name, proper_nouns| %>
+<% i += 1 %>
+<% row_start_flag = (i % 3 == 1) %>
+<% row_end_flag = (proper_nouns_group.size == i || i % 3 == 0) %>
+<% if row_start_flag %>
+    <div class="row">
+<% end %>
+      <div class="4u 12u(medium)">
+        <section class="box feature">
+          <div class="inner">
+            <h3><%= genre_name %></h3>
+            <ul class="style2">
+              <% proper_nouns.each do |proper_noun| %>
+                <li><%= link_to proper_noun.name_jp, "/lens_lists/tag/#{proper_noun.name_jp}" %></li>
+              <% end %>
+            </ul>
+          </div>
+        </section>
+      </div>
+      </a>
+<% if row_end_flag %>
+    </div>
+<% end %>
+<% end %>
+  </div></div>

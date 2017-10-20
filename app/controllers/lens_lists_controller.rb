@@ -4,7 +4,7 @@ class LensListsController < ApplicationController
 
   def top
     @m_lens_infos = LensListsService.top
-    @proper_nouns = LensListsService.footer
+    @proper_nouns = LensListsService._footer
   end
 
   def index
@@ -13,24 +13,26 @@ class LensListsController < ApplicationController
     @q = params[:q]
     @f_num = params[:f_num]
     @focal_length = params[:focal_length]
-    @proper_nouns = LensListsService.footer
+    @footer_proper_nouns = LensListsService._footer
     @m_lens_info = MLensInfo
   end
 
   def tag
-    @title = params[:tag]
+    @title = "#{params[:tag]} - タグ"
 
     tag = params[:tag]
     m_proper_noun = MProperNoun.where(name_jp: tag).or(MProperNoun.where(name_en: tag)).first
-    raise "タグが存在しない：#{tag}" unless m_proper_noun.present?
+    raise ActiveRecord::RecordNotFound("タグが存在しない：#{tag}") unless m_proper_noun.present?
 
     @m_lens_infos = LensListsService.tag(params[:page], m_proper_noun)
-    @q = params[:q]
-    @f_num = params[:f_num]
-    @focal_length = params[:focal_length]
-    @proper_nouns = LensListsService.footer
+    @footer_proper_nouns = LensListsService._footer
     @m_lens_info = MLensInfo
     render 'index'
+  end
+
+  def category
+    @title = 'カテゴリー'
+    @proper_nouns = LensListsService.category
   end
 
   def open_info
