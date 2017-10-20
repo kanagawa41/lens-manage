@@ -1,7 +1,5 @@
 class MProperNoun < ApplicationRecord
   belongs_to :m_lens_genre
-  has_one :designation_m_lens_info, class_name: :m_lens_info, foreign_key: :designation
-  has_one :maker_m_lens_info, class_name: :m_lens_info, foreign_key: :maker
 
   # タグ一覧を取得する
   def self.fetch_tags

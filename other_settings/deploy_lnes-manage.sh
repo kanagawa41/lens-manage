@@ -137,7 +137,8 @@ else
   bundle install --deployment --path $BUNDLE_PATH
 
   # バックアップと差分が発生した場合上書きする
-  if [ `diff -qr $ORG_BUNDLE $BK_BUNDLE >/dev/null` ]; then
+  # ※「if []; then」の形式にするとうまく動作しない
+  if ! $(diff -qr $ORG_BUNDLE $BK_BUNDLE >/dev/null); then
     rm -rf $BK_BUNDLE
     cp -r $ORG_BUNDLE $BK_PROJECT_PATH
     echo "== This folder of bundle is different from the folder of back-up. The folder of back-up was updated latest. =="

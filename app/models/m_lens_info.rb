@@ -2,8 +2,8 @@ class MLensInfo < ApplicationRecord
   belongs_to :m_shop_info
   has_one :m_image
   has_one :analytics_lens_info
-  belongs_to :designation, :class_name => 'MProperNoun', :foreign_key => 'designation'
-  belongs_to :maker, :class_name => 'MProperNoun', :foreign_key => 'maker'
+  belongs_to :designation_m_proper_noun, :class_name => 'MProperNoun', :foreign_key => 'designation', required: false
+  belongs_to :maker_m_proper_noun, :class_name => 'MProperNoun', :foreign_key => 'maker', required: false
 
   validate :none_nil_but_blank?
 
@@ -18,7 +18,7 @@ class MLensInfo < ApplicationRecord
 
   # 条件検索を行う
   def self.set_search_conditions(query, f_num, focal_length, tag_id=nil)
-    m_lens_info = MLensInfo.includes(:analytics_lens_info, :m_image, :m_shop_info, :designation, :maker).left_joins(:analytics_lens_info).where(disabled: false)
+    m_lens_info = MLensInfo.includes(:analytics_lens_info, :m_image, :m_shop_info, :designation_m_proper_noun, :maker_m_proper_noun).left_joins(:analytics_lens_info).where(disabled: false)
     if query.present?
       m_lens_info = m_lens_info.where("CONCAT(lens_name, ranking_words) like ?", "%" + query + "%")
     end

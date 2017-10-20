@@ -123,7 +123,6 @@ namespace :analytics_lens do
     m_lens_info = MLensInfo.select(:ranking_words).includes(:analytics_lens_info).joins(:analytics_lens_info, :m_shop_info).where(tags: nil).where("m_shop_infos.id = ?", shop_id).all
 
     m_lens_info.each_slice(100).to_a.each do |m_lens_info_group|
-      update_m_lens_infos = []
       m_lens_info_group.each do |r|
         match_tags = []
         next unless r.analytics_lens_info.ranking_words.present?
@@ -144,14 +143,14 @@ namespace :analytics_lens do
 
         r.tags = uniq_tags.sort.join(',')
 
-        r.designation = uniq_tags.find{|r| MLensGenre.is_designation?(r)}
-        r.maker = uniq_tags.find{|r| MLensGenre.is_maker?(r)}
+        r.designation = uniq_tags.find{|uniq_tag| MLensGenre.is_designation?(uniq_tag)}
+        r.maker = uniq_tags.find{|uniq_tag| MLensGenre.is_maker?(uniq_tag)}
 
         unless r.save!
           Rails.logger.error "セーブエラー(#{r.id})：#{r.messages}"
         end
       end
-      # COMMENT: 不可を感じる場合は指定回数で終了させる
+      # COMMENT: 負荷を感じる場合は指定回数で終了させる
       # break
     end
   end
