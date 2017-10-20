@@ -11,7 +11,8 @@ module.getAjaxTemplate = function() {
     type: 'get',
     url: '',
     crossDomain: true,
-    timeout: 1000 * 60 * 5, // 5分
+    // timeout: 1000 * 60 * 5, // 5分
+    timeout: 0 // 無制限
     cache: false,
     data: {
     },
