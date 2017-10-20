@@ -55,6 +55,9 @@ Rails.application.configure do
   config.log_level = :debug
   config.logger = Logger.new('log/development.log', 'daily')
 
+  # 例外の場合の表示処理
+  config.exceptions_app = ->(env) { ErrorsController.action(:show).call(env) }
+
   # assetsをまとめない
   # config.assets.digest = false
   # config.assets.compress = false
