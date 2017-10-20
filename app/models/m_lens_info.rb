@@ -26,8 +26,8 @@ class MLensInfo < ApplicationRecord
     if focal_length.present?
       m_lens_info = m_lens_info.where("focal_length like ?", "%" + focal_length + "%")
     end
-    if tag.present?
-      m_lens_info = m_lens_info.where("CONCAT(',', tags, ',') like ?", "%," + tag_id + ",%")
+    if tag_id.present?
+      m_lens_info = m_lens_info.where("CONCAT(',', tags, ',') like ?", "%," + tag_id.to_s + ",%")
     end
     m_lens_info
   end

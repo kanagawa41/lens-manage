@@ -20,16 +20,11 @@ class LensListsController < ApplicationController
   def tag
     @title = params[:tag]
 
-    # FIXME: 検索でおちている模様
-    # tag = params[:tag]
-    # m_proper_noun = MProperNoun.where(name_jp: tag).or(name_en: tag).first
-    # unless m_proper_noun.present?
-    #   render_404
-    #   return
-    # end
+    tag = params[:tag]
+    m_proper_noun = MProperNoun.where(name_jp: tag).or(MProperNoun.where(name_en: tag)).first
+    raise "タグが存在しない：#{tag}" unless m_proper_noun.present?
 
-    # @m_lens_infos = LensListsService.tag(params, params[:page], m_proper_noun)
-    @m_lens_infos = LensListsService.index(params, params[:page])
+    @m_lens_infos = LensListsService.tag(params[:page], m_proper_noun)
     @q = params[:q]
     @f_num = params[:f_num]
     @focal_length = params[:focal_length]

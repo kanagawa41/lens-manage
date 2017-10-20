@@ -22,6 +22,6 @@ class MProperNoun < ApplicationRecord
   end
 
   def self.list_group_genre
-    MProperNoun.select(:id, :name_jp, :name_en).includes(:m_lens_genre).joins(:m_lens_genre).group('m_lens_genres.id').all
+    MProperNoun.select(:id, :name_jp, :name_en).includes(:m_lens_genre).joins(:m_lens_genre).group(:m_lens_genre_id).all
   end
 end

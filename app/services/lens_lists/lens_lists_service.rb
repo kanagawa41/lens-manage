@@ -32,17 +32,17 @@ module LensListsService
     MLensInfo.find(lens_info_id)
   end
 
-  def tag(params, page, m_proper_noun)
-    result_num = MLensInfo.set_search_conditions(query, f_num, focal_length, m_proper_noun.id).count
+  def tag(page, m_proper_noun)
+    result_num = MLensInfo.set_search_conditions(nil, nil, nil, m_proper_noun.id).count
     SearchHistory.create(
-      search_char: query,
+      search_char: nil,
       result_num: result_num,
-      search_condition_json: { f_num: nil, focal_length: nil, tag: tag }.to_json
+      search_condition_json: { f_num: nil, focal_length: nil, tag: [m_proper_noun.name_jp, m_proper_noun.name_en] }.to_json
     )
 
     return Kaminari.paginate_array([]).page(0) if result_num == 0
 
-    MLensInfo.set_search_conditions(query, f_num, focal_length).order(created_at: :desc).page(page)
+    MLensInfo.set_search_conditions(nil, nil, nil, m_proper_noun.id).order(created_at: :desc).page(page)
   end
 
   def footer
