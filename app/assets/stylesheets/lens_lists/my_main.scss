@@ -1,15 +1,17 @@
 #page-wrapper {
   #header-wrapper {
     #header {
-      #logo a {
-        font-size: 0.7em;
-      }    
+      #logo {
+        a {
+          font-size: 0.6em;
+        }
+      }
     }
   }
 }
 
 #logo {
-  a:hover { 
+  a:hover {
     text-decoration: none;
     color: #FFF;
   }
@@ -26,7 +28,7 @@
   a.button {
     line-height: 1.9em;
     font-size: 1em;
-  }  
+  }
 }
 
 #features-wrapper {

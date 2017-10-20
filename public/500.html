@@ -59,9 +59,10 @@
   <!-- This file lives in public/500.html -->
   <div class="dialog">
     <div>
-      <h1>We're sorry, but something went wrong.</h1>
+      <h1>サーバ内でエラーが発生しました。(ステータス - 500)</h1>
     </div>
-    <p>If you are the application owner check the logs for more information.</p>
+    <p><img alt="エラー画像" src="/error_img.jpg" width="200" height="200"><br>申し訳ございませんが、<%= link_to 'トップページ', lens_lists_path %>へ戻って頂き、必要があれば管理者へご連絡をお願い致します。<br>
+      Copyright © 2017 簡単オールドレンズ検索</p>
   </div>
 </body>
 </html>

@@ -19,5 +19,5 @@ class ErrorsController < ActionController::Base
     render template: "errors/error_500", status: 500, layout: 'application'
   end
 
-  def show; raise env["action_dispatch.exception"]; end
+  def show; raise request.env["action_dispatch.exception"]; end
 end
