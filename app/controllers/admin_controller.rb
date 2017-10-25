@@ -44,6 +44,11 @@ class AdminController < ApplicationController
     }}
   end
 
+  # 未知のワード取得
+  def check_strange_word
+    @strange_words = AdminService::check_strange_word(params[:m_shop_info_id])
+  end
+
   # タグのリセット(Ajax)
   def reset_tags_ajax
     if request.xhr?

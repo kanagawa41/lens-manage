@@ -15,6 +15,9 @@ ActiveAdmin.register_page "Dashboard" do
             li do
               link_to("Conohaストレージ情報", conoha_list_admin_index_path)
             end
+            li do
+              link_to("未知の言葉をチェック", check_strange_word_admin_index_path)
+            end
           end
 
           label "テーブル"

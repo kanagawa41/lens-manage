@@ -40,6 +40,10 @@ function usage()
 declare -i argc=0
 declare -a argv=()
 
+if [ "$1" = "" ]; then
+  usage
+  exit 1
+fi
 if ! `echo ${ENVS[@]} | grep -q "$1"` ; then
   usage
   exit 1

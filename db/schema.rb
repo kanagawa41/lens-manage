@@ -163,6 +163,7 @@ ActiveRecord::Schema.define(version: 20171020075941) do
     t.index ["m_lens_info_id"], name: "index_transition_histories_on_m_lens_info_id"
   end
 
+  add_foreign_key "analytics_lens_infos", "m_lens_infos"
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_lens_infos"

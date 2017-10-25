@@ -77,6 +77,14 @@ module AdminService
     0 == $?.exitstatus
   end
 
+  def check_strange_word(m_shop_info_id)
+    if m_shop_info_id.present?
+      AnalyticsLensInfo.joins(:m_lens_info).where('m_lens_infos.m_shop_info_id'=> m_shop_info_id).all
+    else
+      AnalyticsLensInfo.limit(100).all
+    end
+  end
+
   # オブジェクトストレージの接続情報
   def fetch_container_data
     container = fetch_container_info

@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       get 'fetch_tree_datas_ajax'
       get 'reset_tags_ajax'
       get 'reset_word_ranking'
+      get 'check_strange_word'
     end
   end
 
