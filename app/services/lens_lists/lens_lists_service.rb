@@ -8,21 +8,31 @@ module LensListsService
 
   def index(params, page)
     query = params[:q]
-    f_num = params[:f_num]
-    focal_length = params[:focal_length]
-    if query.present? || f_num.present? || focal_length.present?
-      result_num = MLensInfo.set_search_conditions(query, f_num, focal_length).count
+    min_price = params[:min_price]
+    max_price = params[:max_price]
+    tag = params[:tag]
+
+    if params[:tag].present?
+      m_proper_noun = MProperNoun.search_tag(tag)
+      return Kaminari.paginate_array([]).page(0) unless m_proper_noun.present?
+      tag_id = m_proper_noun.id
+    end
+
+    if query.present? || min_price.present? || max_price.present? || tag_id.present?
+      result_num = MLensInfo.set_search_conditions(query, min_price, max_price, tag_id).count
       SearchHistory.create(
         search_char: query,
         result_num: result_num,
-        search_condition_json: { f_num: f_num, focal_length: focal_length }.to_json
+        search_condition_json: { min_price: min_price, max_price: max_price, tag: tag }.to_json
       )
 
       return Kaminari.paginate_array([]).page(0) if result_num == 0
 
-      MLensInfo.set_search_conditions(query, f_num, focal_length).order(created_at: :desc).page(page)
+      # 日付が新し、情報が古くない順
+      MLensInfo.set_search_conditions(query, min_price, max_price, m_proper_noun.id).order(created_at: :desc, old_flag: :asc).page(page)
+
     else # 指定がなかった場合
-      MLensInfo.where(disabled: false).order(created_at: :desc).page(page)
+      MLensInfo.includes_for_search.where(disabled: false).order(created_at: :desc, old_flag: :asc).page(page)
     end
   end
 
@@ -37,7 +47,7 @@ module LensListsService
     SearchHistory.create(
       search_char: nil,
       result_num: result_num,
-      search_condition_json: { f_num: nil, focal_length: nil, tag: [m_proper_noun.name_jp, m_proper_noun.name_en] }.to_json
+      search_condition_json: { min_price: nil, max_price: nil, tag: [m_proper_noun.name_jp, m_proper_noun.name_en] }.to_json
     )
 
     return Kaminari.paginate_array([]).page(0) if result_num == 0

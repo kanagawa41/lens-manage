@@ -17,21 +17,25 @@ class MLensInfo < ApplicationRecord
   end
 
   # 条件検索を行う
-  def self.set_search_conditions(query, f_num, focal_length, tag_id=nil)
-    m_lens_info = MLensInfo.includes(:analytics_lens_info, :m_image, :m_shop_info, :designation_m_proper_noun, :maker_m_proper_noun).left_joins(:analytics_lens_info).where(disabled: false)
+  def self.set_search_conditions(query, min_price, max_price, tag_id=nil)
+    m_lens_info = MLensInfo.includes_for_search.left_joins(:analytics_lens_info).where(disabled: false)
     if query.present?
       m_lens_info = m_lens_info.where("CONCAT(lens_name, ranking_words) like ?", "%" + query + "%")
     end
-    if f_num.present?
-      m_lens_info = m_lens_info.where("f_num like ?", "%" + f_num + "%")
+    if min_price.present?
+      m_lens_info = m_lens_info.where("price >= ? ", min_price.to_i)
     end
-    if focal_length.present?
-      m_lens_info = m_lens_info.where("focal_length like ?", "%" + focal_length + "%")
+    if max_price.present?
+      m_lens_info = m_lens_info.where("price <= ? ", max_price.to_i)
     end
     if tag_id.present?
       m_lens_info = m_lens_info.where("CONCAT(',', tags, ',') like ?", "%," + tag_id.to_s + ",%")
     end
     m_lens_info
+  end
+
+  def self.includes_for_search
+    MLensInfo.includes(:analytics_lens_info, :m_image, :m_shop_info, :designation_m_proper_noun, :maker_m_proper_noun)
   end
 
   # F値一覧を取得する

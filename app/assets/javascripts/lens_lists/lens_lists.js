@@ -17,8 +17,14 @@ module.init = function() {
 
   // 条件のリセット
   $('#detail_reset_btn').on('click', function(){
-    $('#focal_length').val('');
-    $('#f_num').val('');
+    $('#min_price').val('');
+    $('#max_price').val('');
+    $('#tag').val(null).trigger("change");
+  });
+
+  $('#tag').select2({
+    width: 500,
+    allowClear: true
   });
 }
 

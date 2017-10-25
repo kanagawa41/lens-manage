@@ -29,3 +29,6 @@ nohup.out
 /test/*
 _up.log
 public/assets/*
+
+.DS_Store
+._.DS_Store
