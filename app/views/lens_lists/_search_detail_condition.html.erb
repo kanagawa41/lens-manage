@@ -59,6 +59,7 @@
             <div class="3u 12u(medium)">
               <%= label :index, :min_price, "タグ" %>
               <%= select_tag(:tag, options_from_collection_for_select(@m_proper_noun.fetch_tags_for_display, :first, :last, selected: @tag), id: :tag) %>
+              <%= hidden_field_tag(:tag_flag, !!@tag) %>
             </div>
           </div>
         </div>

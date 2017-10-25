@@ -23,9 +23,12 @@ module.init = function() {
   });
 
   $('#tag').select2({
-    width: 500,
+    width: 250,
     allowClear: true
   });
+  if($('#tag_flag').val() != "true"){
+    $('#tag').val(null).trigger("change");
+  }
 }
 
 return module;
