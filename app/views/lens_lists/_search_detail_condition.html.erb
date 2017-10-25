@@ -7,11 +7,30 @@
       <a href="javascript:void(0);" id="detail_search">絞り込み</a>
     </div>
   </div>
+  <%
+    detail_conditions = ""
+    if @min_price.present?
+     detail_conditions += " / " if detail_conditions.size > 0
+     detail_conditions += "<b>"
+     detail_conditions += "最低価格: ¥#{@min_price.to_i.to_s(:delimited)}"
+     detail_conditions += "</b>"
+    end
+    if @max_price.present?
+     detail_conditions += " / " if detail_conditions.size > 0
+     detail_conditions += "<b>"
+     detail_conditions += "最高価格: #{@max_price.to_i.to_s(:delimited)}"
+     detail_conditions += "</b>"
+    end
+    if @tag.present?
+     detail_conditions += " / " if detail_conditions.size > 0
+     detail_conditions += "<b>"
+     detail_conditions += "タグ: #{@tag}"
+     detail_conditions += "</b>"
+    end
+  %>
   <div class="row">
     <div class="11u 12u(medium)">
-      <% if min_price.present? %>
-      <%= "最低価格: ¥#{min_price.to_s(:delimited)}" %>
-      <% end %>
+      <span><%= detail_conditions.html_safe %></span>
     </div>
   </div>
 </div>
