@@ -77,6 +77,8 @@ module LensInfoAnalysis extend self
 	          ranking[k2] = ranking[k] + ranking[k2]
 	          ranking.delete k
 	        end
+
+          break
         end
       end
     end
