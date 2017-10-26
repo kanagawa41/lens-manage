@@ -108,7 +108,12 @@ if [ "${i_flag}" = "TRUE" ]; then
   # 古いのが残っているかもなので一応削除
   ifrm $PROJECT_PATH
   ifrm $BK_PROJECT_PATH
-  git clone $GIT_PROJECT_URL $PROJECT_NAME
+
+  if ! $(git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"); then
+    echo "== Faild: checkout from git. =="
+    exit 1
+  fi
+
   cd $PROJECT_PATH
   bundle install --deployment --path $BUNDLE_PATH
 
@@ -119,7 +124,12 @@ if [ "${i_flag}" = "TRUE" ]; then
 
 else
   cp -r $ORG_LOG/* $BK_LOG
-  git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"
+
+  if ! $(git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"); then
+    echo "== Faild: checkout from git. =="
+    exit 1
+  fi
+
   rm -rf $PROJECT_PATH
   mv -f "${PROJECT_NAME}_NEW" $PROJECT_NAME
 
