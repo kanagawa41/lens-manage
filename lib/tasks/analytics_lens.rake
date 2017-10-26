@@ -24,7 +24,7 @@ namespace :analytics_lens do
     desc "タグの関連文字を補充する(実行するたびに上書きする)"
     task compensate_tag_relate: :environment do
       MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
-        `bundle exec rails analytics_lens:add_tags[#{m.id}] RAILS_ENV=#{Rails.env}`
+        `bundle exec rails analytics_lens:compensate_tag_relate[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
   end
