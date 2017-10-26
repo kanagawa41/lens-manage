@@ -44,8 +44,9 @@ module LensInfoAnalysis extend self
       # 単語単位で精査
       word.split(' ').each do |s_word|
 	      unless increase_match_count(words, s_word, ranking)
+          e_s_word = Regexp.escape s_word
 	      	# 該当しない文字は除去する
-	      	word = word.sub(/\s?#{s_word}|#{s_word}\s?/, '')
+	      	word = word.sub(/\s?#{e_s_word}|#{e_s_word}\s?/, '')
 	      end
       end
 

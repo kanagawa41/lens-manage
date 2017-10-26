@@ -109,10 +109,12 @@ if [ "${i_flag}" = "TRUE" ]; then
   ifrm $PROJECT_PATH
   ifrm $BK_PROJECT_PATH
 
-  if ! $(git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"); then
-    echo "== Faild: checkout from git. =="
-    exit 1
-  fi
+  # FIXME: Gitの成功、失敗の条件文の追加
+  # if ! $(git clone $GIT_PROJECT_URL $PROJECT_NAME); then
+  #   echo "== Faild: checkout from git. =="
+  #   exit 1
+  # fi
+  git clone $GIT_PROJECT_URL $PROJECT_NAME
 
   cd $PROJECT_PATH
   bundle install --deployment --path $BUNDLE_PATH
@@ -125,10 +127,12 @@ if [ "${i_flag}" = "TRUE" ]; then
 else
   cp -r $ORG_LOG/* $BK_LOG
 
-  if ! $(git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"); then
-    echo "== Faild: checkout from git. =="
-    exit 1
-  fi
+  # FIXME: Gitの成功、失敗の条件文の追加
+  # if ! $(git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"); then
+  #   echo "== Faild: checkout from git. =="
+  #   exit 1
+  # fi
+  git clone $GIT_PROJECT_URL "${PROJECT_NAME}_NEW"
 
   rm -rf $PROJECT_PATH
   mv -f "${PROJECT_NAME}_NEW" $PROJECT_NAME
