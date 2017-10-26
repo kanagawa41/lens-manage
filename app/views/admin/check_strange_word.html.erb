@@ -1,3 +1,12 @@
+<% if @strange_words.present? %>
+<div id="header-wrapper" style="padding: 0 0 0 0">
+  <div id="header" class="container">
+      <div id="logo" style="padding-bottom: 0">
+        <h2>解析結果</h2>
+      </div>
+  </div>
+</div>
+
 <!-- 概要  -->
 <div id="overview" class="box container">
   <div class="row">
@@ -9,10 +18,11 @@
           <td>
             <% if m.ranking_words.present? %>
               <% m.ranking_words.split(',').each do |ranking_word| %>
-                <% if MProperNoun.search_tag(ranking_word).present? %>
-                  , <%= ranking_word %>
+                <% next if LensInfoAnalysis::exclude_specific_word?(ranking_word) %>
+                <% if @cache_proper_nouns.include? ranking_word %>
+                  , <span style="font-size: 0.5em;"><%= ranking_word %></span>
                 <% else %>
-                  , <b style="font-size: 1.5em;"><%= ranking_word %></b>
+                  , <b style="font-size: 1.5em; color: <%= sample_color %>"><%= ranking_word %></b>
                 <% end %>
               <% end %>
             <% end %>
@@ -21,4 +31,10 @@
       <% end %>
     </div>
   </div>
+  <div class="row">
+    <div class="12u 12u(medium)" style="text-align: center;">
+      <%= paginate @strange_words %>
+    </div>
+  </div>
 </div>
+<% end %>

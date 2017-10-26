@@ -13,7 +13,7 @@ module LensInfoAnalysis extend self
     "前後", "型", "軽量", "説明書", "簡易", "世代", "表示", "価格", "画像", "撮",
     "解放", "機", "薦", "勧", "円", "可能", "交換", "表記", "その他", "装", "期",
     "構造", "問題", "種類", "場合", "希少", "美品", "大学", "傷", "合", "用",
-    "薄", "沈", "取扱", "版"
+    "薄", "沈", "取扱", "版", "評価"
   ].freeze
   # 除外日本語系(一致)
   EX_KN_JP = [
@@ -26,7 +26,7 @@ module LensInfoAnalysis extend self
   ].freeze
   # 除外カメラ系(一致)
   EX_KN_LENS = [
-    "レンズ", "カメラ", "マウント", "キャップ", "フィルター", "フード", "ボケ", "ケラレ", "コーティング", "アダプタ"
+    "レンズ", "カメラ", "マウント", "キャップ", "フィルター", "フード", "ボケ", "ケラレ", "コーティング", "アダプタ", "オート", "自動", "ポートレート"
   ].freeze
   # 除外英語系
   EX_EN = ["type", "mount", "new", "old", "for", "www", "cap", "in", "mm","g\\.a\\.", "\\.\\.\\."].freeze
@@ -86,8 +86,6 @@ module LensInfoAnalysis extend self
     # 一致数で降順
     Hash[*ranking.sort{|(k1, v1), (k2, v2)| v2 <=> v1 }.flatten]
   end
-
-  private
 
   # 一致した文字をカウントアップする
   def increase_match_count(words, word, ranking)

@@ -38,7 +38,7 @@ class MProperNoun < ApplicationRecord
   end
 
   def self.search_tag(tag)
-    m_proper_noun = MProperNoun.where(name_jp: tag).or(MProperNoun.where(name_en: tag)).first
+    m_proper_noun = MProperNoun.where(name_jp: tag).or(MProperNoun.where(name_en: tag)).or(MProperNoun.where("CONCAT(',', relate_name, ',') like ?", "%," + tag + ",%")).first
   end
 
   def self.list_group_genre

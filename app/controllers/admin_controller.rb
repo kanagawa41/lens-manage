@@ -46,7 +46,8 @@ class AdminController < ApplicationController
 
   # 未知のワード取得
   def check_strange_word
-    @strange_words = AdminService::check_strange_word(params[:m_shop_info_id])
+    @strange_words = AdminService::check_strange_word(params[:m_shop_info_id], params[:page])
+    @cache_proper_nouns = MProperNoun.fetch_tags.values.inject([]){|s, r| s + r.split(',')}
   end
 
   # タグのリセット(Ajax)

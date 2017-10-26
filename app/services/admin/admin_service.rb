@@ -77,11 +77,11 @@ module AdminService
     0 == $?.exitstatus
   end
 
-  def check_strange_word(m_shop_info_id)
+  def check_strange_word(m_shop_info_id, page)
     if m_shop_info_id.present?
-      AnalyticsLensInfo.joins(:m_lens_info).where('m_lens_infos.m_shop_info_id'=> m_shop_info_id).all
+      AnalyticsLensInfo.joins(:m_lens_info).where('m_lens_infos.m_shop_info_id'=> m_shop_info_id).page(page).per(100)
     else
-      AnalyticsLensInfo.limit(100).all
+      AnalyticsLensInfo.page(page)
     end
   end
 
