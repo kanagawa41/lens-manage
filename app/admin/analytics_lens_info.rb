@@ -1,5 +1,5 @@
 ActiveAdmin.register AnalyticsLensInfo do
-  permit_params :m_lens_info_id, :google_related_words, :google_match_words
+  permit_params :m_lens_info_id, :google_related_words, :google_match_words, :done_flag
 
   # # csvの内容をカスタマイズ
   csv :force_quotes => false, :humanize_name => false do
@@ -7,6 +7,7 @@ ActiveAdmin.register AnalyticsLensInfo do
     column :google_related_words
     column :google_match_words
     column :ranking_words
+    column :done_flag
   end
 
   index do
@@ -21,6 +22,7 @@ ActiveAdmin.register AnalyticsLensInfo do
     column :google_related_words
     column :google_match_words
     column :ranking_words
+    column :done_flag
     column :created_at
 
     actions defaults: false do |model|
@@ -36,6 +38,7 @@ ActiveAdmin.register AnalyticsLensInfo do
       f.input :google_related_words
       f.input :google_match_words
       f.input :ranking_words
+      f.input :done_flag
     end
     f.actions
   end

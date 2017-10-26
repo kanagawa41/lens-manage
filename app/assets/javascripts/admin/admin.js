@@ -36,6 +36,14 @@ module.getCsrfToken = function() {
 }
 
 // 初期処理
+module.checkStrangeWordInit = function() {
+  $('#all_check').on('click', function(){
+    var checkBoxes = $('input[name=analytics_ids\\[\\]]');
+    checkBoxes.prop("checked", $(this).prop("checked"));
+  });
+}
+
+// 初期処理
 module.init = function() {
   var click_flag = false;
   // 最新への更新

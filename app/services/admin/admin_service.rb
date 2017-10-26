@@ -79,10 +79,16 @@ module AdminService
 
   def check_strange_word(m_shop_info_id, page)
     if m_shop_info_id.present?
-      AnalyticsLensInfo.joins(:m_lens_info).where('m_lens_infos.m_shop_info_id'=> m_shop_info_id).page(page).per(100)
+      analytics_lens_info = AnalyticsLensInfo.joins(:m_lens_info).where('m_lens_infos.m_shop_info_id'=> m_shop_info_id)
     else
-      AnalyticsLensInfo.page(page)
+      analytics_lens_info = AnalyticsLensInfo
     end
+
+    analytics_lens_info.where(done_flag: false).page(page).per(100)
+  end
+
+  def analytics_done(analytics_ids)
+    AnalyticsLensInfo.where(id: analytics_ids).update(done_flag: true)
   end
 
   # オブジェクトストレージの接続情報

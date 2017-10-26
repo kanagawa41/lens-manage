@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171020075941) do
+ActiveRecord::Schema.define(version: 20171026013432) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(version: 20171020075941) do
     t.text "google_related_words", limit: 4294967295, null: false
     t.text "google_match_words", limit: 4294967295, null: false
     t.text "ranking_words", limit: 4294967295
+    t.boolean "done_flag", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["m_lens_info_id"], name: "index_analytics_lens_infos_on_m_lens_info_id", unique: true
@@ -163,7 +164,6 @@ ActiveRecord::Schema.define(version: 20171020075941) do
     t.index ["m_lens_info_id"], name: "index_transition_histories_on_m_lens_info_id"
   end
 
-  add_foreign_key "analytics_lens_infos", "m_lens_infos"
   add_foreign_key "collect_results", "m_shop_infos"
   add_foreign_key "collect_targets", "m_shop_infos"
   add_foreign_key "collect_warehouses", "m_lens_infos"

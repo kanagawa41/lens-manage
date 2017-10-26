@@ -50,6 +50,13 @@ class AdminController < ApplicationController
     @cache_proper_nouns = MProperNoun.fetch_tags.values.inject([]){|s, r| s + r.split(',')}
   end
 
+  # 解析終了
+  def analytics_done
+    AdminService::analytics_done params[:analytics_ids]
+
+    redirect_to action: 'check_strange_word'
+  end
+
   # タグのリセット(Ajax)
   def reset_tags_ajax
     if request.xhr?

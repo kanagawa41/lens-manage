@@ -2,20 +2,34 @@
 <div id="header-wrapper" style="padding: 0 0 0 0">
   <div id="header" class="container">
       <div id="logo" style="padding-bottom: 0">
+        <div>
+          <%= link_to '管理画面TOPへ', admin_dashboard_path %>
+        </div>
         <h2>解析結果</h2>
       </div>
   </div>
 </div>
 
 <!-- 概要  -->
+<%= form_tag('/admin/analytics_done', multipart: true, id: 'admin_analytics_done', method: "post") do %>
 <div id="overview" class="box container">
+  <%= submit_tag "解析完了" %>
+  <%= label_tag 'all_check' do %>
+    <%= check_box_tag 'all_check' %>
+    全てチェック
+  <% end %>
   <div class="row">
     <div class="12u 12u(medium)">
       <table>
       <% @strange_words.each do |m| %>
         <tr>
-          <td><%= m.id %></td>
-          <td>
+          <td style="width: 6em; border-bottom: solid 1px #000;">
+            <%= label_tag 'analytics_ids[]' do %>
+              <%= check_box_tag 'analytics_ids[]', m.id %>
+              <%= m.id %>
+            <% end %>
+          </td>
+          <td style="border-bottom: solid 1px #000;">
             <% if m.ranking_words.present? %>
               <% m.ranking_words.split(',').each do |ranking_word| %>
                 <% next if LensInfoAnalysis::exclude_specific_word?(ranking_word) %>
@@ -38,3 +52,18 @@
   </div>
 </div>
 <% end %>
+<% else %>
+<div id="overview" class="box container">
+  <div class="row">
+    <div class="12u 12u(medium)">
+      解析対象はございません。
+    </div>
+  </div>
+</div>
+<% end %>
+
+<script>
+  $(function(){
+    modules.admin.checkStrangeWordInit();
+  });
+</script>

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       get 'reset_tags_ajax'
       get 'reset_word_ranking'
       get 'check_strange_word'
+      post 'analytics_done'
     end
   end
 
