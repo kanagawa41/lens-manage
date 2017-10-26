@@ -2,7 +2,7 @@ class MProperNoun < ApplicationRecord
   belongs_to :m_lens_genre
 
   # タグ一覧を取得する
-  def self.fetch_tags
+  def self.fetch_tags(no_relate_name_flag=false)
     raw_m_proper_noun = MProperNoun.all.map do |r|
       target_str = ''
       if r.name_jp.present?
@@ -11,7 +11,7 @@ class MProperNoun < ApplicationRecord
       if r.name_en.present?
         target_str += ',' + r.name_en
       end
-      if r.relate_name.present?
+      if !no_relate_name_flag && r.relate_name.present?
         target_str += ',' + r.relate_name
       end
 

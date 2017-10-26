@@ -115,21 +115,9 @@ module LensInfoAnalysis extend self
   def before_analysis(word)
   	convert_word = word
 
-    # 英数を全角から半角へ変換
-    convert_word = convert_word.tr('０-９', '0-9')
-    # カタカナを半角から全角へ変換
-    convert_word = NKF.nkf('-wX', convert_word)
-    # アルファベットと記号を半角から全角へ変換
-    convert_word = NKF.nkf('-wZ0', convert_word)
-    # 小文字へ変換
-    convert_word = convert_word.downcase
-    # 全角空白を半角へ変換
-    convert_word = NKF.nkf('-wZ1', convert_word)
-    # 特殊記号を空白へ変換([半角]|[全角])
-    convert_word = convert_word.gsub(/[…=\/【】@\(\)●○¥"\:\*\[\]]|[．・、]/, ' ')
-    # ひらがなの除去
-    # ※レンズ名の呼称にひらがなは使用しないので
-    convert_word = convert_word.gsub(/\p{hiragana}/, ' ')
+    convert_word = unify_char convert_word
+
+    convert_word = to_space_in_particular_char convert_word
 
     # 特定のワードを除外
     convert_word = exclude_all_word convert_word
@@ -143,6 +131,9 @@ module LensInfoAnalysis extend self
 
     convert_word = tmp_convert_words.join(',')
 
+    # 文字が連結を意味している記号を使用している場合、それは一つとして扱う。
+    convert_word = "," + convert_word.gsub(/([\-\.])/, ' ') + ","
+
     # 複数の英単語が並んでいた場合は、一つの単語とする
     convert_word = convert_word.gsub(/((?:[a-z]+\s*){2,}+)/){"," + $1 + ","}
 
@@ -152,6 +143,37 @@ module LensInfoAnalysis extend self
     convert_word = convert_word.gsub(/\s?,\s?/, ',')
     # 「,」の連続を一つへ
     convert_word = convert_word.gsub(/,+/, ',')
+  end
+
+  # 文字の統一化
+  def unify_char(word)
+    convert_word = word
+
+    # 英数を全角から半角へ変換
+    convert_word = convert_word.tr('０-９', '0-9')
+    # カタカナを半角から全角へ変換
+    convert_word = NKF.nkf('-wX', convert_word)
+    # アルファベットと記号を半角から全角へ変換
+    convert_word = NKF.nkf('-wZ0', convert_word)
+    # 小文字へ変換
+    convert_word = convert_word.downcase
+    # 全角空白を半角へ変換
+    convert_word = NKF.nkf('-wZ1', convert_word)
+
+    convert_word
+  end
+
+  # 特定の文字の空白変換
+  def to_space_in_particular_char(word)
+    convert_word = word
+
+    # 特殊記号を空白へ変換([半角]|[全角])
+    convert_word = convert_word.gsub(/[…=\/【】@\(\)●○¥"\:\*\[\]]|[．・、]/, ' ')
+    # ひらがなの除去
+    # ※レンズ名の呼称にひらがなは使用しないので
+    convert_word = convert_word.gsub(/\p{hiragana}/, ' ')
+
+    convert_word
   end
 
   # 全体的な文字の除外

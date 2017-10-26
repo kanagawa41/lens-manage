@@ -20,6 +20,13 @@ namespace :analytics_lens do
         `bundle exec rails analytics_lens:add_tags[#{m.id}] RAILS_ENV=#{Rails.env}`
       end
     end
+
+    desc "タグの関連文字を補充する(実行するたびに上書きする)"
+    task compensate_tag_relate: :environment do
+      MShopInfo.select(:id, :shop_name).where(disabled: false).all.each do |m|
+        `bundle exec rails analytics_lens:add_tags[#{m.id}] RAILS_ENV=#{Rails.env}`
+      end
+    end
   end
 
   namespace :reset do
@@ -152,6 +159,43 @@ namespace :analytics_lens do
       end
       # COMMENT: 負荷を感じる場合は指定回数で終了させる
       # break
+    end
+  end
+
+  desc "タグの関連文字を補充する(実行するたびに上書きする)"
+  task :compensate_tag_relate, ['target_shop_id'] => :environment do |task, args|
+    TaskCommon::set_log 'analytics_lens/compensate_tag_relate'
+
+    # タグ一覧を取得する
+    m_proper_nouns = MProperNoun.fetch_tags true
+
+    shop_id = args[:target_shop_id].to_i
+
+    analytics_lens_infos = AnalyticsLensInfo.select(:ranking_words).includes(:m_lens_info).joins(:m_lens_info).where("m_lens_infos.m_shop_info_id"=> shop_id).all
+
+    analytics_lens_infos.each do |analytics_lens_info|
+      ranking_words = analytics_lens_info.ranking_words
+
+      m_proper_nouns.each do |noun_id, target_words|
+        target_words.split(',').each do |target_word|
+          next unless target_word.present?
+
+          if ranking_words.match /#{target_word}/
+            m_proper_noun = MProperNoun.find noun_id
+            if m_proper_noun.relate_name.present?
+              m_proper_noun.relate_name = (m_proper_noun.relate_name + ',' + ranking_words).split(',').uniq.join(',')
+            else
+              m_proper_noun.relate_name = ranking_words
+            end
+
+            unless m_proper_noun.save!
+              Rails.logger.error "セーブエラー(#{noun_id})：#{m_proper_noun.messages}"
+            end
+
+            next
+          end
+        end
+      end
     end
   end
 
