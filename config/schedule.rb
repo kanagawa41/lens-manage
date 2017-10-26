@@ -41,6 +41,11 @@ every '45 4-23/1 * * * ' do
   rake "analytics_lens:all:word_ranking"
 end
 
+# タグの関連性の保管
+every '31 4 * * 0' do
+  rake "analytics_lens:all:compensate_tag_relate"
+end
+
 # # 毎日00:05分
 # every '5 0 * * * ' do
 #   rake "brand_group:fetch"
